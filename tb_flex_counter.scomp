@@ -1,10 +1,10 @@
 QuestaSim-64 vlog 10.3b Compiler 2014.05 May 29 2014
-Start time: 19:27:25 on Oct 31,2017
-vlog -sv -work mapped_work source/tb_flex_counter.sv 
+Start time: 19:05:19 on Oct 31,2017
+vlog -sv -work source_work source/tb_flex_counter.sv 
 -- Compiling module tb_flex_counter
 -- Compiling module tb_flex_counter_DUT
 
 Top level modules:
 	tb_flex_counter
-End time: 19:27:25 on Oct 31,2017, Elapsed time: 0:00:00
+End time: 19:05:19 on Oct 31,2017, Elapsed time: 0:00:00
 Errors: 0, Warnings: 0
