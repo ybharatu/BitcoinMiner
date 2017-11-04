@@ -3,4 +3,6 @@
 *.svf
 *.tcl
 transcript
-
+*.bak
+/source/work/*
+*~
