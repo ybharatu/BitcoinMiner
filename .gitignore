@@ -3,4 +3,10 @@
 *.svf
 *.tcl
 transcript
-
+*.qtl
+*.qdb
+*.qpg
+_info
+_vmake
+_opt__lock
+*.bak

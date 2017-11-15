@@ -1,6 +1,6 @@
 *.mcomp
-*.mtran
 *.scomp
-*.stran
 *.svf
 *.tcl
+transcript
+

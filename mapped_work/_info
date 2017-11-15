@@ -1,0 +1,89 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/ecegrid/a/mg137/ece337/bitcoinMiner
+T_opt
+!s110 1510101790
+VNZPc42180zfWzPC?^2?WA3
+04 12 4 work flex_counter fast 0
+=1-3417ebaec286-5a02531e-6c619-3e56
+o-quiet -auto_acc_if_foreign -work mapped_work/ -L /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work -L /home/ecegrid/a/ece337/Class0.5u/GOLD_LIB -Lf /home/ecegrid/a/ece337/Course_Prod/IP_Libs/Lab_IP_Lib/Vsim +acc
+n@_opt
+OL;O;10.3b;59
+vflex_counter
+Z1 DXx6 sv_std 3 std 0 22 <EOTafDcUY:cQeO^ICn]m3
+Z2 !s110 1510101786
+!i10b 1
+!s100 dXBQYZOzMb16k4[ooK]`[0
+IRNI;l<2AZVoHVY;hDF8n=0
+Z3 V`JN@9S9cnhjKRR_L]QIcM3
+Z4 !s105 flex_counter_v_unit
+S1
+R0
+Z5 w1510101783
+Z6 8mapped/flex_counter.v
+Z7 Fmapped/flex_counter.v
+L0 40
+Z8 OL;L;10.3b;59
+r1
+!s85 0
+31
+Z9 !s108 1510101786.634101
+Z10 !s107 mapped/flex_counter.v|
+Z11 !s90 -sv|-work|mapped_work|mapped/flex_counter.v|
+!i113 0
+Z12 o-sv -work mapped_work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+vflex_counter_DW01_inc_0
+R1
+R2
+!i10b 1
+!s100 9FWO=[Z7CKl60dA3Z@@Eb0
+IMWh<nLbzP0H0_1`K=N?Q:2
+R3
+R4
+S1
+R0
+R5
+R6
+R7
+L0 8
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 0
+R12
+nflex_counter_@d@w01_inc_0
+vflex_counter_DW01_inc_1
+R1
+R2
+!i10b 1
+!s100 `Oo^cWdd>S<YGA9TlcGg23
+I078bzHfb3?zP4mi0Y_ib61
+R3
+R4
+S1
+R0
+R5
+R6
+R7
+L0 24
+R8
+r1
+!s85 0
+31
+R9
+R10
+R11
+!i113 0
+R12
+nflex_counter_@d@w01_inc_1
