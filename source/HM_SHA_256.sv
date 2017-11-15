@@ -82,16 +82,16 @@ always_ff @ ( posedge clk, negedge n_rst) begin //change back to always_ff and m
 		h <= 0;
 		out_hash <= 0;
 	end		
-//	else if(count == 1) begin //or maybe 0 im not sure	
-//		a <= selected_hash[0];
-//		b <= selected_hash[1];
-//		c <= selected_hash[2];
-//		d <= selected_hash[3];
-//		e <= selected_hash[4];
-//		f <= selected_hash[5];
-//		g <= selected_hash[6];
-//		h <= selected_hash[7];
-//	end
+	else if(count == 1) begin //or maybe 0 im not sure	
+		a <= selected_hash[0];
+		b <= selected_hash[1];
+		c <= selected_hash[2];
+		d <= selected_hash[3];
+		e <= selected_hash[4];
+		f <= selected_hash[5];
+		g <= selected_hash[6];
+		h <= selected_hash[7];
+	end
 	else begin
 		a <= anext;
 		b <= bnext;
@@ -104,7 +104,7 @@ always_ff @ ( posedge clk, negedge n_rst) begin //change back to always_ff and m
 		out_hash <= out_reg;
 	end
 	
-	//out_hash <= out_reg; // Double check naming convention here
+	//out_hash <= out_reg;
 
 end
 
@@ -132,13 +132,14 @@ always_comb begin
 	end
 end
 
-	// Initial Right Rotate
-	HW_rightrotate #(6) RR6 (.in(e), .out(rr6));
-	HW_rightrotate #(25) RR25 (.in(e), .out(rr25));
-	HW_rightrotate #(11) RR11 (.in(e), .out(rr11));
-	HW_rightrotate #(13) RR13 (.in(a), .out(rr13));
-	HW_rightrotate #(22) RR22 (.in(a), .out(rr22));
-	HW_rightrotate #(2) RR2 (.in(a), .out(rr2));
+// Initial Right Rotate
+
+HM_rightrotate #(6) RR6 (.in(e), .out(rr6));
+HM_rightrotate #(25) RR25 (.in(e), .out(rr25));
+HM_rightrotate #(11) RR11 (.in(e), .out(rr11));
+HM_rightrotate #(13) RR13 (.in(a), .out(rr13));
+HM_rightrotate #(22) RR22 (.in(a), .out(rr22));
+HM_rightrotate #(2) RR2 (.in(a), .out(rr2));
 
 always_comb begin // Compression Core
 	S1 = rr6 ^ rr11 ^ rr25;

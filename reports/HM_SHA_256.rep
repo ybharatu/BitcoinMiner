@@ -4,27 +4,26 @@ Warning: Cannot find the design 'HM_rightrotate' in the library 'WORK'. (LBR-1)
 Information: Building the design 'HM_rightrotate' instantiated from design 'HM_SHA_256' with
 	the parameters "18". (HDL-193)
 Warning: Cannot find the design 'HM_rightrotate' in the library 'WORK'. (LBR-1)
-Information: Building the design 'HW_rightrotate' instantiated from design 'HM_SHA_256' with
+Information: Building the design 'HM_rightrotate' instantiated from design 'HM_SHA_256' with
 	the parameters "6". (HDL-193)
-Warning: Cannot find the design 'HW_rightrotate' in the library 'WORK'. (LBR-1)
-Information: Building the design 'HW_rightrotate' instantiated from design 'HM_SHA_256' with
+Warning: Cannot find the design 'HM_rightrotate' in the library 'WORK'. (LBR-1)
+Information: Building the design 'HM_rightrotate' instantiated from design 'HM_SHA_256' with
 	the parameters "25". (HDL-193)
-Warning: Cannot find the design 'HW_rightrotate' in the library 'WORK'. (LBR-1)
-Information: Building the design 'HW_rightrotate' instantiated from design 'HM_SHA_256' with
+Warning: Cannot find the design 'HM_rightrotate' in the library 'WORK'. (LBR-1)
+Information: Building the design 'HM_rightrotate' instantiated from design 'HM_SHA_256' with
 	the parameters "11". (HDL-193)
-Warning: Cannot find the design 'HW_rightrotate' in the library 'WORK'. (LBR-1)
-Information: Building the design 'HW_rightrotate' instantiated from design 'HM_SHA_256' with
+Warning: Cannot find the design 'HM_rightrotate' in the library 'WORK'. (LBR-1)
+Information: Building the design 'HM_rightrotate' instantiated from design 'HM_SHA_256' with
 	the parameters "13". (HDL-193)
-Warning: Cannot find the design 'HW_rightrotate' in the library 'WORK'. (LBR-1)
-Information: Building the design 'HW_rightrotate' instantiated from design 'HM_SHA_256' with
+Warning: Cannot find the design 'HM_rightrotate' in the library 'WORK'. (LBR-1)
+Information: Building the design 'HM_rightrotate' instantiated from design 'HM_SHA_256' with
 	the parameters "22". (HDL-193)
-Warning: Cannot find the design 'HW_rightrotate' in the library 'WORK'. (LBR-1)
-Information: Building the design 'HW_rightrotate' instantiated from design 'HM_SHA_256' with
+Warning: Cannot find the design 'HM_rightrotate' in the library 'WORK'. (LBR-1)
+Information: Building the design 'HM_rightrotate' instantiated from design 'HM_SHA_256' with
 	the parameters "2". (HDL-193)
-Warning: Cannot find the design 'HW_rightrotate' in the library 'WORK'. (LBR-1)
+Warning: Cannot find the design 'HM_rightrotate' in the library 'WORK'. (LBR-1)
 Warning: Unable to resolve reference 'HM_rightrotate' in 'HM_SHA_256'. (LINK-5)
-Warning: Unable to resolve reference 'HW_rightrotate' in 'HM_SHA_256'. (LINK-5)
-Warning: Design 'HM_SHA_256' has '2' unresolved references. For more detailed information, use the "link" command. (UID-341)
+Warning: Design 'HM_SHA_256' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
 Information: Updating design information... (UID-85)
  
 ****************************************
@@ -34,7 +33,7 @@ Report : timing
         -max_paths 1
 Design : HM_SHA_256
 Version: K-2015.06-SP1
-Date   : Tue Nov 14 20:36:50 2017
+Date   : Wed Nov 15 16:08:42 2017
 ****************************************
 
 Operating Conditions: typical   Library: osu05_stdcells
@@ -50,21 +49,21 @@ Wire Load Model Mode: top
   Point                                    Incr       Path
   -----------------------------------------------------------
   out_hash_reg[0][0]/CLK (DFFSR)           0.00       0.00 r
-  out_hash_reg[0][0]/Q (DFFSR)             0.45       0.45 f
-  out_hash[0][0] (out)                     0.00       0.45 f
-  data arrival time                                   0.45
+  out_hash_reg[0][0]/Q (DFFSR)             0.60       0.60 f
+  out_hash[0][0] (out)                     0.00       0.60 f
+  data arrival time                                   0.60
   -----------------------------------------------------------
   (Path is unconstrained)
 
 
 1
-Warning: Design 'HM_SHA_256' has '2' unresolved references. For more detailed information, use the "link" command. (UID-341)
+Warning: Design 'HM_SHA_256' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
  
 ****************************************
 Report : area
 Design : HM_SHA_256
 Version: K-2015.06-SP1
-Date   : Tue Nov 14 20:36:50 2017
+Date   : Wed Nov 15 16:08:42 2017
 ****************************************
 
 Library(s) Used:
@@ -72,21 +71,21 @@ Library(s) Used:
     osu05_stdcells (File: /package/eda/cells/OSU/v2.7/synopsys/lib/ami05/osu05_stdcells.db)
 
 Number of ports:                         1459
-Number of nets:                          2510
-Number of cells:                         1444
-Number of combinational cells:            588
+Number of nets:                          2881
+Number of cells:                         1815
+Number of combinational cells:            959
 Number of sequential cells:               849
 Number of macros/black boxes:               0
-Number of buf/inv:                        129
-Number of references:                      23
+Number of buf/inv:                        242
+Number of references:                      26
 
-Combinational area:             330975.000000
-Buf/Inv area:                    18576.000000
+Combinational area:             406935.000000
+Buf/Inv area:                    35712.000000
 Noncombinational area:          407088.000000
 Macro/Black Box area:                0.000000
 Net Interconnect area:      undefined  (No wire load specified)
 
-Total cell area:                738063.000000
+Total cell area:                814023.000000
 Total area:                 undefined
 
 Information: This design contains black box (unknown) components. (RPT-8)
@@ -104,7 +103,7 @@ Report : power
         -analysis_effort low
 Design : HM_SHA_256
 Version: K-2015.06-SP1
-Date   : Tue Nov 14 20:36:51 2017
+Date   : Wed Nov 15 16:08:43 2017
 ****************************************
 
 
@@ -130,18 +129,18 @@ Power-specific unit information :
                                        Switch   Int      Leak     Total
 Hierarchy                              Power    Power    Power    Power    %
 --------------------------------------------------------------------------------
-HM_SHA_256                              230.742  337.771  251.597  568.513 100.0
-  add_3_root_add_146_4 (HM_SHA_256_DW01_add_6)
-                                         12.134   10.535   11.591   22.669   4.0
-  add_2_root_add_146_4 (HM_SHA_256_DW01_add_5)
+HM_SHA_256                              257.179  357.210  275.530  614.390 100.0
+  add_3_root_add_147_4 (HM_SHA_256_DW01_add_6)
+                                         13.162   11.576   11.591   24.738   4.0
+  add_2_root_add_147_4 (HM_SHA_256_DW01_add_5)
                                           0.000    0.000    0.000    0.000   0.0
-  add_1_root_add_146_4 (HM_SHA_256_DW01_add_4)
-                                         34.331   32.173   11.591   66.504  11.7
-  add_0_root_add_146_4 (HM_SHA_256_DW01_add_3)
-                                         55.804   24.745   11.591   80.549  14.2
-  add_1_root_add_158 (HM_SHA_256_DW01_add_2)
-                                         49.067   53.741   11.591  102.808  18.1
-  add_154 (HM_SHA_256_DW01_add_1)         3.855   27.532   11.591   31.387   5.5
-  add_0_root_add_158 (HM_SHA_256_DW01_add_0)
-                                          7.979   32.809   11.591   40.788   7.2
+  add_1_root_add_147_4 (HM_SHA_256_DW01_add_4)
+                                         34.682   32.533   11.591   67.215  10.9
+  add_0_root_add_147_4 (HM_SHA_256_DW01_add_3)
+                                         55.002   23.972   11.591   78.974  12.9
+  add_1_root_add_159 (HM_SHA_256_DW01_add_2)
+                                         48.890   53.538   11.591  102.428  16.7
+  add_155 (HM_SHA_256_DW01_add_1)         5.014   28.097   11.591   33.111   5.4
+  add_0_root_add_159 (HM_SHA_256_DW01_add_0)
+                                          8.145   31.773   11.591   39.918   6.5
 1

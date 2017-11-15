@@ -1,5 +1,5 @@
 module HM_rightrotate
-#(BITS)
+#(BITS = 1)
 (
 	input wire [31:0]in,
 	output wire [31:0]out
