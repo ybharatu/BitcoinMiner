@@ -1,25 +1,23 @@
 // SHA 256 main module
 
-module SHA_256
+module HM_SHA_256
 (
 	input wire halt, clear,
-	input wire [7:0][31:0] prev_hash,
 	input wire [15:0][31:0] data,
-	output reg [7:0][31:0] out_hash
 	input wire clk,
-	input wire n_rst
+	input wire n_rst,
+	input wire count,
+	output reg [7:0][31:0] out_hash
 );
 
 reg [7:0][31:0]curr_hash;
 reg [63:0][31:0] w;
-
 reg [47:0][31:0]s0;
 reg [47:0][31:0]s1;
 logic [47:0][31:0] rr7;    // Right rotated W by 7
 logic [47:0][31:0] rr18;   // by 18
 logic [47:0][31:0] rr17;   // by 17
 logic [47:0][31:0] rr19;   // by 19
-logic [7:0][31:0] hash; // selected previous hash
 logic [31:0] a;
 logic [31:0] b;
 logic [31:0] c;
@@ -48,6 +46,9 @@ logic [31:0] enext;
 logic [31:0] fnext;
 logic [31:0] gnext;
 logic [31:0] hnext;
+logic [31:0] wsel;
+logic [31:0] ksel;
+logic [7:0][31:0] selected_hash;
 
 
 reg [64:0][31:0] k = { 32'h428a2f98, 32'h71374491, 32'hb5c0fbcf, 32'he9b5dba5, 32'h3956c25b, 32'h59f111f1, 32'h923f82a4, 32'hab1c5ed5,
@@ -57,21 +58,19 @@ reg [64:0][31:0] k = { 32'h428a2f98, 32'h71374491, 32'hb5c0fbcf, 32'he9b5dba5, 3
    32'h27b70a85, 32'h2e1b2138, 32'h4d2c6dfc, 32'h53380d13, 32'h650a7354, 32'h766a0abb, 32'h81c2c92e, 32'h92722c85,
    32'ha2bfe8a1, 32'ha81a664b, 32'hc24b8b70, 32'hc76c51a3, 32'hd192e819, 32'hd6990624, 32'hf40e3585, 32'h106aa070,
    32'h19a4c116, 32'h1e376c08, 32'h2748774c, 32'h34b0bcb5, 32'h391c0cb3, 32'h4ed8aa4a, 32'h5b9cca4f, 32'h682e6ff3,
-   32'h748f82ee, 32'h78a5636f, 32'h84c87814, 32'h8cc70208, 32'h90befffa, 32'ha4506ceb, 32'hbef9a3f7, 32'hc67178f2}
+   32'h748f82ee, 32'h78a5636f, 32'h84c87814, 32'h8cc70208, 32'h90befffa, 32'ha4506ceb, 32'hbef9a3f7, 32'hc67178f2};
 
 
 
 
-assign hash = clear ? 256'h6a09e667bb67ae853c6ef372a54ff53a510e527f9b05688c1f83d9ab5be0cd19 : prev_hash;
+assign selected_hash = (clear ? 256'h6a09e667bb67ae853c6ef372a54ff53a510e527f9b05688c1f83d9ab5be0cd19 : out_hash);
 // initialize to either previous hash or  fractional parts of the square roots of the first 8 primes 2..19):
 
-assign out_hash = (halt == 1)? prev_hash : curr_hash; // TODO (change with current hash value)
+assign out_reg = ((halt == 1)? out_hash : curr_hash); // TODO (change with current hash value)
 assign w[15:0] = data;
 
-genvar i;
 
-
-always_ff(posedge clk, negedge n_rst) begin
+always_ff @ ( posedge clk, negedge n_rst) begin //change back to always_ff and make a new alwasy comb
 	if(n_rst == 0) begin
 		a <= 0;
 		b <= 0;
@@ -81,7 +80,18 @@ always_ff(posedge clk, negedge n_rst) begin
 		f <= 0;
 		g <= 0;
 		h <= 0;
-	end	
+		out_hash <= 0;
+	end		
+//	else if(count == 1) begin //or maybe 0 im not sure	
+//		a <= selected_hash[0];
+//		b <= selected_hash[1];
+//		c <= selected_hash[2];
+//		d <= selected_hash[3];
+//		e <= selected_hash[4];
+//		f <= selected_hash[5];
+//		g <= selected_hash[6];
+//		h <= selected_hash[7];
+//	end
 	else begin
 		a <= anext;
 		b <= bnext;
@@ -91,28 +101,38 @@ always_ff(posedge clk, negedge n_rst) begin
 		f <= fnext;
 		g <= gnext;
 		h <= hnext;
+		out_hash <= out_reg;
 	end
 	
-	out_hash <= curr_hash;
+	//out_hash <= out_reg; // Double check naming convention here
 
 end
 
-flex_counter(.count_out(count))
+genvar i;
 
-generate 
+generate  // W calculations, OPTIMIZE THIS
 	for (i = 16; i < 64; i= i + 1) begin
-		HM_rightrotate #(7) RR7 (.in(w[i-15]), .out(rr7[i]));
-		HM_rightrotate #(18) RR18 (.in(w[i-15]), .out(rr18[i]));
-		HM_rightrotate #(17) RR17 (.in(w[i-2]), .out(rr17[i]));
-		HM_rightrotate #(19) RR19 (.in(w[i-2]), .out(rr19[i]));
-		assign s0[i] = rr7[i] ^ rr18[i] ^ (w[i-15] >> 3);
-		assign s1[i] = rr17[i] ^ rr19[i] ^ (w[i-15] >> 10);
+		HM_rightrotate #(7) RR7 (.in(w[i-15]), .out(rr7[i-16])); //double check all bounds on this
+		HM_rightrotate #(18) RR18 (.in(w[i-15]), .out(rr18[i-16]));
+		HM_rightrotate #(17) RR17 (.in(w[i-2]), .out(rr17[i-16]));
+		HM_rightrotate #(19) RR19 (.in(w[i-2]), .out(rr19[i-16]));
+		assign s0[i] = rr7[i-16] ^ rr18[i-16] ^ (w[i-15] >> 3);
+		assign s1[i] = rr17[i-16] ^ rr19[i-16] ^ (w[i-15] >> 10);
 		assign w[i] = w[i-16] + s0[i] + w[i-7] + s1[i];
 	end
 endgenerate
 
-	assign curr_k = k[	
+always_comb begin
+	integer j;
+	for( j = 0; j < 32; j = j + 1) begin
+		if(count == j)begin
+		wsel = w[j];
+		ksel = k[j];
+		end
+	end
+end
 
+	// Initial Right Rotate
 	HW_rightrotate #(6) RR6 (.in(e), .out(rr6));
 	HW_rightrotate #(25) RR25 (.in(e), .out(rr25));
 	HW_rightrotate #(11) RR11 (.in(e), .out(rr11));
@@ -120,24 +140,27 @@ endgenerate
 	HW_rightrotate #(22) RR22 (.in(a), .out(rr22));
 	HW_rightrotate #(2) RR2 (.in(a), .out(rr2));
 
-always_comb begin
-	assign S1 = rr6 ^ rr11 ^ rr25;
-	assign ch  = (e & f) xor ((~e) & g);
-	assign temp1 = h + S1 + ch + k[] + w[count];
-	assign S0 = rr2 ^ rr13 ^ rr22;
-	assign maj = (a & b) ^ (a & c) ^ (b & c)
-	assign temp2 = S0 + maj;
+always_comb begin // Compression Core
+	S1 = rr6 ^ rr11 ^ rr25;
+	ch  = (e & f) ^ ((~e) & g);
+	temp1 = h + S1 + ch + ksel + wsel; // Carry look ahead adders
+	S0 = rr2 ^ rr13 ^ rr22;
+	maj = (a & b) ^ (a & c) ^ (b & c);
+	temp2 = S0 + maj;
 
-	assign hnext = g;
-	assign gnext = f;
-	assign fnext = e;
-	assign enext = d + temp1;
-	assign dnext = c;
-	assign cnext = b;
-	assign bnext = a;
-	assign anext = temp1 + temp2;
-
+	hnext = g;
+	gnext = f;
+	fnext = e;
+	enext = d + temp1;
+	dnext = c;
+	cnext = b;
+	bnext = a;
+	anext = temp1 + temp2;
 end
+
+
+assign curr_hash = {h + selected_hash[7], g + selected_hash[6], f + selected_hash[5], e + selected_hash[4], d + selected_hash[3], c + selected_hash[2], b + selected_hash[1], a + selected_hash[0]};
+
 
 
 endmodule
