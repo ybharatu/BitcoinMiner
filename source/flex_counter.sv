@@ -7,7 +7,11 @@
 // Description: Flexible Rollover Counter
 module flex_counter
 #(
+<<<<<<< HEAD
 	parameter NUM_CNT_BITS = 5
+=======
+	parameter NUM_CNT_BITS = 7
+>>>>>>> 6093f0605aab32b86289ac7df46d4cfa2550437a
 )
 (
 	input wire n_rst,

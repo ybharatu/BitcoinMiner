@@ -1,7 +1,12 @@
 #@ # 
 #@ # Running dc_shell Version K-2015.06-SP1 for linux64 -- Jul 21, 2015
+<<<<<<< HEAD
 #@ # Date:   Thu Nov 16 14:42:15 2017
 #@ # Run by: mg138@ee215lnx01.ecn.purdue.edu
+=======
+#@ # Date:   Tue Nov  7 19:42:57 2017
+#@ # Run by: mg137@ee215lnx17.ecn.purdue.edu
+>>>>>>> 6093f0605aab32b86289ac7df46d4cfa2550437a
 #@ 
 
 source /package/eda/synopsys/syn-K-2015.06-SP1/admin/setup/.synopsys_dc.setup
@@ -3788,8 +3793,13 @@ source /package/eda/synopsys/syn-K-2015.06-SP1/admin/setup/.synopsys_dc.setup
 #@ }
 #@ # -- End source /package/eda/synopsys/syn-K-2015.06-SP1/admin/setup/.synopsys_dc.setup
 
+<<<<<<< HEAD
 source /home/ecegrid/a/mg138/.synopsys_dc.setup
 #@ # -- Starting source /home/ecegrid/a/mg138/.synopsys_dc.setup
+=======
+source /home/ecegrid/a/mg137/.synopsys_dc.setup
+#@ # -- Starting source /home/ecegrid/a/mg137/.synopsys_dc.setup
+>>>>>>> 6093f0605aab32b86289ac7df46d4cfa2550437a
 
 #@ #
 #@ #
@@ -3833,6 +3843,7 @@ source /home/ecegrid/a/mg138/.synopsys_dc.setup
 #@ #set symbol_library  your_library.sdb 
 #@ set symbol_library {  /package/eda/cells/OSU/v2.7/synopsys/lib/ami05/osu05_stdcells.db }
 #@ 
+<<<<<<< HEAD
 #@ # -- End source /home/ecegrid/a/mg138/.synopsys_dc.setup
 
 gui_start
@@ -4040,3 +4051,35 @@ change_selection [get_s HM_SHA_256]
 gui_scroll -habs 14873746 -vabs -8579376 -window [gui_get_current_window -view]
 gui_scroll -habs 33614313 -vabs -397518 -window [gui_get_current_window -view]
 exit
+=======
+#@ # -- End source /home/ecegrid/a/mg137/.synopsys_dc.setup
+
+source -echo do_mapping.tcl
+#@ # -- Starting source do_mapping.tcl
+
+#@ # Step 1:  Read in the source file
+#@ analyze -format sverilog -lib WORK { flex_counter.sv}
+#@ elaborate flex_counter -lib WORK
+#@ uniquify
+#@ # Step 2: Set design constraints
+#@ # Uncomment below to set timing, area, power, etc. constraints
+#@ # set_max_delay <delay> -from "<input>" -to "<output>"
+#@ # set_max_area <area>
+#@ # set_max_total_power <power> mW
+#@ 
+#@ 
+#@ # Step 3: Compile the design
+#@ compile -map_effort medium
+#@ 
+#@ # Step 4: Output reports
+#@ report_timing -path full -delay max -max_paths 1 -nworst 1 > reports/flex_counter.rep
+#@ report_area >> reports/flex_counter.rep
+#@ report_power -hier >> reports/flex_counter.rep
+#@ 
+#@ # Step 5: Output final VHDL and Verilog files
+#@ write_file -format verilog -hierarchy -output "mapped/flex_counter.v"
+#@ echo "\nScript Done\n"
+#@ echo "\nChecking Design\n"
+#@ check_design
+#@ quit
+>>>>>>> 6093f0605aab32b86289ac7df46d4cfa2550437a

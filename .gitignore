@@ -3,6 +3,16 @@
 *.svf
 *.tcl
 transcript
+<<<<<<< HEAD
 *.bak
 /source/work/*
 *~
+=======
+*.qtl
+*.qdb
+*.qpg
+_info
+_vmake
+_opt__lock
+*.bak
+>>>>>>> 6093f0605aab32b86289ac7df46d4cfa2550437a
