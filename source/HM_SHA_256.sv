@@ -6,7 +6,7 @@ module HM_SHA_256
 	input wire [15:0][31:0] data,
 	input wire clk,
 	input wire n_rst,
-	input wire count,
+	input wire [7:0] count,
 	output reg [7:0][31:0] out_hash
 );
 
