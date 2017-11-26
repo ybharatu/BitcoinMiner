@@ -8,29 +8,52 @@ z2
 !i10f 100
 cModel Technology
 Z0 d/home/ecegrid/a/mg138/ece337/BitcoinMiner
-vHM_SHA_256
+vdecoder
 Z1 DXx6 sv_std 3 std 0 22 <EOTafDcUY:cQeO^ICn]m3
+!s110 1511722861
+!i10b 1
+!s100 B2E_A>D^?L]CI?HJ[Kn_K3
+IL^@HHFBVCIn7c7g@Em_kf2
+Z2 V`JN@9S9cnhjKRR_L]QIcM3
+!s105 decoder_sv_unit
+S1
+d/home/ecegrid/a/mg137/ece337/project/BitcoinMiner
+w1511722860
+8source/decoder.sv
+Fsource/decoder.sv
+L0 9
+Z3 OL;L;10.3b;59
+r1
+!s85 0
+31
+!s108 1511722861.737508
+!s107 source/decoder.sv|
+!s90 -reportprogress|300|source/decoder.sv|
+!i113 0
+Z4 o-L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+vHM_SHA_256
+R1
 !s110 1510779564
 !i10b 1
 !s100 78NO0THji_KM8EIOBLGbK0
 IQDG;ag>_kldMYJo9@lG1T3
-Z2 V`JN@9S9cnhjKRR_L]QIcM3
-Z3 !s105 HM_SHA_256_sv_unit
+R2
+Z5 !s105 HM_SHA_256_sv_unit
 S1
 R0
 w1510779473
-Z4 8source/HM_SHA_256.sv
-Z5 Fsource/HM_SHA_256.sv
+Z6 8source/HM_SHA_256.sv
+Z7 Fsource/HM_SHA_256.sv
 L0 3
-Z6 OL;L;10.3b;59
+R3
 r1
 !s85 0
 31
 !s108 1510779564.814483
-!s107 source/HM_SHA_256.sv|
-Z7 !s90 -reportprogress|300|source/HM_SHA_256.sv|
+Z8 !s107 source/HM_SHA_256.sv|
+Z9 !s90 -reportprogress|300|source/HM_SHA_256.sv|
 !i113 0
-Z8 o-L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+R4
 n@h@m_@s@h@a_256
 vSHA_256
 R1
@@ -39,20 +62,20 @@ R1
 !s100 80efWDkWNfeYj2HI7jd:>1
 IKl5f4`OM8B;?OQ007OU><2
 R2
-R3
+R5
 S1
 R0
 w1510708462
-R4
-R5
-L0 3
 R6
+R7
+L0 3
+R3
 r1
 !s85 0
 31
 !s108 1510708463.366884
-!s107 source/HM_SHA_256.sv|
-R7
-!i113 0
 R8
+R9
+!i113 0
+R4
 n@s@h@a_256

@@ -14,16 +14,7 @@ module eop_detect
 	input wire d_minus_sync,
 	output wire eop
 );
-	reg _EOP;
 
-	always_ff @ (posedge clk, negedge n_rst)
-	begin
-		if(n_rst == 1'b0)
-			_EOP <= 0;
-		else
-			_EOP <= ~(d_plus_sync | d_minus_sync); 
-	end
-
-	assign eop = _EOP;
+	assign eop = ~(d_plus_sync | d_minus_sync);
 
 endmodule
