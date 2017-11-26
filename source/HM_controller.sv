@@ -8,7 +8,7 @@
 module HM_controller
 (
 	input begin_hash, quit_hash,
-	input [6:0] hash_count,
+	input hash_rollover,
 	input clk, n_rst,	
 	output logic cnt_up, hash_done, clear, halt,
 	output logic [1:0] hash_select
@@ -48,7 +48,7 @@ begin
 			cnt_up = 1;
 			clear = 1;
 			hash_select = 0;
-			if(hash_count == 64)
+			if(hash_rollover == 1)
 				nextState = CALC_HASH2;
 		end
 		CALC_HASH2: begin
