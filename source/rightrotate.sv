@@ -1,4 +1,4 @@
-module HM_rightrotate
+module rightrotate
 #(BITS = 1)
 (
 	input wire [31:0]in,

@@ -9,10 +9,10 @@ module HM_timer
 (
 	input cnt_up, clk, n_rst,
 	output logic hash_rollover,
-	output logic [7:0] count	
+	output logic [6:0] count	
 );
 
 
-	flex_counter #(7) HASH_CNT (.clear(), .count_enable(cnt_up), .clk(clk), .n_rst(n_rst), .rollover_val(64), .rollover_flag(hash_rollover), .count_out(count));
+	flex_counter #(7) HASH_CNT (.clear(), .count_enable(cnt_up), .clk(clk), .n_rst(n_rst), .rollover_val(7'd64), .rollover_flag(hash_rollover), .count_out(count));
 
 endmodule

@@ -6,19 +6,23 @@
 // Version:     1.0  Initial Design Entry
 // Description: hash selector thing file
 module HM_hash_selection
+#(
+	parameter MODULE_NUM = 0
+)
+
 (
 	input [511:0] data_to_hash,
 	input [1:0] hash_select,
 	input [255:0] prev_hash,
-	output logic [511:0] input_data
+	output logic [511:0] data
 );
 
 always_comb
 begin
 	if(hash_select == 'd2)
-		input_data = {prev_hash, 1'b1, 191'b0, 64'd256};
-	else
-		input_data = data_to_hash;
+		data = {prev_hash, 1'b1, 191'b0, 64'd256};
+	else if(hash_select == 'd1)
+		data = data_to_hash + MODULE_NUM;
 end
 
 endmodule

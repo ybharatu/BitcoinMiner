@@ -55,14 +55,14 @@ begin
 			cnt_up = 1;
 			clear = 0;
 			hash_select = 1;
-			if(hash_count == 64)
+			if(hash_rollover == 1)
 				nextState = CALC_HASH3;
 		end
 		CALC_HASH3: begin
 			cnt_up = 1;
 			clear = 1;
 			hash_select = 2;
-			if(hash_count == 'd64)
+			if(hash_rollover == 1)
 				nextState = HASH_CHECK;
 		end
 		HASH_CHECK: begin

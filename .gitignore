@@ -5,6 +5,8 @@
 transcript
 work/*
 source/work/*
+source_work/*
+mapped_work/*
 *~
 *.qtl
 *.qdb

@@ -6,7 +6,7 @@ module HM_SHA_256
 	input wire [15:0][31:0] data, //watch out here before we were using [31:0][7:0] to adress data
 	input wire clk,
 	input wire n_rst,
-	input wire [7:0] count,
+	input wire [6:0] count,
 	output reg [7:0][31:0] out_hash 
 );
 
@@ -112,10 +112,10 @@ genvar i;
 
 generate  // W calculations, OPTIMIZE THIS
 	for (i = 16; i < 64; i= i + 1) begin
-		HM_rightrotate #(7) RR7 (.in(w[i-15]), .out(rr7[i-16])); //double check all bounds on this
-		HM_rightrotate #(18) RR18 (.in(w[i-15]), .out(rr18[i-16]));
-		HM_rightrotate #(17) RR17 (.in(w[i-2]), .out(rr17[i-16]));
-		HM_rightrotate #(19) RR19 (.in(w[i-2]), .out(rr19[i-16]));
+		rightrotate #(7) RR7 (.in(w[i-15]), .out(rr7[i-16])); //double check all bounds on this
+		rightrotate #(18) RR18 (.in(w[i-15]), .out(rr18[i-16]));
+		rightrotate #(17) RR17 (.in(w[i-2]), .out(rr17[i-16]));
+		rightrotate #(19) RR19 (.in(w[i-2]), .out(rr19[i-16]));
 		assign s0[i] = rr7[i-16] ^ rr18[i-16] ^ (w[i-15] >> 3);
 		assign s1[i] = rr17[i-16] ^ rr19[i-16] ^ (w[i-15] >> 10);
 		assign w[i] = w[i-16] + s0[i] + w[i-7] + s1[i];
@@ -134,12 +134,12 @@ end
 
 // Initial Right Rotate
 
-HM_rightrotate #(6) RR6 (.in(e), .out(rr6));
-HM_rightrotate #(25) RR25 (.in(e), .out(rr25));
-HM_rightrotate #(11) RR11 (.in(e), .out(rr11));
-HM_rightrotate #(13) RR13 (.in(a), .out(rr13));
-HM_rightrotate #(22) RR22 (.in(a), .out(rr22));
-HM_rightrotate #(2) RR2 (.in(a), .out(rr2));
+rightrotate #(6) RR6 (.in(e), .out(rr6));
+rightrotate #(25) RR25 (.in(e), .out(rr25));
+rightrotate #(11) RR11 (.in(e), .out(rr11));
+rightrotate #(13) RR13 (.in(a), .out(rr13));
+rightrotate #(22) RR22 (.in(a), .out(rr22));
+rightrotate #(2) RR2 (.in(a), .out(rr2));
 
 always_comb begin // Compression Core
 	S1 = rr6 ^ rr11 ^ rr25;
