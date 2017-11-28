@@ -16,3 +16,4 @@ _opt__lock
 *.mtran
 *.stran
 *.nfs*
+vsim.wlf
