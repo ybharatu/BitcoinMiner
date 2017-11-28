@@ -22,7 +22,7 @@ module USB_controller
 	input wire transmit_start,
 	input wire crc_chk,
 	input wire d_edge,
-	output reg receiving;
+	output reg receiving,
 	output reg write_enable,
 	output reg error,
 	output reg read_enable,
@@ -32,9 +32,8 @@ module USB_controller
 	output reg transmitting,
 	output reg in_out
 );
-	//ISSUES: two CRC_CHK states, there is no pError and sync inputs/outputs (pError = error?)
 
-	typedef enum bit [3:0] {IDLE, START_RCV, RCV_BYTE, RCVING, RCV_DONE, CRC_CHK, ERROR
+	typedef enum bit [3:0] {IDLE, START_RCV, RCV_BYTE, RCVING, RCV_DONE, CRC_CHK, ERROR,
 							LOAD, START_TX, HOLD_TX, READ, CHK_CRC, HOLD_CRC}
 	stateType;
 	stateType current_state, next_state;
@@ -93,14 +92,14 @@ module USB_controller
 			RCV_BYTE: begin
 				next_state = RCV_BYTE;
 				receiving = 1;
-				if(rx_data == sync)
+				if(rx_data == 8'b01010100) //sync pattern
 					next_state = RCVING;
 				else
 					next_state = ERROR;
 			end
 			ERROR: begin
 				next_state = ERROR;
-				pError = 1;
+				error = 1;
 				if(eop)
 					next_state = IDLE;
 			end
