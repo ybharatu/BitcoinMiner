@@ -13,4 +13,6 @@ _info
 _vmake
 _opt__lock
 *.bak
+*.mtran
+*.stran
 
