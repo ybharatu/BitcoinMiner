@@ -8,7 +8,7 @@
 
 `timescale 1ns / 10ps
 
-module tb_block_storage ();
+module tb_PD_block_storage ();
 
 
 	// Define parameters
@@ -54,7 +54,7 @@ module tb_block_storage ();
 			difficulty = tb_difficulty;
 	endclocking
 
-	block_storage DUT (.i_data_en(tb_i_data_en), .i_data(tb_i_data), .i_data_sel(tb_i_data_sel),
+	PD_block_storage DUT (.i_data_en(tb_i_data_en), .i_data(tb_i_data), .i_data_sel(tb_i_data_sel),
 			   .chunk_1(tb_chunk_1), .chunk_2(tb_chunk_2), .difficulty(tb_difficulty), .clk(tb_clk));
 
 	initial

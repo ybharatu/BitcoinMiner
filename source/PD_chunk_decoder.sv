@@ -5,7 +5,7 @@
 // Lab Section: 337-05
 // Version:     1.0  Initial Design Entry
 // Description: Check decoder in Packet Decoder
-module chunk_decoder
+module PD_chunk_decoder
 (
 	input [1:0] hash_select,
 	input [511:0] chunk1,
