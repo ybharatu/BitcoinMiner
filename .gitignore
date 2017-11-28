@@ -4,6 +4,7 @@
 *.tcl
 transcript
 work/*
+source/work/*
 *~
 *.qtl
 *.qdb

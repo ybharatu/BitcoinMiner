@@ -46,6 +46,9 @@ module tb_HM_SHA_256
 			
 	endclocking
 
+	HM_SHA_256 DUT (.n_rst(tb_n_rst), .clk(tb_clk), .halt(tb_halt),
+			.clear(tb_clear), .data(tb_data), .count(tb_count), .out_hash(tb_out_hash)); 
+
 	initial
 	begin
 
@@ -53,11 +56,12 @@ module tb_HM_SHA_256
 
 	end
 	
-	tb_n_rst 	= 1'b0;
+	tb_n_rst 	= 1'b1;
 	tb_clear	= 1'b1;
 	tb_data 	= 512'b0;
 	tb_count	= 'b0;
 	tb_halt		= 1'b0;
+
 
 
 	

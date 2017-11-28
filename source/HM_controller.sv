@@ -71,6 +71,10 @@ begin
 			nextState = IDLE;
 		end
 	endcase
+
+	if(quit_hash == 1) begin
+		nextState = IDLE;
+	end
 end
 
 
