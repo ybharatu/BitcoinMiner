@@ -6,7 +6,7 @@
 // Version:     1.0  Initial Design Entry
 // Description: EOP Detect
 
-module eop_detect
+module USB_eop_detect
 (
 	input wire clk,
 	input wire n_rst,

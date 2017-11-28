@@ -6,7 +6,7 @@
 // Version:     1.0  Initial Design Entry
 // Description: Receiver Timer
 
-module timer_rx
+module USB_timer_rx
 (
 	input wire d_edge,
 	input wire receiving,

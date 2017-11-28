@@ -6,7 +6,7 @@
 // Version:     1.0  Initial Design Entry
 // Description: Transmitter Timer
 
-module timer_tx
+module USB_timer_tx
 (
 	input wire clk,
 	input wire n_rst,

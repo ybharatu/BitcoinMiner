@@ -6,7 +6,7 @@
 // Version:     1.0  Initial Design Entry
 // Description: USB Decoder
 
-module decoder
+module USB_decoder
 (
 	input wire d_plus_sync,
 	input wire shift_enable,

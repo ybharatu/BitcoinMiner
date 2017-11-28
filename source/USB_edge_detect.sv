@@ -6,7 +6,7 @@
 // Version:     1.0  Initial Design Entry
 // Description: Edge Detect for Transitions
 
-module edge_detect
+module USB_edge_detect
 (
 	input wire clk,
 	input wire n_rst,
@@ -24,6 +24,6 @@ module edge_detect
 			d <= d_plus_sync; 
 	end
 
-	assign eop = (d_sync_plus ^ d);
+	assign d_edge = (d_plus_sync ^ d);
 
 endmodule
