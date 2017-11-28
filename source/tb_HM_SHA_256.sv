@@ -5,13 +5,16 @@
 // Lab Section: 337-05
 // Version:     1.0  Initial Design Entry
 // Description: SHA test bench
-module tb_HM_SHA_256
+
+`timescale 1ns / 10ps
+
+module tb_HM_SHA_256 ();
 
 
 	// Define parameters
 	// basic test bench parameters
-	localparam	CLK_PERIOD	= 10; //??
-	localparam	CHECK_DELAY = 1; // Check 1ns after the rising edge to allow for propagation delay
+	localparam	CLK_PERIOD	= 20; //Not Target Clock
+	localparam	CHECK_DELAY 	= 1; // Check 1ns after the rising edge to allow for propagation delay
 	
 	// Shared Test Variables
 	reg tb_clk;
@@ -32,7 +35,7 @@ module tb_HM_SHA_256
 	reg tb_halt;
 	reg [15:0][31:0] tb_data;
 	reg [7:0] tb_count;
-	reg [7:0][31:0] tb_out_hash;
+	reg [31:0][7:0] tb_out_hash;
 
 	clocking cb @(posedge tb_clk);
 		 		// 1step means 1 time precision unit, 10ps for this module. We assume the hold time is less than 200ps.
@@ -41,8 +44,8 @@ module tb_HM_SHA_256
 		output halt = tb_halt,
 			clear = tb_clear,
 			count = tb_count,
-			data = tb_data,
-		input out_hash = tb_out_hash,
+			data = tb_data;
+		input out_hash = tb_out_hash;
 			
 	endclocking
 
@@ -51,18 +54,24 @@ module tb_HM_SHA_256
 
 	initial
 	begin
-
-
-
-	end
 	
-	tb_n_rst 	= 1'b1;
+	//Test 0: n_rst test
+ 	tb_n_rst 	= 1'b0;
 	tb_clear	= 1'b1;
 	tb_data 	= 512'b0;
-	tb_count	= 'b0;
-	tb_halt		= 1'b0;
+	tb_count	= 7'b0;
+	tb_halt		= 1'b1;
 
+	@cb;
 
+	if (tb_data == 512'b0)
+		$info("Case %0d:: PASSED", tb_test_num);
+	else // Test case failed
+		$error("Case %0d:: FAILED", tb_test_num);
+
+	end
+
+	//Test 1: reset off
 
 	
 

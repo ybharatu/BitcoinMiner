@@ -8,11 +8,334 @@
 # //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
 # //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
 # //
-# vsim -Lf /home/ecegrid/a/ece337/Course_Prod/IP_Libs/Lab_IP_Lib/Vsim -L /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work -L /home/ecegrid/a/ece337/Class0.5u/GOLD_LIB "+no_glitch_msg" -coverage -voptargs="+acc" -i -t ps source_work/.block_storage 
-# Start time: 13:02:56 on Nov 28,2017
-# ** Note: (vsim-3812) Design is being optimized...
+# vsim -Lf /home/ecegrid/a/ece337/Course_Prod/IP_Libs/Lab_IP_Lib/Vsim -L /home/ecegrid/a/ece337/Course_Prod/Cell_Libs/AMI_05/vhdl_work -L /home/ecegrid/a/ece337/Class0.5u/GOLD_LIB "+no_glitch_msg" -coverage -voptargs="+acc" -i -t ps source_work/.tb_block_storage 
+# Start time: 14:39:00 on Nov 28,2017
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
 # Loading sv_std.std
+# Loading work.tb_block_storage(fast)
 # Loading work.block_storage(fast)
 # ** Warning: (vsim-8634) Code was not compiled with coverage options.
-# End time: 13:03:00 on Nov 28,2017, Elapsed time: 0:00:04
+add wave -position insertpoint sim:/tb_block_storage/DUT/*
+run 1000 ns
+# ** Info: Block storage Decoder detects row           0
+#    Time: 15 ns  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case           1 Passed
+#    Time: 25 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row           1
+#    Time: 25100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case           2 Passed
+#    Time: 35 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row           2
+#    Time: 35100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case           3 Passed
+#    Time: 45 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row           3
+#    Time: 45100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case           4 Passed
+#    Time: 55 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row           4
+#    Time: 55100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case           5 Passed
+#    Time: 65 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row           5
+#    Time: 65100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case           6 Passed
+#    Time: 75 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row           6
+#    Time: 75100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case           7 Passed
+#    Time: 85 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row           7
+#    Time: 85100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case           8 Passed
+#    Time: 95 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row           8
+#    Time: 95100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case           9 Passed
+#    Time: 105 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row           9
+#    Time: 105100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          10 Passed
+#    Time: 115 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          10
+#    Time: 115100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          11 Passed
+#    Time: 125 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          11
+#    Time: 125100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          12 Passed
+#    Time: 135 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          12
+#    Time: 135100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          13 Passed
+#    Time: 145 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          13
+#    Time: 145100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          14 Passed
+#    Time: 155 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          14
+#    Time: 155100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          15 Passed
+#    Time: 165 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          15
+#    Time: 165100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          16 Passed
+#    Time: 175 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          16
+#    Time: 175100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          17 Passed
+#    Time: 185 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          17
+#    Time: 185100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          18 Passed
+#    Time: 195 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          18
+#    Time: 195100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          19 Passed
+#    Time: 205 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          19
+#    Time: 205100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          20 Passed
+#    Time: 215 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          20
+#    Time: 215100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          21 Passed
+#    Time: 225 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          21
+#    Time: 225100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          22 Passed
+#    Time: 235 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          22
+#    Time: 235100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          23 Passed
+#    Time: 245 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          23
+#    Time: 245100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          24 Passed
+#    Time: 255 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          24
+#    Time: 255100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          25 Passed
+#    Time: 265 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          25
+#    Time: 265100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          26 Passed
+#    Time: 275 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          26
+#    Time: 275100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          27 Passed
+#    Time: 285 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          27
+#    Time: 285100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          28 Passed
+#    Time: 295 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          28
+#    Time: 295100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          29 Passed
+#    Time: 305 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          29
+#    Time: 305100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          30 Passed
+#    Time: 315 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          30
+#    Time: 315100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          31 Passed
+#    Time: 325 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          31
+#    Time: 325100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          32 Passed
+#    Time: 335 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          32
+#    Time: 335100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          33 Passed
+#    Time: 345 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          33
+#    Time: 345100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          34 Passed
+#    Time: 355 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          34
+#    Time: 355100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          35 Passed
+#    Time: 365 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          35
+#    Time: 365100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          36 Passed
+#    Time: 375 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          36
+#    Time: 375100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          37 Passed
+#    Time: 385 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          37
+#    Time: 385100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          38 Passed
+#    Time: 395 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          38
+#    Time: 395100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          39 Passed
+#    Time: 405 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          39
+#    Time: 405100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          40 Passed
+#    Time: 415 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          40
+#    Time: 415100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          41 Passed
+#    Time: 425 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          41
+#    Time: 425100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          42 Passed
+#    Time: 435 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          42
+#    Time: 435100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          43 Passed
+#    Time: 445 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          43
+#    Time: 445100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          44 Passed
+#    Time: 455 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          44
+#    Time: 455100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          45 Passed
+#    Time: 465 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          45
+#    Time: 465100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          46 Passed
+#    Time: 475 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          46
+#    Time: 475100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          47 Passed
+#    Time: 485 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          47
+#    Time: 485100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          48 Passed
+#    Time: 495 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          48
+#    Time: 495100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          49 Passed
+#    Time: 505 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          49
+#    Time: 505100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          50 Passed
+#    Time: 515 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          50
+#    Time: 515100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          51 Passed
+#    Time: 525 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          51
+#    Time: 525100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          52 Passed
+#    Time: 535 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          52
+#    Time: 535100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          53 Passed
+#    Time: 545 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          53
+#    Time: 545100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          54 Passed
+#    Time: 555 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          54
+#    Time: 555100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          55 Passed
+#    Time: 565 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          55
+#    Time: 565100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          56 Passed
+#    Time: 575 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          56
+#    Time: 575100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          57 Passed
+#    Time: 585 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          57
+#    Time: 585100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          58 Passed
+#    Time: 595 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          58
+#    Time: 595100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          59 Passed
+#    Time: 605 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          59
+#    Time: 605100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          60 Passed
+#    Time: 615 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          60
+#    Time: 615100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          61 Passed
+#    Time: 625 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          61
+#    Time: 625100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          62 Passed
+#    Time: 635 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          62
+#    Time: 635100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          63 Passed
+#    Time: 645 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          63
+#    Time: 645100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          64 Passed
+#    Time: 655 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          64
+#    Time: 655100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          65 Passed
+#    Time: 665 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          65
+#    Time: 665100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          66 Passed
+#    Time: 675 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          66
+#    Time: 675100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          67 Passed
+#    Time: 685 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          67
+#    Time: 685100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          68 Passed
+#    Time: 695 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          68
+#    Time: 695100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          69 Passed
+#    Time: 705 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          69
+#    Time: 705100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          70 Passed
+#    Time: 715 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          70
+#    Time: 715100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          71 Passed
+#    Time: 725 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          71
+#    Time: 725100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          72 Passed
+#    Time: 735 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          72
+#    Time: 735100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          73 Passed
+#    Time: 745 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          73
+#    Time: 745100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          74 Passed
+#    Time: 755 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          74
+#    Time: 755100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          75 Passed
+#    Time: 765 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          75
+#    Time: 765100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          76 Passed
+#    Time: 775 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          76
+#    Time: 775100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          77 Passed
+#    Time: 785 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          77
+#    Time: 785100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          78 Passed
+#    Time: 795 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          78
+#    Time: 795100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          79 Passed
+#    Time: 805 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# ** Info: Block storage Decoder detects row          79
+#    Time: 805100 ps  Scope: tb_block_storage.DUT File: source/block_storage.sv Line: 40
+# ** Info: Test Case          80 Passed
+#    Time: 815 ns  Scope: tb_block_storage File: source/tb_block_storage.sv Line: 77
+# End time: 14:45:39 on Nov 28,2017, Elapsed time: 0:06:39
 # Errors: 0, Warnings: 1

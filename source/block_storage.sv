@@ -13,7 +13,7 @@ module block_storage
 	input clk,
 	output wire [63:0][7:0] chunk_1,
 	output wire [15:0][7:0] chunk_2,
-	output wire [31:0] target_difficulty
+	output wire [3:0][7:0] difficulty
 	
 );
 
@@ -48,9 +48,9 @@ always_comb begin
 end
 
 //Be aware of byte order and double check this with how the data is sent via USB
-assign chunk_1 = storage[63:0][7:0];
-assign chunk_2 = storage[79:64][7:0];
-assign target_difficulty = storage[75:71][7:0];
+assign chunk_1[63:0] = storage [63:0];
+assign chunk_2[15:0] = storage [79:64];
+assign difficulty[3:0] = storage [75:71];
 
 
 endmodule

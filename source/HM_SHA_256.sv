@@ -3,11 +3,11 @@
 module HM_SHA_256
 (
 	input wire halt, clear,
-	input wire [15:0][31:0] data,
+	input wire [15:0][31:0] data, //watch out here before we were using [31:0][7:0] to adress data
 	input wire clk,
 	input wire n_rst,
 	input wire [7:0] count,
-	output reg [7:0][31:0] out_hash
+	output reg [7:0][31:0] out_hash 
 );
 
 reg [7:0][31:0]curr_hash;
