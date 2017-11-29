@@ -43,11 +43,11 @@ begin
 	
 	if(shift_enable && eop)
 	begin
-		temp_d_orig = (d_plus_sync ~^ d_plus_sync_prev);
+		temp_d_orig = 1;
 	end
 	else
 	begin
-		temp_d_orig = 1;
+		temp_d_orig = (d_plus_sync ~^ d_plus_sync_prev);
 	end
 
 end
