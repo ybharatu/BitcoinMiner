@@ -30,12 +30,18 @@ module tb_HM_SHA_256 ();
 
 
 	integer tb_test_num = 0;
+	integer count = 0;
 	reg tb_n_rst;
 	reg tb_clear;
 	reg tb_halt;
 	reg [15:0][31:0] tb_data;
 	reg [7:0] tb_count;
 	reg [31:0][7:0] tb_out_hash;
+	integer i;
+
+	reg [31:0][7:0] expected_1 = 256'hca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb;
+	reg  [63:0][7:0] data_1 = 512'b0;
+
 
 	clocking cb @(posedge tb_clk);
 		 		// 1step means 1 time precision unit, 10ps for this module. We assume the hold time is less than 200ps.
@@ -52,6 +58,19 @@ module tb_HM_SHA_256 ();
 	HM_SHA_256 DUT (.n_rst(tb_n_rst), .clk(tb_clk), .halt(tb_halt),
 			.clear(tb_clear), .data(tb_data), .count(tb_count), .out_hash(tb_out_hash)); 
 
+	
+	task wait_hash;
+	begin
+		integer w;
+
+		for(w = 0; w < 64; w = w + 1) begin
+			cb.count <= count;
+			@cb;
+			count = count + 1;
+		end
+	end
+	endtask
+
 	initial
 	begin
 	
@@ -61,6 +80,10 @@ module tb_HM_SHA_256 ();
 	tb_data 	= 512'b0;
 	tb_count	= 7'b0;
 	tb_halt		= 1'b1;
+	data_1 = 512'b0;
+	data_1[0] = 8'h61;
+	data_1[1] = 8'h80;
+	data_1[63] = 8'h08;
 
 	@cb;
 
@@ -69,10 +92,31 @@ module tb_HM_SHA_256 ();
 	else // Test case failed
 		$error("Case %0d:: FAILED", tb_test_num);
 
-	end
+	//Test 1: reset off calculate a hash
+	
+	cb.n_rst <= 1'b1;
+	@cb;
+	@cb;
+	
+	cb.halt <= 0;
+	cb.clear <= 1;
+	
+	cb.data <= data_1;
 
-	//Test 1: reset off
+	wait_hash();
+
+	if( cb.out_hash == expected_1)
+		$info("HOLY SHIT IT WORKS");
+	else
+		$error("To be expected");
 
 	
+
+	
+
+
+
+
+	end
 
 endmodule

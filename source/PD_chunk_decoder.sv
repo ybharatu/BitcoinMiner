@@ -20,7 +20,7 @@ begin
 		data_to_hash = chunk1;
 	end
 	else begin
-		data_to_hash = {chunk2, 1'b1, 319'b0, 64'd128};
+		data_to_hash = {chunk2, 1'b1, 319'b0, 64'd640}; // Message W + 1 + 319 0's + 640
 	end
 
 end

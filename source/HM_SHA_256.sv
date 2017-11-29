@@ -12,8 +12,8 @@ module HM_SHA_256
 
 reg [7:0][31:0]curr_hash;
 reg [63:0][31:0] w;
-reg [47:0][31:0]s0;
-reg [47:0][31:0]s1;
+reg [63:16][31:0]s0;
+reg [63:16][31:0]s1;
 logic [47:0][31:0] rr7;    // Right rotated W by 7
 logic [47:0][31:0] rr18;   // by 18
 logic [47:0][31:0] rr17;   // by 17
@@ -111,7 +111,7 @@ end
 genvar i;
 
 generate  // W calculations, OPTIMIZE THIS
-	for (i = 16; i < 64; i= i + 1) begin
+	for (i = 16; i < 64; i = i + 1) begin
 		rightrotate #(7) RR7 (.in(w[i-15]), .out(rr7[i-16])); //double check all bounds on this
 		rightrotate #(18) RR18 (.in(w[i-15]), .out(rr18[i-16]));
 		rightrotate #(17) RR17 (.in(w[i-2]), .out(rr17[i-16]));
