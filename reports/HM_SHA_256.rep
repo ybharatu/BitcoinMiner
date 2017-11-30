@@ -1,0 +1,227 @@
+Information: Updating design information... (UID-85)
+Warning: Design 'HM_SHA_256' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : HM_SHA_256
+Version: K-2015.06-SP1
+Date   : Wed Nov 29 18:16:03 2017
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: typical   Library: osu05_stdcells
+Wire Load Model Mode: top
+
+  Startpoint: out_hash_reg[7][30]
+              (rising edge-triggered flip-flop)
+  Endpoint: out_hash[7][30]
+            (output port)
+  Path Group: (none)
+  Path Type: max
+
+  Point                                    Incr       Path
+  -----------------------------------------------------------
+  out_hash_reg[7][30]/CLK (DFFPOSX1)       0.00 #     0.00 r
+  out_hash_reg[7][30]/Q (DFFPOSX1)         0.32       0.32 f
+  out_hash[7][30] (out)                    0.00       0.32 f
+  data arrival time                                   0.32
+  -----------------------------------------------------------
+  (Path is unconstrained)
+
+
+1
+ 
+****************************************
+Report : area
+Design : HM_SHA_256
+Version: K-2015.06-SP1
+Date   : Wed Nov 29 18:16:03 2017
+****************************************
+
+Library(s) Used:
+
+    osu05_stdcells (File: /package/eda/cells/OSU/v2.7/synopsys/lib/ami05/osu05_stdcells.db)
+
+Number of ports:                         7239
+Number of nets:                         18805
+Number of cells:                        10154
+Number of combinational cells:           8200
+Number of sequential cells:              1886
+Number of macros/black boxes:               0
+Number of buf/inv:                       1571
+Number of references:                      90
+
+Combinational area:            4168791.000000
+Buf/Inv area:                   234648.000000
+Noncombinational area:         1437696.000000
+Macro/Black Box area:                0.000000
+Net Interconnect area:      undefined  (No wire load specified)
+
+Total cell area:               5606487.000000
+Total area:                 undefined
+1
+Loading db file '/package/eda/cells/OSU/v2.7/synopsys/lib/ami05/osu05_stdcells.db'
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
+Warning: There is no defined clock in the design. (PWR-80)
+Warning: Design has unannotated primary inputs. (PWR-414)
+Warning: Design has unannotated sequential cell outputs. (PWR-415)
+ 
+****************************************
+Report : power
+        -hier
+        -analysis_effort low
+Design : HM_SHA_256
+Version: K-2015.06-SP1
+Date   : Wed Nov 29 18:16:04 2017
+****************************************
+
+
+Library(s) Used:
+
+    osu05_stdcells (File: /package/eda/cells/OSU/v2.7/synopsys/lib/ami05/osu05_stdcells.db)
+
+
+Operating Conditions: typical   Library: osu05_stdcells
+Wire Load Model Mode: top
+
+
+Global Operating Voltage = 5    
+Power-specific unit information :
+    Voltage Units = 1V
+    Capacitance Units = 1.000000pf
+    Time Units = 1ns
+    Dynamic Power Units = 1mW    (derived from V,C,T units)
+    Leakage Power Units = 1nW
+
+
+--------------------------------------------------------------------------------
+                                       Switch   Int      Leak     Total
+Hierarchy                              Power    Power    Power    Power    %
+--------------------------------------------------------------------------------
+HM_SHA_256                             1.44e+03 1.74e+03 1.84e+03 3.18e+03 100.0
+  add_184_3 (HM_SHA_256_DW01_add_62)      0.550    2.259   11.591    2.809   0.1
+  add_2_root_add_141_3 (HM_SHA_256_DW01_add_61)
+                                         34.654   29.596   11.591   64.250   2.0
+  add_1_root_add_141_3 (HM_SHA_256_DW01_add_60)
+                                         29.590   27.338   11.591   56.928   1.8
+  add_0_root_add_141_3 (HM_SHA_256_DW01_add_59)
+                                         27.235   50.166   11.591   77.401   2.4
+  add_2_root_add_141_3_I2 (HM_SHA_256_DW01_add_58)
+                                         34.651   29.596   11.591   64.247   2.0
+  add_1_root_add_141_3_I2 (HM_SHA_256_DW01_add_57)
+                                         29.554   27.297   11.591   56.851   1.8
+  add_0_root_add_141_3_I2 (HM_SHA_256_DW01_add_56)
+                                         27.073   50.121   11.591   77.193   2.4
+  add_2_root_add_141_3_I3 (HM_SHA_256_DW01_add_55)
+                                         34.673   29.614   11.591   64.287   2.0
+  add_1_root_add_141_3_I3 (HM_SHA_256_DW01_add_54)
+                                         15.942   14.125   11.591   30.067   0.9
+  add_0_root_add_141_3_I3 (HM_SHA_256_DW01_add_53)
+                                         22.930   42.757   11.591   65.687   2.1
+  add_2_root_add_141_3_I4 (HM_SHA_256_DW01_add_52)
+                                         34.564   29.515   11.591   64.079   2.0
+  add_1_root_add_141_3_I4 (HM_SHA_256_DW01_add_51)
+                                         15.845   14.031   11.591   29.877   0.9
+  add_0_root_add_141_3_I4 (HM_SHA_256_DW01_add_50)
+                                         22.902   42.738   11.591   65.640   2.1
+  add_2_root_add_141_3_I5 (HM_SHA_256_DW01_add_49)
+                                         34.682   29.616   11.591   64.297   2.0
+  add_1_root_add_141_3_I5 (HM_SHA_256_DW01_add_48)
+                                         15.882   14.071   11.591   29.953   0.9
+  add_0_root_add_141_3_I5 (HM_SHA_256_DW01_add_47)
+                                         22.918   42.730   11.591   65.648   2.1
+  add_2_root_add_141_3_I6 (HM_SHA_256_DW01_add_46)
+                                         34.638   29.580   11.591   64.217   2.0
+  add_1_root_add_141_3_I6 (HM_SHA_256_DW01_add_45)
+                                         15.905   14.090   11.591   29.994   0.9
+  add_0_root_add_141_3_I6 (HM_SHA_256_DW01_add_44)
+                                         22.860   42.631   11.591   65.490   2.1
+  add_2_root_add_141_3_I7 (HM_SHA_256_DW01_add_43)
+                                         34.634   29.581   11.591   64.216   2.0
+  add_1_root_add_141_3_I7 (HM_SHA_256_DW01_add_42)
+                                         15.864   14.049   11.591   29.913   0.9
+  add_0_root_add_141_3_I7 (HM_SHA_256_DW01_add_41)
+                                         22.910   42.709   11.591   65.619   2.1
+  add_2_root_add_141_3_I8 (HM_SHA_256_DW01_add_40)
+                                         34.464   29.429   11.591   63.893   2.0
+  add_1_root_add_141_3_I8 (HM_SHA_256_DW01_add_39)
+                                          3.037    2.653   11.591    5.689   0.2
+  add_0_root_add_141_3_I8 (HM_SHA_256_DW01_add_38)
+                                         16.947   33.638   11.591   50.585   1.6
+  add_2_root_add_141_3_I9 (HM_SHA_256_DW01_add_37)
+                                         34.417   29.386   11.591   63.803   2.0
+  add_1_root_add_141_3_I9 (HM_SHA_256_DW01_add_36)
+                                          3.042    2.660   11.591    5.702   0.2
+  add_0_root_add_141_3_I9 (HM_SHA_256_DW01_add_35)
+                                         16.964   33.651   11.591   50.614   1.6
+  add_2_root_add_141_3_I10 (HM_SHA_256_DW01_add_34)
+                                         34.731   29.671   11.591   64.402   2.0
+  add_1_root_add_141_3_I10 (HM_SHA_256_DW01_add_33)
+                                          3.052    2.665   11.591    5.717   0.2
+  add_0_root_add_141_3_I10 (HM_SHA_256_DW01_add_32)
+                                         16.982   33.735   11.591   50.717   1.6
+  add_2_root_add_141_3_I11 (HM_SHA_256_DW01_add_31)
+                                         34.616   29.557   11.591   64.174   2.0
+  add_1_root_add_141_3_I11 (HM_SHA_256_DW01_add_30)
+                                          3.044    2.663   11.591    5.707   0.2
+  add_0_root_add_141_3_I11 (HM_SHA_256_DW01_add_29)
+                                         16.987   33.724   11.591   50.711   1.6
+  add_2_root_add_141_3_I12 (HM_SHA_256_DW01_add_28)
+                                         34.520   29.477   11.591   63.997   2.0
+  add_1_root_add_141_3_I12 (HM_SHA_256_DW01_add_27)
+                                          3.049    2.665   11.591    5.714   0.2
+  add_0_root_add_141_3_I12 (HM_SHA_256_DW01_add_26)
+                                         16.911   33.614   11.591   50.526   1.6
+  add_2_root_add_141_3_I13 (HM_SHA_256_DW01_add_25)
+                                         34.579   29.531   11.591   64.110   2.0
+  add_1_root_add_141_3_I13 (HM_SHA_256_DW01_add_24)
+                                          3.021    2.636   11.591    5.656   0.2
+  add_0_root_add_141_3_I13 (HM_SHA_256_DW01_add_23)
+                                         16.970   33.681   11.591   50.651   1.6
+  add_2_root_add_141_3_I14 (HM_SHA_256_DW01_add_22)
+                                         34.644   29.607   11.591   64.251   2.0
+  add_1_root_add_141_3_I14 (HM_SHA_256_DW01_add_21)
+                                          3.054    2.671   11.591    5.725   0.2
+  add_0_root_add_141_3_I14 (HM_SHA_256_DW01_add_20)
+                                         17.005   33.735   11.591   50.740   1.6
+  add_2_root_add_141_3_I15 (HM_SHA_256_DW01_add_19)
+                                         34.677   29.620   11.591   64.297   2.0
+  add_1_root_add_141_3_I15 (HM_SHA_256_DW01_add_18)
+                                          3.041    2.655   11.591    5.696   0.2
+  add_0_root_add_141_3_I15 (HM_SHA_256_DW01_add_17)
+                                         16.997   33.710   11.591   50.707   1.6
+  add_2_root_add_141_3_I16 (HM_SHA_256_DW01_add_16)
+                                          4.936    3.346   11.591    8.282   0.3
+  add_1_root_add_141_3_I16 (HM_SHA_256_DW01_add_15)
+                                       2.84e-02 2.61e-02   11.591 5.45e-02   0.0
+  add_0_root_add_141_3_I16 (HM_SHA_256_DW01_add_14)
+                                          1.352    4.100   11.591    5.452   0.2
+  add_3_root_add_168_4 (HM_SHA_256_DW01_add_13)
+                                          0.517    0.455   11.591    0.972   0.0
+  add_1_root_add_168_4 (HM_SHA_256_DW01_add_11)
+                                          3.506    3.048   11.591    6.554   0.2
+  add_0_root_add_168_4 (HM_SHA_256_DW01_add_10)
+                                          6.545    2.751   11.591    9.296   0.3
+  add_1_root_add_180 (HM_SHA_256_DW01_add_9)
+                                          3.570    3.912   11.591    7.482   0.2
+  add_176 (HM_SHA_256_DW01_add_8)         0.910    3.337   11.591    4.247   0.1
+  add_0_root_add_180 (HM_SHA_256_DW01_add_7)
+                                          0.986    2.797   11.591    3.783   0.1
+  add_184 (HM_SHA_256_DW01_add_6)         0.371    1.662   11.591    2.033   0.1
+  add_184_2 (HM_SHA_256_DW01_add_5)       0.464    2.024   11.591    2.488   0.1
+  add_184_4 (HM_SHA_256_DW01_add_4)       0.871    3.213   11.591    4.083   0.1
+  add_184_5 (HM_SHA_256_DW01_add_3)       0.370    1.722   11.591    2.092   0.1
+  add_184_6 (HM_SHA_256_DW01_add_2)       0.322    1.369   11.591    1.691   0.1
+  add_184_7 (HM_SHA_256_DW01_add_1)       0.523    2.067   11.591    2.590   0.1
+  add_184_8 (HM_SHA_256_DW01_add_0)       0.769    2.877   11.591    3.646   0.1
+  RR2 (rightrotate_BITS2)                 0.000    0.000    0.000    0.000   0.0
+  RR22 (rightrotate_BITS22)               0.000    0.000    0.000    0.000   0.0
+  RR13 (rightrotate_BITS13)               0.000    0.000    0.000    0.000   0.0
+  RR11 (rightrotate_BITS11)               0.000    0.000    0.000    0.000   0.0
+  RR25 (rightrotate_BITS25)               0.000    0.000    0.000    0.000   0.0
+  RR6 (rightrotate_BITS6)                 0.000    0.000    0.000    0.000   0.0
+1

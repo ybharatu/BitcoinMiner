@@ -34,13 +34,18 @@ module tb_HM_SHA_256 ();
 	reg tb_n_rst;
 	reg tb_clear;
 	reg tb_halt;
+	reg tb_init;
 	reg [15:0][31:0] tb_data;
-	reg [7:0] tb_count;
-	reg [31:0][7:0] tb_out_hash;
+	reg [6:0] tb_count;
+	reg [7:0][31:0] tb_out_hash;
 	integer i;
 
-	reg [31:0][7:0] expected_1 = 256'hca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb;
-	reg  [63:0][7:0] data_1 = 512'b0;
+	reg [7:0][31:0] expected_1 = {32'hf20015ad,32'hb410ff61,32'h96177a9c,32'hb00361a3,32'h5dae2223,32'h414140de,32'h8f01cfea,32'hba7816bf};
+				   
+	reg  [15:0][31:0] data_1 = {32'h00000018,32'h00000000,32'h00000000,32'h00000000,
+				   32'h00000000,32'h00000000,32'h00000000,32'h00000000,
+				   32'h00000000,32'h00000000,32'h00000000,32'h00000000,
+				   32'h00000000,32'h00000000,32'h00000000,32'h61626380 }; 
 
 
 	clocking cb @(posedge tb_clk);
@@ -50,13 +55,14 @@ module tb_HM_SHA_256 ();
 		output halt = tb_halt,
 			clear = tb_clear,
 			count = tb_count,
-			data = tb_data;
+			data = tb_data,
+			init = tb_init;
 		input out_hash = tb_out_hash;
 			
 	endclocking
 
 	HM_SHA_256 DUT (.n_rst(tb_n_rst), .clk(tb_clk), .halt(tb_halt),
-			.clear(tb_clear), .data(tb_data), .count(tb_count), .out_hash(tb_out_hash)); 
+			.clear(tb_clear), .data(tb_data), .count(tb_count), .out_hash(tb_out_hash), .init(tb_init)); 
 
 	
 	task wait_hash;
@@ -80,14 +86,11 @@ module tb_HM_SHA_256 ();
 	tb_data 	= 512'b0;
 	tb_count	= 7'b0;
 	tb_halt		= 1'b1;
-	data_1 = 512'b0;
-	data_1[0] = 8'h61;
-	data_1[1] = 8'h80;
-	data_1[63] = 8'h08;
+	tb_data		= data_1;
 
 	@cb;
 
-	if (tb_data == 512'b0)
+	if (tb_out_hash == 512'b0)
 		$info("Case %0d:: PASSED", tb_test_num);
 	else // Test case failed
 		$error("Case %0d:: FAILED", tb_test_num);
@@ -97,25 +100,25 @@ module tb_HM_SHA_256 ();
 	cb.n_rst <= 1'b1;
 	@cb;
 	@cb;
-	
+	cb.init <= 1;
+	@cb;
+	cb.init <= 0;
+	@cb;
+	@cb;
+	@cb;
 	cb.halt <= 0;
 	cb.clear <= 1;
 	
 	cb.data <= data_1;
 
-	wait_hash();
+	wait_hash(); //Run 64 clocks
+	@cb; //Wait one clock then check
 
-	if( cb.out_hash == expected_1)
+	if( tb_out_hash == expected_1)
 		$info("HOLY SHIT IT WORKS");
 	else
 		$error("To be expected");
-
-	
-
-	
-
-
-
+	cb.halt <= 1;
 
 	end
 
