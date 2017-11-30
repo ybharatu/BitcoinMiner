@@ -51,12 +51,22 @@ module tb_USB_decoder ();
 	
 	task send_bit;
 		input data;
-	begin
-		//cb.shift_enable <= 'b1;
-		//@cb;
+	begin		
 		cb.d_plus_sync <= data;
-		//cb.shift_enable <= 'b0;
-		//@cb;
+		@(posedge tb_clk)
+		tb_shift_enable <= 'b1;
+		@(posedge tb_clk)
+		tb_shift_enable <= 'b0;
+		@(posedge tb_clk)
+		#(BUS_PERIOD);
+		
+	end
+	endtask
+
+	task send_bit_noshift;
+		input data;
+	begin	
+		cb.d_plus_sync <= data;
 		#(BUS_PERIOD);
 		
 	end
@@ -66,50 +76,31 @@ module tb_USB_decoder ();
 	begin
 		// Initial Reset
 		cb.n_rst <= 'b0;
-		@cb;
-		@cb;
-		// Test Case 1: Shift enable and eop equal 0. 
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		// Test Case 1: Shift Enable = 1 and eop = 0 
 		tb_test_num = tb_test_num + 1;
 		cb.n_rst <= 'b1;
-		cb.shift_enable <= 'b1;
+		cb.shift_enable <= 'b0;
 		cb.eop <= 'b0;
 		send_bit(1);
 		send_bit(0);
 		send_bit(1);
-		// Test Case 2: Shift Enable = 1 and eop = 0
+		cb.eop <= 'b0;
+		send_bit(1);
+		send_bit(0);
+		send_bit(1);
+		send_bit(0);
+		send_bit(0);
+		send_bit(0);
+		// Test Case 2: Shift Enable = 0 and eop = 0
 		tb_test_num = tb_test_num + 1;
-		//cb.shift_enable <= 'b1;
-		cb.eop <= 'b0;
-		send_bit(1);
-		cb.shift_enable <= 'b1;
-		@cb;
-		cb.shift_enable <= 'b0;
-		@cb;
-		send_bit(0);
-		cb.shift_enable <= 'b1;
-		@cb;
-		cb.shift_enable <= 'b0;
-		@cb;
-		send_bit(1);
-		cb.shift_enable <= 'b1;
-		@cb;
-		cb.shift_enable <= 'b0;
-		@cb;
-		send_bit(0);
-		cb.shift_enable <= 'b1;
-		@cb;
-		cb.shift_enable <= 'b0;
-		@cb;
-		send_bit(0);
-		cb.shift_enable <= 'b1;
-		@cb;
-		cb.shift_enable <= 'b0;
-		@cb;
-		send_bit(0);
-		cb.shift_enable <= 'b1;
-		@cb;
-		cb.shift_enable <= 'b0;
-		@cb;
+		send_bit_noshift(1);
+		send_bit_noshift(0);
+		send_bit_noshift(0);
+		send_bit_noshift(1);
+		send_bit_noshift(0);
+
 	
 	end
 		

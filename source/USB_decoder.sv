@@ -24,7 +24,8 @@ logic temp_d_orig;
 always_ff @ (posedge clk, negedge n_rst)
 begin
 	if(n_rst == 1'b0)
-		d_plus_sync_prev <= 0;
+		d_plus_sync_prev <= 1;
+	
 	else
 		d_plus_sync_prev <= d_plus_sync_shift; 
 end
@@ -34,13 +35,22 @@ begin
 
 	if(shift_enable)
 	begin
-		d_plus_sync_shift = d_plus_sync;
+		if(eop & shift_enable)
+		begin
+			d_plus_sync_shift = 1;
+		end
+		else
+		begin
+			d_plus_sync_shift = d_plus_sync;
+		end
 	end
 	else
 	begin
-		d_plus_sync_shift = d_plus_sync_prev; 
+		d_plus_sync_shift = d_plus_sync;//d_plus_sync_prev; 
 	end
+
 	
+/*
 	if(shift_enable && eop)
 	begin
 		temp_d_orig = 1;
@@ -49,10 +59,11 @@ begin
 	begin
 		temp_d_orig = (d_plus_sync ~^ d_plus_sync_prev);
 	end
+*/
 
 end
 
-assign  d_orig = temp_d_orig;
+assign  d_orig = ~(d_plus_sync ^ d_plus_sync_prev);
 
 endmodule
 
