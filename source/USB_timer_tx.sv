@@ -14,7 +14,7 @@ module USB_timer_tx
 	input wire transmit_empty,
 	output wire byte_sent,
 	output wire data_sent,
-	output wire tx_shift;
+	output wire tx_shift
 );
 
 logic temp_byte_sent;
