@@ -20,12 +20,15 @@ logic temp_shift_enable;
 logic temp_byte_received;
 logic rf_1;
 logic rf_2;
+logic clear_bit_stuffing;
 
-flex_counter #(4) FLEX_COUNTER (.clk(clk), .n_rst(n_rst), .clear(d_edge || !receiving), .count_enable(receiving), .rollover_val(4'd8), .count_out(), .rollover_flag(rf_1));
+assign clear_bit_stuffing = (rf_1 && rf_2);
 
-flex_counter #(4) FLEX_COUNTER2 (.clk(clk), .n_rst(n_rst), .clear(!receiving), .count_enable(shift_enable), .rollover_val(4'd8), .count_out(), .rollover_flag(temp_byte_received));
+flex_counter #(4) FLEX_COUNTER (.clk(clk), .n_rst(n_rst), .clear(!receiving), .count_enable(receiving), .rollover_val(4'd8), .count_out(), .rollover_flag(rf_1));
 
-flex_counter #(4) FLEX_COUNTER3 (.clk(clk), .n_rst(n_rst), .clear(d_edge), .count_enable(!d_edge), .rollover_val(4'd6), .count_out(), .rollover_flag(rf_2));
+flex_counter #(4) FLEX_COUNTER2_BYTE_RECEIVED (.clk(clk), .n_rst(n_rst), .clear(!receiving), .count_enable(shift_enable), .rollover_val(4'd8), .count_out(), .rollover_flag(temp_byte_received));
+
+flex_counter #(4) FLEX_COUNTER3_BIT_STUFFING (.clk(clk), .n_rst(n_rst), .clear(d_edge || clear_bit_stuffing), .count_enable(!d_edge & shift_enable), .rollover_val(4'd6), .count_out(), .rollover_flag(rf_2));
 
 always_comb
 begin
