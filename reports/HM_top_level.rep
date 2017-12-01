@@ -1,0 +1,805 @@
+Information: Updating design information... (UID-85)
+Warning: Design 'HM_top_level' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 4
+Design : HM_top_level
+Version: K-2015.06-SP1
+Date   : Fri Dec  1 15:54:14 2017
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: typical   Library: osu05_stdcells
+Wire Load Model Mode: top
+
+  Startpoint: TIMER/HASH_CNT/count_reg_reg[3]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: SHA/e_reg[31]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  TIMER/HASH_CNT/count_reg_reg[3]/CLK (DFFSR)             0.00 #     0.00 r
+  TIMER/HASH_CNT/count_reg_reg[3]/Q (DFFSR)               0.49       0.49 f
+  TIMER/HASH_CNT/count_out[3] (flex_counter_fix_NUM_CNT_BITS7)
+                                                          0.00       0.49 f
+  TIMER/count[3] (HM_timer)                               0.00       0.49 f
+  U1/Y (BUFX2)                                            0.28       0.77 f
+  SHA/count[3] (HM_SHA_256)                               0.00       0.77 f
+  SHA/U5114/Y (INVX2)                                     0.11       0.87 r
+  SHA/U496/Y (AND2X1)                                     0.25       1.12 r
+  SHA/U720/Y (AND2X2)                                     0.20       1.32 r
+  SHA/U76/Y (AND2X1)                                      0.12       1.44 r
+  SHA/U714/Y (BUFX2)                                      0.37       1.81 r
+  SHA/U470/Y (INVX8)                                      0.25       2.06 f
+  SHA/U5320/Y (NAND3X1)                                   0.21       2.26 r
+  SHA/U5321/Y (INVX2)                                     0.08       2.34 f
+  SHA/U5324/Y (NAND3X1)                                   0.16       2.50 r
+  SHA/U3217/Y (OR2X2)                                     0.30       2.80 r
+  SHA/U5480/Y (NOR2X1)                                    0.12       2.92 f
+  SHA/U3178/Y (NAND2X1)                                   0.13       3.05 r
+  SHA/U5481/Y (NOR2X1)                                    0.18       3.24 f
+  SHA/add_2_root_add_0_root_add_171_4/B[6] (HM_SHA_256_DW01_add_321)
+                                                          0.00       3.24 f
+  SHA/add_2_root_add_0_root_add_171_4/U229/Y (NAND2X1)
+                                                          0.20       3.43 r
+  SHA/add_2_root_add_0_root_add_171_4/U345/Y (INVX2)      0.12       3.55 f
+  SHA/add_2_root_add_0_root_add_171_4/U215/Y (AOI21X1)
+                                                          0.17       3.71 r
+  SHA/add_2_root_add_0_root_add_171_4/U205/Y (OAI21X1)
+                                                          0.17       3.89 f
+  SHA/add_2_root_add_0_root_add_171_4/U181/Y (AOI21X1)
+                                                          0.17       4.06 r
+  SHA/add_2_root_add_0_root_add_171_4/U179/Y (OAI21X1)
+                                                          0.11       4.17 f
+  SHA/add_2_root_add_0_root_add_171_4/U284/Y (INVX2)      0.23       4.40 r
+  SHA/add_2_root_add_0_root_add_171_4/U158/Y (OAI21X1)
+                                                          0.16       4.57 f
+  SHA/add_2_root_add_0_root_add_171_4/U143/Y (XNOR2X1)
+                                                          0.21       4.78 r
+  SHA/add_2_root_add_0_root_add_171_4/SUM[13] (HM_SHA_256_DW01_add_321)
+                                                          0.00       4.78 r
+  SHA/add_1_root_add_0_root_add_171_4/B[13] (HM_SHA_256_DW01_add_319)
+                                                          0.00       4.78 r
+  SHA/add_1_root_add_0_root_add_171_4/U154/Y (NOR2X1)     0.32       5.10 f
+  SHA/add_1_root_add_0_root_add_171_4/U140/Y (NOR2X1)     0.19       5.29 r
+  SHA/add_1_root_add_0_root_add_171_4/U139/Y (AOI21X1)
+                                                          0.11       5.40 f
+  SHA/add_1_root_add_0_root_add_171_4/U137/Y (OAI21X1)
+                                                          0.18       5.58 r
+  SHA/add_1_root_add_0_root_add_171_4/U122/Y (AOI21X1)
+                                                          0.18       5.76 f
+  SHA/add_1_root_add_0_root_add_171_4/U81/Y (OAI21X1)     0.18       5.94 r
+  SHA/add_1_root_add_0_root_add_171_4/U267/Y (INVX2)      0.24       6.18 f
+  SHA/add_1_root_add_0_root_add_171_4/U74/Y (OAI21X1)     0.19       6.37 r
+  SHA/add_1_root_add_0_root_add_171_4/U284/Y (XNOR2X1)
+                                                          0.27       6.64 f
+  SHA/add_1_root_add_0_root_add_171_4/SUM[22] (HM_SHA_256_DW01_add_319)
+                                                          0.00       6.64 f
+  SHA/add_0_root_add_0_root_add_171_4/A[22] (HM_SHA_256_DW01_add_320)
+                                                          0.00       6.64 f
+  SHA/add_0_root_add_0_root_add_171_4/U81/Y (NOR2X1)      0.12       6.76 r
+  SHA/add_0_root_add_0_root_add_171_4/U77/Y (NOR2X1)      0.23       6.99 f
+  SHA/add_0_root_add_0_root_add_171_4/U75/Y (NAND2X1)     0.18       7.16 r
+  SHA/add_0_root_add_0_root_add_171_4/U74/Y (OAI21X1)     0.13       7.30 f
+  SHA/add_0_root_add_0_root_add_171_4/U59/Y (AOI21X1)     0.20       7.50 r
+  SHA/add_0_root_add_0_root_add_171_4/U265/Y (INVX2)      0.21       7.71 f
+  SHA/add_0_root_add_0_root_add_171_4/U28/Y (AOI21X1)     0.19       7.90 r
+  SHA/add_0_root_add_0_root_add_171_4/U17/Y (XOR2X1)      0.29       8.19 f
+  SHA/add_0_root_add_0_root_add_171_4/SUM[28] (HM_SHA_256_DW01_add_320)
+                                                          0.00       8.19 f
+  SHA/add_180/B[28] (HM_SHA_256_DW01_add_322)             0.00       8.19 f
+  SHA/add_180/U32/Y (NOR2X1)                              0.26       8.45 r
+  SHA/add_180/U18/Y (NOR2X1)                              0.28       8.74 f
+  SHA/add_180/U16/Y (NAND2X1)                             0.16       8.90 r
+  SHA/add_180/U15/Y (OAI21X1)                             0.21       9.10 f
+  SHA/add_180/U7/Y (AOI21X1)                              0.19       9.30 r
+  SHA/add_180/U1/Y (XOR2X1)                               0.18       9.48 r
+  SHA/add_180/SUM[31] (HM_SHA_256_DW01_add_322)           0.00       9.48 r
+  SHA/U4368/Y (AOI22X1)                                   0.13       9.61 f
+  SHA/U4369/Y (OAI21X1)                                   0.14       9.75 r
+  SHA/e_reg[31]/D (DFFSR)                                 0.00       9.75 r
+  data arrival time                                                  9.75
+
+  clock clk (rise edge)                                  10.00      10.00
+  clock network delay (ideal)                             0.00      10.00
+  SHA/e_reg[31]/CLK (DFFSR)                               0.00      10.00 r
+  library setup time                                     -0.24       9.76
+  data required time                                                 9.76
+  --------------------------------------------------------------------------
+  data required time                                                 9.76
+  data arrival time                                                 -9.75
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.00
+
+
+  Startpoint: TIMER/HASH_CNT/count_reg_reg[3]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: SHA/a_reg[31]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  TIMER/HASH_CNT/count_reg_reg[3]/CLK (DFFSR)             0.00 #     0.00 r
+  TIMER/HASH_CNT/count_reg_reg[3]/Q (DFFSR)               0.49       0.49 f
+  TIMER/HASH_CNT/count_out[3] (flex_counter_fix_NUM_CNT_BITS7)
+                                                          0.00       0.49 f
+  TIMER/count[3] (HM_timer)                               0.00       0.49 f
+  U1/Y (BUFX2)                                            0.28       0.77 f
+  SHA/count[3] (HM_SHA_256)                               0.00       0.77 f
+  SHA/U5114/Y (INVX2)                                     0.11       0.87 r
+  SHA/U496/Y (AND2X1)                                     0.25       1.12 r
+  SHA/U720/Y (AND2X2)                                     0.20       1.32 r
+  SHA/U76/Y (AND2X1)                                      0.12       1.44 r
+  SHA/U714/Y (BUFX2)                                      0.37       1.81 r
+  SHA/U470/Y (INVX8)                                      0.25       2.06 f
+  SHA/U5320/Y (NAND3X1)                                   0.21       2.26 r
+  SHA/U5321/Y (INVX2)                                     0.08       2.34 f
+  SHA/U5324/Y (NAND3X1)                                   0.16       2.50 r
+  SHA/U3217/Y (OR2X2)                                     0.30       2.80 r
+  SHA/U5480/Y (NOR2X1)                                    0.12       2.92 f
+  SHA/U3178/Y (NAND2X1)                                   0.13       3.05 r
+  SHA/U5481/Y (NOR2X1)                                    0.18       3.24 f
+  SHA/add_2_root_add_0_root_add_171_4/B[6] (HM_SHA_256_DW01_add_321)
+                                                          0.00       3.24 f
+  SHA/add_2_root_add_0_root_add_171_4/U229/Y (NAND2X1)
+                                                          0.20       3.43 r
+  SHA/add_2_root_add_0_root_add_171_4/U345/Y (INVX2)      0.12       3.55 f
+  SHA/add_2_root_add_0_root_add_171_4/U215/Y (AOI21X1)
+                                                          0.17       3.71 r
+  SHA/add_2_root_add_0_root_add_171_4/U205/Y (OAI21X1)
+                                                          0.17       3.89 f
+  SHA/add_2_root_add_0_root_add_171_4/U181/Y (AOI21X1)
+                                                          0.17       4.06 r
+  SHA/add_2_root_add_0_root_add_171_4/U179/Y (OAI21X1)
+                                                          0.11       4.17 f
+  SHA/add_2_root_add_0_root_add_171_4/U284/Y (INVX2)      0.23       4.40 r
+  SHA/add_2_root_add_0_root_add_171_4/U158/Y (OAI21X1)
+                                                          0.16       4.57 f
+  SHA/add_2_root_add_0_root_add_171_4/U143/Y (XNOR2X1)
+                                                          0.21       4.78 r
+  SHA/add_2_root_add_0_root_add_171_4/SUM[13] (HM_SHA_256_DW01_add_321)
+                                                          0.00       4.78 r
+  SHA/add_1_root_add_0_root_add_171_4/B[13] (HM_SHA_256_DW01_add_319)
+                                                          0.00       4.78 r
+  SHA/add_1_root_add_0_root_add_171_4/U154/Y (NOR2X1)     0.32       5.10 f
+  SHA/add_1_root_add_0_root_add_171_4/U140/Y (NOR2X1)     0.19       5.29 r
+  SHA/add_1_root_add_0_root_add_171_4/U139/Y (AOI21X1)
+                                                          0.11       5.40 f
+  SHA/add_1_root_add_0_root_add_171_4/U137/Y (OAI21X1)
+                                                          0.18       5.58 r
+  SHA/add_1_root_add_0_root_add_171_4/U122/Y (AOI21X1)
+                                                          0.18       5.76 f
+  SHA/add_1_root_add_0_root_add_171_4/U81/Y (OAI21X1)     0.18       5.94 r
+  SHA/add_1_root_add_0_root_add_171_4/U267/Y (INVX2)      0.24       6.18 f
+  SHA/add_1_root_add_0_root_add_171_4/U74/Y (OAI21X1)     0.19       6.37 r
+  SHA/add_1_root_add_0_root_add_171_4/U284/Y (XNOR2X1)
+                                                          0.27       6.64 f
+  SHA/add_1_root_add_0_root_add_171_4/SUM[22] (HM_SHA_256_DW01_add_319)
+                                                          0.00       6.64 f
+  SHA/add_0_root_add_0_root_add_171_4/A[22] (HM_SHA_256_DW01_add_320)
+                                                          0.00       6.64 f
+  SHA/add_0_root_add_0_root_add_171_4/U81/Y (NOR2X1)      0.12       6.76 r
+  SHA/add_0_root_add_0_root_add_171_4/U77/Y (NOR2X1)      0.23       6.99 f
+  SHA/add_0_root_add_0_root_add_171_4/U75/Y (NAND2X1)     0.18       7.16 r
+  SHA/add_0_root_add_0_root_add_171_4/U74/Y (OAI21X1)     0.13       7.30 f
+  SHA/add_0_root_add_0_root_add_171_4/U59/Y (AOI21X1)     0.20       7.50 r
+  SHA/add_0_root_add_0_root_add_171_4/U265/Y (INVX2)      0.21       7.71 f
+  SHA/add_0_root_add_0_root_add_171_4/U28/Y (AOI21X1)     0.19       7.90 r
+  SHA/add_0_root_add_0_root_add_171_4/U17/Y (XOR2X1)      0.29       8.19 f
+  SHA/add_0_root_add_0_root_add_171_4/SUM[28] (HM_SHA_256_DW01_add_320)
+                                                          0.00       8.19 f
+  SHA/add_0_root_add_0_root_add_184/B[28] (HM_SHA_256_DW01_add_323)
+                                                          0.00       8.19 f
+  SHA/add_0_root_add_0_root_add_184/U32/Y (NOR2X1)        0.26       8.45 r
+  SHA/add_0_root_add_0_root_add_184/U18/Y (NOR2X1)        0.28       8.73 f
+  SHA/add_0_root_add_0_root_add_184/U16/Y (NAND2X1)       0.18       8.91 r
+  SHA/add_0_root_add_0_root_add_184/U15/Y (OAI21X1)       0.21       9.12 f
+  SHA/add_0_root_add_0_root_add_184/U7/Y (AOI21X1)        0.19       9.31 r
+  SHA/add_0_root_add_0_root_add_184/U1/Y (XOR2X1)         0.18       9.49 r
+  SHA/add_0_root_add_0_root_add_184/SUM[31] (HM_SHA_256_DW01_add_323)
+                                                          0.00       9.49 r
+  SHA/U13815/Y (AOI22X1)                                  0.13       9.63 f
+  SHA/U13816/Y (OAI21X1)                                  0.13       9.75 r
+  SHA/a_reg[31]/D (DFFSR)                                 0.00       9.75 r
+  data arrival time                                                  9.75
+
+  clock clk (rise edge)                                  10.00      10.00
+  clock network delay (ideal)                             0.00      10.00
+  SHA/a_reg[31]/CLK (DFFSR)                               0.00      10.00 r
+  library setup time                                     -0.24       9.76
+  data required time                                                 9.76
+  --------------------------------------------------------------------------
+  data required time                                                 9.76
+  data arrival time                                                 -9.75
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.01
+
+
+  Startpoint: TIMER/HASH_CNT/count_reg_reg[3]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: SHA/e_reg[27]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  TIMER/HASH_CNT/count_reg_reg[3]/CLK (DFFSR)             0.00 #     0.00 r
+  TIMER/HASH_CNT/count_reg_reg[3]/Q (DFFSR)               0.44       0.44 r
+  TIMER/HASH_CNT/count_out[3] (flex_counter_fix_NUM_CNT_BITS7)
+                                                          0.00       0.44 r
+  TIMER/count[3] (HM_timer)                               0.00       0.44 r
+  U1/Y (BUFX2)                                            0.27       0.71 r
+  SHA/count[3] (HM_SHA_256)                               0.00       0.71 r
+  SHA/U5114/Y (INVX2)                                     0.10       0.80 f
+  SHA/U496/Y (AND2X1)                                     0.34       1.14 f
+  SHA/U720/Y (AND2X2)                                     0.32       1.46 f
+  SHA/U5126/Y (NAND2X1)                                   0.15       1.61 r
+  SHA/U3111/Y (INVX1)                                     0.62       2.23 f
+  SHA/U3110/Y (INVX2)                                     0.29       2.52 r
+  SHA/U5466/Y (NAND2X1)                                   0.15       2.66 f
+  SHA/U5499/Y (NOR2X1)                                    0.11       2.77 r
+  SHA/U5501/Y (NAND3X1)                                   0.08       2.85 f
+  SHA/U5502/Y (NOR2X1)                                    0.14       2.99 r
+  SHA/add_2_root_add_0_root_add_171_4/B[3] (HM_SHA_256_DW01_add_321)
+                                                          0.00       2.99 r
+  SHA/add_2_root_add_0_root_add_171_4/U257/Y (NOR2X1)     0.27       3.25 f
+  SHA/add_2_root_add_0_root_add_171_4/U343/Y (INVX2)      0.12       3.37 r
+  SHA/add_2_root_add_0_root_add_171_4/U241/Y (NAND2X1)
+                                                          0.13       3.51 f
+  SHA/add_2_root_add_0_root_add_171_4/U233/Y (NOR2X1)     0.12       3.62 r
+  SHA/add_2_root_add_0_root_add_171_4/U232/Y (AOI21X1)
+                                                          0.29       3.91 f
+  SHA/add_2_root_add_0_root_add_171_4/U283/Y (INVX4)      0.21       4.12 r
+  SHA/add_2_root_add_0_root_add_171_4/U211/Y (AOI21X1)
+                                                          0.18       4.30 f
+  SHA/add_2_root_add_0_root_add_171_4/U198/Y (XOR2X1)     0.21       4.51 r
+  SHA/add_2_root_add_0_root_add_171_4/SUM[8] (HM_SHA_256_DW01_add_321)
+                                                          0.00       4.51 r
+  SHA/add_1_root_add_0_root_add_171_4/B[8] (HM_SHA_256_DW01_add_319)
+                                                          0.00       4.51 r
+  SHA/add_1_root_add_0_root_add_171_4/U280/Y (OR2X2)      0.32       4.82 r
+  SHA/add_1_root_add_0_root_add_171_4/U195/Y (AOI21X1)
+                                                          0.12       4.94 f
+  SHA/add_1_root_add_0_root_add_171_4/U193/Y (OAI21X1)
+                                                          0.19       5.14 r
+  SHA/add_1_root_add_0_root_add_171_4/U178/Y (AOI21X1)
+                                                          0.21       5.34 f
+  SHA/add_1_root_add_0_root_add_171_4/U327/Y (INVX2)      0.21       5.55 r
+  SHA/add_1_root_add_0_root_add_171_4/U169/Y (AOI21X1)
+                                                          0.18       5.74 f
+  SHA/add_1_root_add_0_root_add_171_4/U156/Y (XOR2X1)     0.21       5.95 r
+  SHA/add_1_root_add_0_root_add_171_4/SUM[12] (HM_SHA_256_DW01_add_319)
+                                                          0.00       5.95 r
+  SHA/add_0_root_add_0_root_add_171_4/A[12] (HM_SHA_256_DW01_add_320)
+                                                          0.00       5.95 r
+  SHA/add_0_root_add_0_root_add_171_4/U266/Y (OR2X2)      0.32       6.26 r
+  SHA/add_0_root_add_0_root_add_171_4/U167/Y (AOI21X1)
+                                                          0.12       6.38 f
+  SHA/add_0_root_add_0_root_add_171_4/U165/Y (OAI21X1)
+                                                          0.19       6.58 r
+  SHA/add_0_root_add_0_root_add_171_4/U318/Y (INVX2)      0.18       6.76 f
+  SHA/add_0_root_add_0_root_add_171_4/U153/Y (XOR2X1)     0.28       7.04 r
+  SHA/add_0_root_add_0_root_add_171_4/SUM[13] (HM_SHA_256_DW01_add_320)
+                                                          0.00       7.04 r
+  SHA/add_180/B[13] (HM_SHA_256_DW01_add_322)             0.00       7.04 r
+  SHA/add_180/U157/Y (NOR2X1)                             0.29       7.33 f
+  SHA/add_180/U154/Y (OAI21X1)                            0.16       7.49 r
+  SHA/add_180/U152/Y (AOI21X1)                            0.24       7.73 f
+  SHA/add_180/U133/Y (OAI21X1)                            0.26       7.99 r
+  SHA/add_180/U125/Y (AOI21X1)                            0.19       8.18 f
+  SHA/add_180/U119/Y (OAI21X1)                            0.18       8.36 r
+  SHA/add_180/U104/Y (AOI21X1)                            0.16       8.51 f
+  SHA/add_180/U71/Y (OAI21X1)                             0.18       8.69 r
+  SHA/add_180/U56/Y (AOI21X1)                             0.18       8.87 f
+  SHA/add_180/U294/Y (INVX2)                              0.21       9.09 r
+  SHA/add_180/U47/Y (AOI21X1)                             0.18       9.27 f
+  SHA/add_180/U34/Y (XOR2X1)                              0.18       9.45 r
+  SHA/add_180/SUM[27] (HM_SHA_256_DW01_add_322)           0.00       9.45 r
+  SHA/U4187/Y (AOI22X1)                                   0.13       9.59 f
+  SHA/U4188/Y (OAI21X1)                                   0.16       9.74 r
+  SHA/e_reg[27]/D (DFFSR)                                 0.00       9.74 r
+  data arrival time                                                  9.74
+
+  clock clk (rise edge)                                  10.00      10.00
+  clock network delay (ideal)                             0.00      10.00
+  SHA/e_reg[27]/CLK (DFFSR)                               0.00      10.00 r
+  library setup time                                     -0.24       9.76
+  data required time                                                 9.76
+  --------------------------------------------------------------------------
+  data required time                                                 9.76
+  data arrival time                                                 -9.74
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.02
+
+
+  Startpoint: CTRL/currState_reg[1]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: SHA/out_hash_reg[1][31]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  CTRL/currState_reg[1]/CLK (DFFSR)                       0.00 #     0.00 r
+  CTRL/currState_reg[1]/Q (DFFSR)                         0.60       0.60 f
+  CTRL/U18/Y (INVX2)                                      0.20       0.80 r
+  CTRL/U10/Y (AND2X2)                                     0.20       1.00 r
+  CTRL/U23/Y (NAND2X1)                                    0.07       1.07 f
+  CTRL/U35/Y (NAND3X1)                                    0.15       1.23 r
+  CTRL/U54/Y (INVX2)                                      0.15       1.38 f
+  CTRL/U74/Y (NAND3X1)                                    0.15       1.53 r
+  CTRL/clear (HM_controller)                              0.00       1.53 r
+  SHA/clear (HM_SHA_256)                                  0.00       1.53 r
+  SHA/U3037/Y (INVX2)                                     0.12       1.65 f
+  SHA/U71/Y (BUFX2)                                       0.25       1.90 f
+  SHA/U45/Y (INVX2)                                       0.12       2.02 r
+  SHA/U50/Y (INVX2)                                       0.29       2.31 f
+  SHA/U3580/Y (NAND2X1)                                   0.27       2.58 r
+  SHA/add_192_7/B[2] (HM_SHA_256_DW01_add_215)            0.00       2.58 r
+  SHA/add_192_7/U224/Y (OR2X2)                            0.31       2.89 r
+  SHA/add_192_7/U189/Y (AOI21X1)                          0.21       3.10 f
+  SHA/add_192_7/U183/Y (OAI21X1)                          0.25       3.35 r
+  SHA/add_192_7/U175/Y (AOI21X1)                          0.25       3.59 f
+  SHA/add_192_7/U169/Y (OAI21X1)                          0.19       3.78 r
+  SHA/add_192_7/U161/Y (AOI21X1)                          0.23       4.02 f
+  SHA/add_192_7/U155/Y (OAI21X1)                          0.25       4.27 r
+  SHA/add_192_7/U147/Y (AOI21X1)                          0.25       4.51 f
+  SHA/add_192_7/U141/Y (OAI21X1)                          0.19       4.70 r
+  SHA/add_192_7/U133/Y (AOI21X1)                          0.18       4.88 f
+  SHA/add_192_7/U127/Y (OAI21X1)                          0.23       5.11 r
+  SHA/add_192_7/U119/Y (AOI21X1)                          0.25       5.36 f
+  SHA/add_192_7/U113/Y (OAI21X1)                          0.25       5.61 r
+  SHA/add_192_7/U105/Y (AOI21X1)                          0.25       5.86 f
+  SHA/add_192_7/U99/Y (OAI21X1)                           0.19       6.05 r
+  SHA/add_192_7/U91/Y (AOI21X1)                           0.23       6.28 f
+  SHA/add_192_7/U85/Y (OAI21X1)                           0.25       6.53 r
+  SHA/add_192_7/U77/Y (AOI21X1)                           0.25       6.78 f
+  SHA/add_192_7/U71/Y (OAI21X1)                           0.25       7.03 r
+  SHA/add_192_7/U63/Y (AOI21X1)                           0.25       7.28 f
+  SHA/add_192_7/U57/Y (OAI21X1)                           0.19       7.47 r
+  SHA/add_192_7/U49/Y (AOI21X1)                           0.18       7.64 f
+  SHA/add_192_7/U43/Y (OAI21X1)                           0.17       7.82 r
+  SHA/add_192_7/U35/Y (AOI21X1)                           0.18       7.99 f
+  SHA/add_192_7/U29/Y (OAI21X1)                           0.15       8.14 r
+  SHA/add_192_7/U21/Y (AOI21X1)                           0.13       8.27 f
+  SHA/add_192_7/U15/Y (OAI21X1)                           0.17       8.44 r
+  SHA/add_192_7/U7/Y (AOI21X1)                            0.13       8.57 f
+  SHA/add_192_7/U270/Y (INVX2)                            0.13       8.70 r
+  SHA/add_192_7/U4/YC (FAX1)                              0.36       9.06 r
+  SHA/add_192_7/U3/YC (FAX1)                              0.33       9.39 r
+  SHA/add_192_7/U240/Y (XNOR2X1)                          0.18       9.57 r
+  SHA/add_192_7/SUM[31] (HM_SHA_256_DW01_add_215)         0.00       9.57 r
+  SHA/U3617/Y (MUX2X1)                                    0.10       9.67 f
+  SHA/U3039/Y (INVX1)                                     0.10       9.77 r
+  SHA/out_hash_reg[1][31]/D (DFFSR)                       0.00       9.77 r
+  data arrival time                                                  9.77
+
+  clock clk (rise edge)                                  10.00      10.00
+  clock network delay (ideal)                             0.00      10.00
+  SHA/out_hash_reg[1][31]/CLK (DFFSR)                     0.00      10.00 r
+  library setup time                                     -0.22       9.78
+  data required time                                                 9.78
+  --------------------------------------------------------------------------
+  data required time                                                 9.78
+  data arrival time                                                 -9.77
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.02
+
+
+1
+ 
+****************************************
+Report : area
+Design : HM_top_level
+Version: K-2015.06-SP1
+Date   : Fri Dec  1 15:54:15 2017
+****************************************
+
+Library(s) Used:
+
+    osu05_stdcells (File: /package/eda/cells/OSU/v2.7/synopsys/lib/ami05/osu05_stdcells.db)
+
+Number of ports:                        20280
+Number of nets:                         87232
+Number of cells:                        67679
+Number of combinational cells:          62970
+Number of sequential cells:              4541
+Number of macros/black boxes:               0
+Number of buf/inv:                      16366
+Number of references:                       7
+
+Combinational area:           17337573.000000
+Buf/Inv area:                  2448792.000000
+Noncombinational area:         3355200.000000
+Macro/Black Box area:                0.000000
+Net Interconnect area:      undefined  (No wire load specified)
+
+Total cell area:              20692773.000000
+Total area:                 undefined
+1
+Loading db file '/package/eda/cells/OSU/v2.7/synopsys/lib/ami05/osu05_stdcells.db'
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
+Warning: Design has unannotated primary inputs. (PWR-414)
+Warning: Design has unannotated sequential cell outputs. (PWR-415)
+ 
+****************************************
+Report : power
+        -hier
+        -analysis_effort low
+Design : HM_top_level
+Version: K-2015.06-SP1
+Date   : Fri Dec  1 15:54:19 2017
+****************************************
+
+
+Library(s) Used:
+
+    osu05_stdcells (File: /package/eda/cells/OSU/v2.7/synopsys/lib/ami05/osu05_stdcells.db)
+
+
+Operating Conditions: typical   Library: osu05_stdcells
+Wire Load Model Mode: top
+
+
+Global Operating Voltage = 5    
+Power-specific unit information :
+    Voltage Units = 1V
+    Capacitance Units = 1.000000pf
+    Time Units = 1ns
+    Dynamic Power Units = 1mW    (derived from V,C,T units)
+    Leakage Power Units = 1nW
+
+
+--------------------------------------------------------------------------------
+                                       Switch   Int      Leak     Total
+Hierarchy                              Power    Power    Power    Power    %
+--------------------------------------------------------------------------------
+HM_top_level                            286.534  706.706 6.18e+03  993.247 100.0
+  TIMER (HM_timer)                        0.191    1.910   10.988    2.100   0.2
+    HASH_CNT (flex_counter_fix_NUM_CNT_BITS7)
+                                          0.191    1.910   10.988    2.100   0.2
+      r300 (flex_counter_fix_NUM_CNT_BITS7_DW01_inc_0)
+                                       2.96e-02 1.94e-02    1.627 4.90e-02   0.0
+  SHA (HM_SHA_256)                      257.771  696.961 6.00e+03  954.738  96.1
+    add_0_root_add_0_root_add_134_3 (HM_SHA_256_DW01_add_469)
+                                          8.089    8.058   16.241   16.147   1.6
+    add_0_root_add_0_root_add_134_3_I2 (HM_SHA_256_DW01_add_468)
+                                          8.110    8.093   16.240   16.203   1.6
+    add_0_root_add_0_root_add_134_3_I3 (HM_SHA_256_DW01_add_463)
+                                          6.808    6.914   16.126   13.722   1.4
+    add_0_root_add_0_root_add_134_3_I4 (HM_SHA_256_DW01_add_461)
+                                          5.871    6.019   16.128   11.889   1.2
+    add_0_root_add_0_root_add_134_3_I5 (HM_SHA_256_DW01_add_459)
+                                          5.814    5.957   16.127   11.771   1.2
+    add_0_root_add_0_root_add_134_3_I6 (HM_SHA_256_DW01_add_457)
+                                          5.915    6.040   16.224   11.956   1.2
+    add_0_root_add_0_root_add_134_3_I7 (HM_SHA_256_DW01_add_455)
+                                          5.864    6.033   16.227   11.897   1.2
+    add_0_root_add_0_root_add_134_3_I11 (HM_SHA_256_DW01_add_449)
+                                          3.941    4.459   15.963    8.400   0.8
+    add_0_root_add_0_root_add_134_3_I12 (HM_SHA_256_DW01_add_448)
+                                          3.917    4.442   15.963    8.359   0.8
+    add_0_root_add_0_root_add_134_3_I48 (HM_SHA_256_DW01_add_359)
+                                       5.97e-04 7.49e-04   15.920 1.36e-03   0.0
+    add_0_root_add_0_root_add_171_4 (HM_SHA_256_DW01_add_320)
+                                          2.895    2.374   16.936    5.269   0.5
+    add_1_root_add_0_root_add_171_4 (HM_SHA_256_DW01_add_319)
+                                          1.267    1.142   17.444    2.409   0.2
+    add_0_root_add_0_root_add_184 (HM_SHA_256_DW01_add_323)
+                                          2.366    2.451   16.792    4.817   0.5
+    add_180 (HM_SHA_256_DW01_add_322)     2.375    2.482   16.620    4.857   0.5
+    add_2_root_add_0_root_add_171_4 (HM_SHA_256_DW01_add_321)
+                                          1.263    1.131   18.072    2.394   0.2
+    add_0_root_add_0_root_add_134_3_I47 (HM_SHA_256_DW01_add_284)
+                                       1.30e-03 1.36e-03   20.725 2.68e-03   0.0
+    add_0_root_add_0_root_add_134_3_I46 (HM_SHA_256_DW01_add_282)
+                                       1.61e-03 1.66e-03   20.725 3.29e-03   0.0
+    add_0_root_add_0_root_add_134_3_I45 (HM_SHA_256_DW01_add_280)
+                                       1.84e-03 1.81e-03   20.725 3.67e-03   0.0
+    add_0_root_add_0_root_add_134_3_I44 (HM_SHA_256_DW01_add_278)
+                                       2.11e-03 2.19e-03   20.725 4.33e-03   0.0
+    add_0_root_add_0_root_add_134_3_I43 (HM_SHA_256_DW01_add_276)
+                                       2.74e-03 2.82e-03   20.725 5.58e-03   0.0
+    add_0_root_add_0_root_add_134_3_I42 (HM_SHA_256_DW01_add_274)
+                                       4.04e-03 4.16e-03   20.725 8.22e-03   0.0
+    add_0_root_add_0_root_add_134_3_I41 (HM_SHA_256_DW01_add_272)
+                                       4.43e-03 4.60e-03   20.725 9.05e-03   0.0
+    add_0_root_add_0_root_add_134_3_I40 (HM_SHA_256_DW01_add_270)
+                                       5.79e-03 5.97e-03   20.725 1.18e-02   0.0
+    add_0_root_add_0_root_add_134_3_I39 (HM_SHA_256_DW01_add_268)
+                                       8.35e-03 8.58e-03   20.725 1.69e-02   0.0
+    add_0_root_add_0_root_add_134_3_I38 (HM_SHA_256_DW01_add_266)
+                                       1.05e-02 1.07e-02   20.725 2.12e-02   0.0
+    add_0_root_add_0_root_add_134_3_I37 (HM_SHA_256_DW01_add_264)
+                                       1.12e-02 1.15e-02   20.725 2.27e-02   0.0
+    add_0_root_add_0_root_add_134_3_I36 (HM_SHA_256_DW01_add_262)
+                                       1.38e-02 1.42e-02   20.725 2.80e-02   0.0
+    add_0_root_add_0_root_add_134_3_I35 (HM_SHA_256_DW01_add_260)
+                                       2.36e-02 2.09e-02   20.725 4.45e-02   0.0
+    add_2_root_add_0_root_add_134_3_I35 (HM_SHA_256_DW01_add_315)
+                                       1.21e-02 1.28e-02   20.726 2.49e-02   0.0
+    add_0_root_add_0_root_add_134_3_I34 (HM_SHA_256_DW01_add_251)
+                                       2.60e-02 2.31e-02   20.725 4.92e-02   0.0
+    add_2_root_add_0_root_add_134_3_I34 (HM_SHA_256_DW01_add_314)
+                                       1.35e-02 1.43e-02   20.726 2.78e-02   0.0
+    add_0_root_add_0_root_add_134_3_I33 (HM_SHA_256_DW01_add_240)
+                                       3.07e-02 2.74e-02   20.725 5.82e-02   0.0
+    add_2_root_add_0_root_add_134_3_I33 (HM_SHA_256_DW01_add_318)
+                                       1.82e-02 1.89e-02   20.726 3.72e-02   0.0
+    add_0_root_add_0_root_add_134_3_I32 (HM_SHA_256_DW01_add_250)
+                                       3.73e-02 3.36e-02   20.725 7.09e-02   0.0
+    add_2_root_add_0_root_add_134_3_I32 (HM_SHA_256_DW01_add_313)
+                                       2.17e-02 2.31e-02   20.726 4.48e-02   0.0
+    add_0_root_add_0_root_add_134_3_I31 (HM_SHA_256_DW01_add_249)
+                                       4.96e-02 4.49e-02   20.725 9.45e-02   0.0
+    add_2_root_add_0_root_add_134_3_I31 (HM_SHA_256_DW01_add_312)
+                                       2.82e-02 2.92e-02   20.726 5.75e-02   0.0
+    add_0_root_add_0_root_add_134_3_I30 (HM_SHA_256_DW01_add_238)
+                                       6.28e-02 5.76e-02   20.725    0.120   0.0
+    add_2_root_add_0_root_add_134_3_I30 (HM_SHA_256_DW01_add_317)
+                                       3.65e-02 3.87e-02   20.726 7.52e-02   0.0
+    add_0_root_add_0_root_add_134_3_I29 (HM_SHA_256_DW01_add_236)
+                                       7.34e-02 6.60e-02   20.725    0.139   0.0
+    add_2_root_add_0_root_add_134_3_I29 (HM_SHA_256_DW01_add_316)
+                                       3.66e-02 3.82e-02   20.726 7.48e-02   0.0
+    add_0_root_add_0_root_add_134_3_I28 (HM_SHA_256_DW01_add_248)
+                                       7.45e-02 6.74e-02   20.725    0.142   0.0
+    add_2_root_add_0_root_add_134_3_I28 (HM_SHA_256_DW01_add_311)
+                                       4.33e-02 4.50e-02   20.726 8.84e-02   0.0
+    add_0_root_add_0_root_add_134_3_I27 (HM_SHA_256_DW01_add_247)
+                                       9.05e-02 8.19e-02   20.725    0.172   0.0
+    add_2_root_add_0_root_add_134_3_I27 (HM_SHA_256_DW01_add_310)
+                                       5.45e-02 5.69e-02   20.726    0.111   0.0
+    add_0_root_add_0_root_add_134_3_I26 (HM_SHA_256_DW01_add_246)
+                                          0.121    0.110   20.725    0.231   0.0
+    add_2_root_add_0_root_add_134_3_I26 (HM_SHA_256_DW01_add_309)
+                                       7.09e-02 7.45e-02   20.726    0.145   0.0
+    add_0_root_add_0_root_add_134_3_I25 (HM_SHA_256_DW01_add_245)
+                                          0.150    0.137   20.725    0.287   0.0
+    add_2_root_add_0_root_add_134_3_I25 (HM_SHA_256_DW01_add_308)
+                                       7.98e-02 8.18e-02   20.726    0.162   0.0
+    add_0_root_add_0_root_add_134_3_I24 (HM_SHA_256_DW01_add_228)
+                                          0.179    0.163   20.725    0.342   0.0
+    add_2_root_add_0_root_add_134_3_I24 (HM_SHA_256_DW01_add_307)
+                                       9.90e-02    0.101   20.726    0.200   0.0
+    add_0_root_add_0_root_add_134_3_I23 (HM_SHA_256_DW01_add_227)
+                                          0.215    0.195   20.725    0.409   0.0
+    add_2_root_add_0_root_add_134_3_I23 (HM_SHA_256_DW01_add_306)
+                                          0.116    0.119   20.726    0.235   0.0
+    add_0_root_add_0_root_add_134_3_I22 (HM_SHA_256_DW01_add_226)
+                                          0.247    0.226   20.725    0.473   0.0
+    add_2_root_add_0_root_add_134_3_I22 (HM_SHA_256_DW01_add_305)
+                                          0.135    0.139   20.726    0.274   0.0
+    add_0_root_add_0_root_add_134_3_I21 (HM_SHA_256_DW01_add_225)
+                                          0.292    0.265   20.725    0.557   0.1
+    add_2_root_add_0_root_add_134_3_I21 (HM_SHA_256_DW01_add_301)
+                                          0.161    0.167   20.726    0.329   0.0
+    add_0_root_add_0_root_add_134_3_I20 (HM_SHA_256_DW01_add_244)
+                                          0.338    0.308   20.725    0.646   0.1
+    add_2_root_add_0_root_add_134_3_I20 (HM_SHA_256_DW01_add_304)
+                                          0.191    0.195   20.726    0.386   0.0
+    add_0_root_add_0_root_add_134_3_I19 (HM_SHA_256_DW01_add_224)
+                                          0.417    0.384   20.725    0.801   0.1
+    add_2_root_add_0_root_add_134_3_I19 (HM_SHA_256_DW01_add_303)
+                                          0.237    0.242   20.726    0.480   0.0
+    add_0_root_add_0_root_add_134_3_I18 (HM_SHA_256_DW01_add_223)
+                                          0.537    0.493   20.725    1.031   0.1
+    add_2_root_add_0_root_add_134_3_I18 (HM_SHA_256_DW01_add_302)
+                                          0.293    0.300   20.726    0.592   0.1
+    add_0_root_add_0_root_add_134_3_I17 (HM_SHA_256_DW01_add_242)
+                                          2.082    2.030   20.725    4.112   0.4
+    add_2_root_add_0_root_add_134_3_I17 (HM_SHA_256_DW01_add_300)
+                                          1.902    2.071   20.726    3.972   0.4
+    add_1_root_add_0_root_add_134_3_I20 (HM_SHA_256_DW01_add_243)
+                                          0.140    0.136   20.726    0.276   0.0
+    add_1_root_add_0_root_add_134_3_I17 (HM_SHA_256_DW01_add_241)
+                                          0.270    0.262   20.726    0.532   0.1
+    add_1_root_add_0_root_add_134_3_I48 (HM_SHA_256_DW01_add_286)
+                                       1.35e-03 1.24e-03   20.726 2.62e-03   0.0
+    add_1_root_add_0_root_add_134_3_I47 (HM_SHA_256_DW01_add_283)
+                                       2.22e-03 1.97e-03   20.726 4.22e-03   0.0
+    add_1_root_add_0_root_add_134_3_I46 (HM_SHA_256_DW01_add_281)
+                                       1.97e-03 1.81e-03   20.726 3.80e-03   0.0
+    add_1_root_add_0_root_add_134_3_I45 (HM_SHA_256_DW01_add_279)
+                                       2.09e-03 1.95e-03   20.726 4.06e-03   0.0
+    add_1_root_add_0_root_add_134_3_I44 (HM_SHA_256_DW01_add_277)
+                                       2.68e-03 2.57e-03   20.726 5.28e-03   0.0
+    add_1_root_add_0_root_add_134_3_I43 (HM_SHA_256_DW01_add_275)
+                                       3.33e-03 3.23e-03   20.726 6.58e-03   0.0
+    add_1_root_add_0_root_add_134_3_I42 (HM_SHA_256_DW01_add_273)
+                                       5.10e-03 4.99e-03   20.726 1.01e-02   0.0
+    add_1_root_add_0_root_add_134_3_I41 (HM_SHA_256_DW01_add_271)
+                                       6.80e-03 6.20e-03   20.726 1.30e-02   0.0
+    add_1_root_add_0_root_add_134_3_I40 (HM_SHA_256_DW01_add_269)
+                                       8.66e-03 7.78e-03   20.726 1.65e-02   0.0
+    add_1_root_add_0_root_add_134_3_I39 (HM_SHA_256_DW01_add_267)
+                                       1.18e-02 1.10e-02   20.726 2.28e-02   0.0
+    add_1_root_add_0_root_add_134_3_I38 (HM_SHA_256_DW01_add_265)
+                                       1.38e-02 1.28e-02   20.726 2.66e-02   0.0
+    add_1_root_add_0_root_add_134_3_I37 (HM_SHA_256_DW01_add_263)
+                                       1.68e-02 1.54e-02   20.726 3.23e-02   0.0
+    add_1_root_add_0_root_add_134_3_I36 (HM_SHA_256_DW01_add_261)
+                                       1.98e-02 1.81e-02   20.726 3.80e-02   0.0
+    add_1_root_add_0_root_add_134_3_I35 (HM_SHA_256_DW01_add_259)
+                                       1.00e-02 9.87e-03   20.726 1.99e-02   0.0
+    add_1_root_add_0_root_add_134_3_I34 (HM_SHA_256_DW01_add_258)
+                                       1.14e-02 1.11e-02   20.726 2.25e-02   0.0
+    add_1_root_add_0_root_add_134_3_I32 (HM_SHA_256_DW01_add_257)
+                                       1.44e-02 1.42e-02   20.726 2.86e-02   0.0
+    add_1_root_add_0_root_add_134_3_I31 (HM_SHA_256_DW01_add_256)
+                                       1.98e-02 1.96e-02   20.726 3.94e-02   0.0
+    add_1_root_add_0_root_add_134_3_I28 (HM_SHA_256_DW01_add_255)
+                                       3.15e-02 3.07e-02   20.726 6.22e-02   0.0
+    add_1_root_add_0_root_add_134_3_I27 (HM_SHA_256_DW01_add_254)
+                                       3.62e-02 3.55e-02   20.726 7.17e-02   0.0
+    add_1_root_add_0_root_add_134_3_I26 (HM_SHA_256_DW01_add_253)
+                                       4.83e-02 4.68e-02   20.726 9.52e-02   0.0
+    add_1_root_add_0_root_add_134_3_I25 (HM_SHA_256_DW01_add_252)
+                                       6.68e-02 6.48e-02   20.726    0.132   0.0
+    add_1_root_add_0_root_add_134_3_I24 (HM_SHA_256_DW01_add_234)
+                                       7.69e-02 7.12e-02   20.726    0.148   0.0
+    add_1_root_add_0_root_add_134_3_I23 (HM_SHA_256_DW01_add_233)
+                                       9.29e-02 8.63e-02   20.726    0.179   0.0
+    add_1_root_add_0_root_add_134_3_I22 (HM_SHA_256_DW01_add_232)
+                                          0.108 9.98e-02   20.726    0.207   0.0
+    add_1_root_add_0_root_add_134_3_I21 (HM_SHA_256_DW01_add_231)
+                                          0.126    0.116   20.726    0.242   0.0
+    add_1_root_add_0_root_add_134_3_I19 (HM_SHA_256_DW01_add_230)
+                                          0.174    0.161   20.726    0.335   0.0
+    add_1_root_add_0_root_add_134_3_I18 (HM_SHA_256_DW01_add_229)
+                                          0.225    0.209   20.726    0.434   0.0
+    add_2_root_add_0_root_add_134_3_I48 (HM_SHA_256_DW01_add_299)
+                                          0.000    0.000   20.726 2.07e-05   0.0
+    add_2_root_add_0_root_add_134_3_I47 (HM_SHA_256_DW01_add_298)
+                                          0.000    0.000   20.726 2.07e-05   0.0
+    add_2_root_add_0_root_add_134_3_I46 (HM_SHA_256_DW01_add_297)
+                                       2.60e-04 3.09e-04   20.726 5.89e-04   0.0
+    add_2_root_add_0_root_add_134_3_I45 (HM_SHA_256_DW01_add_296)
+                                       3.66e-04 4.19e-04   20.726 8.06e-04   0.0
+    add_2_root_add_0_root_add_134_3_I44 (HM_SHA_256_DW01_add_295)
+                                       3.22e-04 3.49e-04   20.726 6.92e-04   0.0
+    add_2_root_add_0_root_add_134_3_I43 (HM_SHA_256_DW01_add_294)
+                                       3.23e-04 3.45e-04   20.726 6.89e-04   0.0
+    add_2_root_add_0_root_add_134_3_I42 (HM_SHA_256_DW01_add_293)
+                                       2.84e-04 3.26e-04   20.726 6.31e-04   0.0
+    add_2_root_add_0_root_add_134_3_I41 (HM_SHA_256_DW01_add_292)
+                                       7.79e-04 7.21e-04   20.726 1.52e-03   0.0
+    add_2_root_add_0_root_add_134_3_I40 (HM_SHA_256_DW01_add_291)
+                                       7.90e-04 7.25e-04   20.726 1.54e-03   0.0
+    add_2_root_add_0_root_add_134_3_I38 (HM_SHA_256_DW01_add_290)
+                                       1.47e-03 1.40e-03   20.726 2.89e-03   0.0
+    add_1_root_add_0_root_add_134_3_I33 (HM_SHA_256_DW01_add_239)
+                                       1.26e-02 1.23e-02   20.726 2.50e-02   0.0
+    add_1_root_add_0_root_add_134_3_I30 (HM_SHA_256_DW01_add_237)
+                                       2.48e-02 2.43e-02   20.726 4.91e-02   0.0
+    add_1_root_add_0_root_add_134_3_I29 (HM_SHA_256_DW01_add_235)
+                                       3.39e-02 3.31e-02   20.726 6.70e-02   0.0
+    add_2_root_add_0_root_add_134_3_I39 (HM_SHA_256_DW01_add_289)
+                                       1.28e-03 1.25e-03   20.726 2.55e-03   0.0
+    add_2_root_add_0_root_add_134_3_I37 (HM_SHA_256_DW01_add_288)
+                                       1.21e-03 1.21e-03   20.726 2.44e-03   0.0
+    add_2_root_add_0_root_add_134_3_I36 (HM_SHA_256_DW01_add_287)
+                                       1.42e-03 1.42e-03   20.726 2.86e-03   0.0
+    add_1_root_add_0_root_add_184 (HM_SHA_256_DW01_add_222)
+                                          1.545    1.293   20.726    2.838   0.3
+    add_192_3 (HM_SHA_256_DW01_add_221)
+                                          0.834    0.979   15.409    1.813   0.2
+    add_192_5 (HM_SHA_256_DW01_add_220)
+                                          0.917    1.044   15.553    1.961   0.2
+    add_192_6 (HM_SHA_256_DW01_add_219)
+                                          0.927    1.053   15.640    1.980   0.2
+    add_192 (HM_SHA_256_DW01_add_218)     0.843    0.987   15.538    1.830   0.2
+    add_192_2 (HM_SHA_256_DW01_add_217)
+                                          0.911    1.033   16.071    1.944   0.2
+    add_192_4 (HM_SHA_256_DW01_add_216)
+                                          0.881    1.113   15.429    1.994   0.2
+    add_192_7 (HM_SHA_256_DW01_add_215)
+                                          0.918    1.090   15.396    2.008   0.2
+    add_192_8 (HM_SHA_256_DW01_add_214)
+                                          0.835    1.096   15.521    1.931   0.2
+    add_1_root_add_0_root_add_134_3_I16 (HM_SHA_256_DW01_add_212)
+                                          2.001    1.970   20.726    3.971   0.4
+    add_1_root_add_0_root_add_134_3_I8 (HM_SHA_256_DW01_add_198)
+                                          3.906    3.597   20.726    7.504   0.8
+    add_2_root_add_0_root_add_134_3_I16 (HM_SHA_256_DW01_add_213)
+                                          2.001    2.024   20.726    4.025   0.4
+    add_2_root_add_0_root_add_134_3_I9 (HM_SHA_256_DW01_add_211)
+                                          0.365    0.355   20.726    0.720   0.1
+    add_2_root_add_0_root_add_134_3_I8 (HM_SHA_256_DW01_add_210)
+                                          1.972    1.982   20.726    3.954   0.4
+    add_1_root_add_0_root_add_134_3_I9 (HM_SHA_256_DW01_add_197)
+                                          1.637    1.589   20.726    3.226   0.3
+    add_2_root_add_0_root_add_134_3_I15 (HM_SHA_256_DW01_add_209)
+                                          0.121    0.118   20.726    0.239   0.0
+    add_2_root_add_0_root_add_134_3_I14 (HM_SHA_256_DW01_add_208)
+                                          0.139    0.134   20.726    0.273   0.0
+    add_2_root_add_0_root_add_134_3_I13 (HM_SHA_256_DW01_add_207)
+                                          0.163    0.158   20.726    0.321   0.0
+    add_2_root_add_0_root_add_134_3_I12 (HM_SHA_256_DW01_add_206)
+                                          0.202    0.195   20.726    0.397   0.0
+    add_2_root_add_0_root_add_134_3_I11 (HM_SHA_256_DW01_add_205)
+                                          0.246    0.233   20.726    0.480   0.0
+    add_2_root_add_0_root_add_134_3_I10 (HM_SHA_256_DW01_add_204)
+                                          0.306    0.298   20.726    0.604   0.1
+    add_2_root_add_0_root_add_134_3_I7 (HM_SHA_256_DW01_add_203)
+                                          1.365    1.346   20.726    2.711   0.3
+    add_2_root_add_0_root_add_134_3_I6 (HM_SHA_256_DW01_add_202)
+                                          1.414    1.390   20.726    2.804   0.3
+    add_2_root_add_0_root_add_134_3_I5 (HM_SHA_256_DW01_add_201)
+                                          1.496    1.463   20.726    2.960   0.3
+    add_2_root_add_0_root_add_134_3_I4 (HM_SHA_256_DW01_add_200)
+                                          1.567    1.529   20.726    3.095   0.3
+    add_2_root_add_0_root_add_134_3_I3 (HM_SHA_256_DW01_add_199)
+                                          3.923    3.605   20.726    7.528   0.8
+    add_3_root_add_0_root_add_171_4 (HM_SHA_256_DW01_add_196)
+                                          1.410    1.192   20.726    2.601   0.3
+    add_0_root_add_0_root_add_134_3_I16 (HM_SHA_256_DW01_add_195)
+                                          3.815    3.784   20.726    7.599   0.8
+    add_0_root_add_0_root_add_134_3_I15 (HM_SHA_256_DW01_add_182)
+                                          5.571    5.584   20.725   11.156   1.1
+    add_1_root_add_0_root_add_134_3_I15 (HM_SHA_256_DW01_add_188)
+                                          1.289    1.343   20.726    2.632   0.3
+    add_0_root_add_0_root_add_134_3_I14 (HM_SHA_256_DW01_add_181)
+                                          5.612    5.620   20.725   11.232   1.1
+    add_1_root_add_0_root_add_134_3_I14 (HM_SHA_256_DW01_add_194)
+                                          1.313    1.312   20.726    2.625   0.3
+    add_0_root_add_0_root_add_134_3_I13 (HM_SHA_256_DW01_add_187)
+                                          5.637    5.643   20.725   11.279   1.1
+    add_1_root_add_0_root_add_134_3_I13 (HM_SHA_256_DW01_add_193)
+                                          1.345    1.344   20.726    2.689   0.3
+    add_1_root_add_0_root_add_134_3_I12 (HM_SHA_256_DW01_add_192)
+                                          1.403    1.392   20.726    2.795   0.3
+    add_1_root_add_0_root_add_134_3_I11 (HM_SHA_256_DW01_add_191)
+                                          1.460    1.440   20.726    2.900   0.3
+    add_0_root_add_0_root_add_134_3_I10 (HM_SHA_256_DW01_add_184)
+                                          5.767    5.748   20.725   11.515   1.2
+    add_1_root_add_0_root_add_134_3_I10 (HM_SHA_256_DW01_add_190)
+                                          1.562    1.537   20.726    3.099   0.3
+    add_0_root_add_0_root_add_134_3_I9 (HM_SHA_256_DW01_add_183)
+                                          5.880    5.848   20.725   11.728   1.2
+    add_0_root_add_0_root_add_134_3_I8 (HM_SHA_256_DW01_add_189)
+                                          7.437    7.189   20.725   14.626   1.5
+    add_1_root_add_0_root_add_134_3_I2 (HM_SHA_256_DW01_add_168)
+                                          5.422    5.289   20.726   10.711   1.1
+    add_1_root_add_0_root_add_134_3 (HM_SHA_256_DW01_add_167)
+                                          5.456    5.313   20.726   10.768   1.1
+    add_1_root_add_0_root_add_134_3_I7 (HM_SHA_256_DW01_add_179)
+                                          5.807    5.753   20.726   11.559   1.2
+    add_1_root_add_0_root_add_134_3_I6 (HM_SHA_256_DW01_add_177)
+                                          5.825    5.755   20.726   11.580   1.2
+    add_1_root_add_0_root_add_134_3_I5 (HM_SHA_256_DW01_add_175)
+                                          5.787    5.651   20.726   11.438   1.2
+    add_1_root_add_0_root_add_134_3_I4 (HM_SHA_256_DW01_add_173)
+                                          5.819    5.677   20.726   11.496   1.2
+    add_1_root_add_0_root_add_134_3_I3 (HM_SHA_256_DW01_add_171)
+                                          5.812    5.675   20.726   11.487   1.2
+    add_2_root_add_0_root_add_134_3_I2 (HM_SHA_256_DW01_add_170)
+                                          5.811    5.679   20.726   11.491   1.2
+    add_2_root_add_0_root_add_134_3 (HM_SHA_256_DW01_add_169)
+                                          5.800    5.492   20.726   11.291   1.1
+  BUS (HM_bus_select)                     0.000    0.000   30.361 3.04e-05   0.0
+  CHECK (HM_check_hash)                   2.864    2.250   64.847    5.114   0.5
+    lt_18 (HM_check_hash_DW_cmp_0)        2.864    2.250   64.730    5.114   0.5
+  CTRL (HM_controller)                    0.160    0.982    6.380    1.142   0.1
+  HASH_SEL (HM_hash_selection_MODULE_NUM0)
+                                         25.524    4.584   76.271   30.108   3.0
+1

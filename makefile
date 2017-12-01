@@ -17,9 +17,9 @@ include /home/ecegrid/a/ece337/Course_Prod/course_make_vars
 # NOTE: YOU WILL NEED TO SET THIS VARIABLE'S VALUE WHEN WORKING WITH HEIRARCHICAL DESIGNS
 # AND THE AUTOMATED GRADING SYSTEM
 USB_FILES := 
-HM_FILES := HM_SHA_256.sv HM_timer.sv HM_check_hash.sv HM_controller.sv HM_hash_selection.sv HM_SHA_256.sv HM_bus_select.sv
+HM_FILES := HM_timer.sv HM_check_hash.sv HM_controller.sv HM_hash_selection.sv HM_SHA_256.sv HM_bus_select.sv
 PD_FILES := PD_block_storage.sv
-EXTRA_FILES := flex_counter.sv flex_pts_sr.sv flex_stp_sr.sv rightrotate.sv
+EXTRA_FILES := flex_counter.sv flex_pts_sr.sv flex_stp_sr.sv rightrotate.sv flex_counter_fix.sv
 
 COMPONENT_FILES	:= $(USB_FILES) $(HM_FILES) $(PD_FILES) $(EXTRA_FILES)
 
@@ -274,8 +274,8 @@ tbsim_%_mapped: $(M_WORK_LIB)/% $(M_WORK_LIB)/tb_%
 
 # Set the default value of the clock name and clock period to an empty string so that clock timing will
 # only be activated in the SYN_CMDS definition if they were overwritten at invocation
-CLOCK_NAME 		:=
-CLOCK_PERIOD	:=
+CLOCK_NAME 	:= clk
+CLOCK_PERIOD	:= 10
 
 # Set the default value of the source files for sub modules to be an empty string so that
 # it will only be used if overwritten at invocation
@@ -342,7 +342,7 @@ uniquify
 # Step 2: Set design constraints
 # Uncomment below to set timing, area, power, etc. constraints
 # set_max_delay <delay> -from "<input>" -to "<output>"
-# set_max_area <area>
+# set_max_area 10000000
 # set_max_total_power <power> mW
 $(if $(and $(CLOCK_NAME), $(CLOCK_PERIOD)), create_clock "$(CLOCK_NAME)" -name "$(CLOCK_NAME)" -period $(CLOCK_PERIOD))
 
@@ -350,7 +350,7 @@ $(if $(and $(CLOCK_NAME), $(CLOCK_PERIOD)), create_clock "$(CLOCK_NAME)" -name "
 compile -map_effort medium
 
 # Step 4: Output reports
-report_timing -path full -delay max -max_paths 1 -nworst 1 > reports/$(MOD_NAME).rep
+report_timing -path full -delay max -max_paths 4 -nworst 1 > reports/$(MOD_NAME).rep
 report_area >> reports/$(MOD_NAME).rep
 report_power -hier >> reports/$(MOD_NAME).rep
 

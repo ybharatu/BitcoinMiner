@@ -13,8 +13,8 @@ module tb_HM_SHA_256 ();
 
 	// Define parameters
 	// basic test bench parameters
-	localparam	CLK_PERIOD	= 20; //Not Target Clock
-	localparam	CHECK_DELAY 	= 1; // Check 1ns after the rising edge to allow for propagation delay
+	localparam	CLK_PERIOD	= 10;
+	localparam	CHECK_DELAY 	= 2; // Check 1ns after the rising edge to allow for propagation delay
 	
 	// Shared Test Variables
 	reg tb_clk;
@@ -35,17 +35,31 @@ module tb_HM_SHA_256 ();
 	reg tb_clear;
 	reg tb_halt;
 	reg tb_init;
+	reg tb_out_load;
 	reg [15:0][31:0] tb_data;
 	reg [6:0] tb_count;
 	reg [7:0][31:0] tb_out_hash;
-	integer i;
 
-	reg [7:0][31:0] expected_1 = {32'hf20015ad,32'hb410ff61,32'h96177a9c,32'hb00361a3,32'h5dae2223,32'h414140de,32'h8f01cfea,32'hba7816bf};
-				   
-	reg  [15:0][31:0] data_1 = {32'h00000018,32'h00000000,32'h00000000,32'h00000000,
+	reg [7:0][31:0] expected_1 = {32'hf20015ad,32'hb410ff61,32'h96177a9c,32'hb00361a3,
+				      32'h5dae2223,32'h414140de,32'h8f01cfea,32'hba7816bf};
+
+	reg [7:0][31:0] expected_2 = {32'h19DB06C1,32'hF6ECEDD4,32'h64FF2167,32'hA33CE459,
+				      32'h0C3E6039,32'hE5C02693,32'hD20638B8,32'h248D6A61};	   
+	
+	reg [15:0][31:0] data_1 = {32'h00000018,32'h00000000,32'h00000000,32'h00000000,
 				   32'h00000000,32'h00000000,32'h00000000,32'h00000000,
 				   32'h00000000,32'h00000000,32'h00000000,32'h00000000,
-				   32'h00000000,32'h00000000,32'h00000000,32'h61626380 }; 
+				   32'h00000000,32'h00000000,32'h00000000,32'h61626380 };
+
+	reg [15:0][31:0] data_2 = {32'h00000000,32'h80000000,32'h6E6F7071,32'h6D6E6F70,
+				   32'h6C6D6E6F,32'h6B6C6D6E,32'h6A6B6C6D,32'h696A6B6C,
+				   32'h68696A6B,32'h6768696A,32'h66676869,32'h65666768,
+				   32'h64656667,32'h63646566,32'h62636465,32'h61626364};
+
+	reg [0:15][31:0] data_3 = {32'h000001C0,32'h00000000,32'h00000000,32'h00000000,
+				   32'h00000000,32'h00000000,32'h00000000,32'h00000000,
+				   32'h00000000,32'h00000000,32'h00000000,32'h00000000,
+				   32'h00000000,32'h00000000,32'h00000000,32'h00000000 };
 
 
 	clocking cb @(posedge tb_clk);
@@ -56,19 +70,20 @@ module tb_HM_SHA_256 ();
 			clear = tb_clear,
 			count = tb_count,
 			data = tb_data,
-			init = tb_init;
+			init = tb_init,
+			load = tb_out_load;
 		input out_hash = tb_out_hash;
 			
 	endclocking
 
 	HM_SHA_256 DUT (.n_rst(tb_n_rst), .clk(tb_clk), .halt(tb_halt),
-			.clear(tb_clear), .data(tb_data), .count(tb_count), .out_hash(tb_out_hash), .init(tb_init)); 
+			.clear(tb_clear), .data(tb_data), .count(tb_count), .out_hash(tb_out_hash), .init(tb_init), .out_load(tb_out_load)); 
 
 	
 	task wait_hash;
 	begin
 		integer w;
-
+		count = 0;
 		for(w = 0; w < 64; w = w + 1) begin
 			cb.count <= count;
 			@cb;
@@ -87,6 +102,8 @@ module tb_HM_SHA_256 ();
 	tb_count	= 7'b0;
 	tb_halt		= 1'b1;
 	tb_data		= data_1;
+	tb_init		= 1'b0;
+	tb_out_load		= 1'b0;
 
 	@cb;
 
@@ -107,18 +124,56 @@ module tb_HM_SHA_256 ();
 	@cb;
 	@cb;
 	cb.halt <= 0;
-	cb.clear <= 1;
-	
-	cb.data <= data_1;
+	cb.clear <= 1; 
 
 	wait_hash(); //Run 64 clocks
-	@cb; //Wait one clock then check
+	cb.load <= 1;
+	@cb;
+	cb.load <= 0;
+	cb.halt <= 1;
+	#CHECK_DELAY
 
 	if( tb_out_hash == expected_1)
 		$info("HOLY SHIT IT WORKS");
 	else
 		$error("To be expected");
+
+	//Test 2: 2- Chunk Block
+
+	@cb;
+	@cb;
+	@cb;
+	cb.data <= data_2;
+	cb.init <= 1;
+	@cb;
+	cb.init <= 0;
+	@cb;
+	cb.halt <= 0;
+	cb.clear <= 1;
+
+	wait_hash(); //Run 64 clocks
+	//@cb; //Wait one clock then check
 	cb.halt <= 1;
+	cb.load <= 1;
+	@cb;
+	cb.load <= 0;
+	cb.clear <= 0;
+	cb.init <= 1;
+	@cb;
+	cb.halt <= 0;
+	cb.data <= data_3;
+	cb.init <= 0;
+	wait_hash();
+	cb.load <= 1;
+	@cb;
+	cb.load <= 0;
+	cb.halt <= 1;
+	#CHECK_DELAY
+	if( tb_out_hash == expected_2)
+		$info("HOLY SHIT IT WORKS");
+	else
+		$error("To be expected");
+	@cb;
 
 	end
 

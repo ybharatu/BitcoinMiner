@@ -21,7 +21,7 @@ always_comb
 begin
 	if(hash_select == 'd2)
 		data = {prev_hash, 1'b1, 191'b0, 64'd256};
-	else if(hash_select == 'd1)
+	else
 		data = data_to_hash + MODULE_NUM;
 end
 

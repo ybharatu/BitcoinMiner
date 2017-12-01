@@ -12,8 +12,8 @@ module HM_timer
 	output logic [6:0] count	
 );
 	reg [6:0] flex_count;
-	assign count = flex_count - 1; //IDK about this
+	assign count = flex_count;
 
-	flex_counter #(7) HASH_CNT (.clear(), .count_enable(cnt_up), .clk(clk), .n_rst(n_rst), .rollover_val(7'd64), .rollover_flag(hash_rollover), .count_out(flex_count));
+	flex_counter_fix #(7) HASH_CNT (.clear(), .count_enable(cnt_up), .clk(clk), .n_rst(n_rst), .rollover_val(7'd63), .rollover_flag(hash_rollover), .count_out(flex_count));
 
 endmodule
