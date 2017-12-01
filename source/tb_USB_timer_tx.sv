@@ -57,15 +57,18 @@ module tb_USB_timer_tx ();
 		@cb;
 		cb.n_rst <= 'b1;
 		@cb;
-		// Enables first flex counter for byte_sent
+		// Checks if 5 bytes are sent
 		cb.transmitting <= 'b1;
-		#(BUS_PERIOD);
-		@cb;
-		// Enables second flex counter for data_sent
 		cb.transmit_empty <= 'b1;
+		#(750);
+		cb.n_rst <= 'b0;
 		@cb;
-		cb.transmit_empty <= 'b0;
-		#(BUS_PERIOD);
+		@cb;
+		cb.n_rst <= 'b1;
+		@cb;
+		cb.transmitting <= 'b1;
+		cb.transmit_empty <= 0;
+		
 	end
 
 endmodule

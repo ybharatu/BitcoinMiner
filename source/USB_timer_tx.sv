@@ -18,22 +18,22 @@ module USB_timer_tx
 );
 
 logic temp_byte_sent;
-logic [4:0] value;
+logic [5:0] value;
 logic temp_data_sent;
 
 flex_counter #(4) FLEX_COUNTER (.clk(clk), .n_rst(n_rst), .clear(!transmitting), .count_enable(transmitting), .rollover_val(4'd8), .count_out(), .rollover_flag(temp_byte_sent));
 
-flex_counter #(5) FLEX_COUNTER2 (.clk(clk), .n_rst(n_rst), .clear(!transmitting), .count_enable(temp_byte_sent), .rollover_val(value), .count_out(), .rollover_flag(temp_data_sent));
+flex_counter #(6) FLEX_COUNTER2 (.clk(clk), .n_rst(n_rst), .clear(!transmitting), .count_enable(temp_byte_sent), .rollover_val(value), .count_out(), .rollover_flag(temp_data_sent));
 
 always_comb
 begin
 	if(transmit_empty)
 	begin
-		value = 5'd5;
+		value = 6'd5;
 	end
 	else
 	begin
-		value = 5'd34;
+		value = 6'd34;
 	end
 end
 
