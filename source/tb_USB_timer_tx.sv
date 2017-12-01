@@ -37,38 +37,34 @@ module tb_USB_timer_tx ();
 	clocking cb @(posedge tb_clk);
 		 		// 1step means 1 time precision unit, 10ps for this module. We assume the hold time is less than 200ps.
 		default input #1step output #100ps; // Setup time (01CLK -> 10D) is 94 ps
-		// output #800ps n_rst = tb_n_rst; // FIXME: Removal time (01CLK -> 01R) is 281.25ps, but this needs to be 800 to prevent metastable value warnings
+		output #800ps n_rst = tb_n_rst; // FIXME: Removal time (01CLK -> 01R) is 281.25ps, but this needs to be 800 to prevent metastable value warnings
 		output  transmitting = tb_transmitting,
-			transmit_empty = tb_transmit_empty,
-			n_rst = tb_n_rst;
+			transmit_empty = tb_transmit_empty;
+			//n_rst = tb_n_rst;
 		input	byte_sent = tb_byte_sent,
 			data_sent = tb_data_sent,
 			tx_shift = tb_tx_shift;
 
 	endclocking
 
-	USB_timer_tx DUT (.clk(tb_clk), .n_rst(tb_n_rst), .transmitting(tb_transmitting), .transmit_empty(tb_transmit_empty),.byte_sent(tb_byte_sent), .data_sent(tb_data_sent), .tx_shift(tb_tx_shift));
+	USB_timer_tx DUT (.clk(tb_clk), .n_rst(tb_n_rst), .transmitting(tb_transmitting), .transmit_empty(tb_transmit_empty), .byte_sent(tb_byte_sent), .data_sent(tb_data_sent), .tx_shift(tb_tx_shift));
 	
 	initial
 	begin	
 		// Initial Reset
 		cb.n_rst <= 'b0;
-		cb.tx_out_bit <= 'b0;
-		cb.create_eop <= 'b0;
 		@cb;
 		@cb;
 		cb.n_rst <= 'b1;
 		@cb;
 		// Enables first flex counter for byte_sent
 		cb.transmitting <= 'b1;
-		@cb;
-		cb.transmitting <= 'b0;
 		#(BUS_PERIOD);
 		@cb;
 		// Enables second flex counter for data_sent
-		cb.transmit_start <= 'b1;
+		cb.transmit_empty <= 'b1;
 		@cb;
-		cb.transmit_start <= 'b0;
+		cb.transmit_empty <= 'b0;
 		#(BUS_PERIOD);
 	end
 
