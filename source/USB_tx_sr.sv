@@ -13,7 +13,8 @@ module USB_tx_sr
 	input wire tx_enable,
 	input wire load_enable,
 	input wire tx_shift,
-	input wire [15:0] tx_data,
+	input wire tx_hold,
+	input wire [15:0] read_data,
 	input wire [15:0] crc_16,
 	input wire crc_enable,
 	output wire tx_out
@@ -27,7 +28,7 @@ module USB_tx_sr
 	(
 		.clk(clk),
 		.n_rst(n_rst),
-		.shift_enable(tx_enable && tx_shift),
+		.shift_enable(tx_enable && tx_shift && !tx_hold),
 		.load_enable(load_enable), 
 		.parallel_in(data),
 		.serial_out(tx_out)

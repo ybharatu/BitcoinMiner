@@ -35,8 +35,8 @@ module USB_encoder
 		.clk(clk), 
 		.n_rst(n_rst), 
 		.clear(!tx_out_bit || eop_wait || restart), 
-		.count_enable(tx_out_bit), 
-		.rollover_val(4'd7), 
+		.count_enable(tx_out_bit && tx_shift), 
+		.rollover_val(4'd6), 
 		.count_out(),
 		.rollover_flag(stuff_bit)
 	);
@@ -83,7 +83,7 @@ module USB_encoder
 
 				if(tx_shift == 1)
 				begin
-				if(d_out == 1)
+				if(d == 1)
 				begin
 					if(d_plus == 0)
 					begin
@@ -111,7 +111,7 @@ module USB_encoder
 
 					
 				end
-				end
+
 				else
 				begin
 					if(d_plus == 0)
