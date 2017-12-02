@@ -35,9 +35,9 @@ module tb_PD_block_storage ();
 	reg [6:0] tb_i_data_sel;
 	reg [63:0][7:0] tb_chunk_1;
 	reg [15:0][7:0] tb_chunk_2;
-	reg [3:0][7:0] tb_difficulty;
-	reg [79:0][7:0] prev_storage;
-	reg [79:0][7:0] curr_storage;
+	reg [31:0][7:0] tb_difficulty;
+	reg [111:0][7:0] prev_storage;
+	reg [111:0][7:0] curr_storage;
 
 	assign curr_storage = {tb_chunk_2, tb_chunk_1};
 	integer i;
@@ -65,14 +65,15 @@ module tb_PD_block_storage ();
 	tb_i_data_sel	= 7'b0;
 	@cb;
 	@cb; //give some time to do nothing
-	//Test 1 - 80 write 80 bytes of memory to storage
+	//Test 1 - 112 write 112 bytes of memory to storage
 	tb_i_data_en = 1'b1;
-	for(i = 0; i < 80; i = i + 1) begin
+	for(i = 0; i < 112; i = i + 1) begin
 		prev_storage = {cb.chunk_2,cb.chunk_1};
 		tb_test_num = tb_test_num + 1;
 		cb.sel <= i;
 		cb.data <= i;
 		@cb;
+		#CHECK_DELAY;
 		assert(curr_storage[i][7:0] == i)
 			$info("Test Case %d Passed",tb_test_num);
 		else
