@@ -116,6 +116,9 @@ begin
 			halt = 1;
 			nextState = IDLE;
 		end
+		default: begin
+			nextState = currState;
+		end
 	endcase
 
 	if(quit_hash == 1) begin

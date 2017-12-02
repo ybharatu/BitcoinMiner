@@ -21,6 +21,7 @@ module USB_tx_controller
 	output reg tx_enable,
 	output reg crc_enable,
 	output reg transmitting,
+	output reg crc_clear, //Find use for this
 	output reg create_eop
 );
 	typedef enum bit [3:0] {IDLE, CREATE_EOP, LOAD, START_TX, HOLD_TX, READ, CHK_CRC, HOLD_CRC}

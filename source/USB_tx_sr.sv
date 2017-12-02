@@ -12,18 +12,23 @@ module USB_tx_sr
 	input wire n_rst,
 	input wire tx_enable,
 	input wire load_enable,
-	input wire tx_shift.
-	input wire [7:0] read_data,
+	input wire tx_shift,
+	input wire [15:0] read_data,
+	input wire [15:0] crc_16,
 	output wire tx_out
 );
 
-	flex_pts_sr #(8,1) TX_SR
+	reg [15:0] data;
+
+	assign data = crc_enable ? crc_16 : tx_data;
+
+	flex_pts_sr #(16,1) TX_SR
 	(
 		.clk(clk),
 		.n_rst(n_rst),
 		.shift_enable(tx_enable && tx_shift),
 		.load_enable(load_enable), 
-		.parallel_in(tx_data),
+		.parallel_in(data),
 		.serial_out(tx_out)
 	);
 
