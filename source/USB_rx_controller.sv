@@ -12,13 +12,14 @@ module USB_rx_controller
 	input wire n_rst,
 	input wire shift_enable,
 	input wire byte_received,
-	input wire [0:15] rx_data,
+	input wire [15:0] rx_data,
 	input wire eop,
-	input wire crc_chk,
+	input wire crc_check_5,
+	input wire crc_check_16,
 	input wire d_edge,
 	output reg receiving,
 	output reg write_enable,
-	output reg error
+	output reg rcv_error
 );
 
 	typedef enum bit [3:0] {IDLE, START_RCV, RCV_BYTE, RCVING, RCV_DONE, CRC_CHK, ERROR}
@@ -97,7 +98,7 @@ module USB_rx_controller
 				next_state = CRC_CHK;
 				receiving = 1;
 				write_enable = 0;
-				if(crc_chk)
+				if(crc_check_5 || crc_check_16)
 					next_state = IDLE;
 				else
 					next_state = ERROR;

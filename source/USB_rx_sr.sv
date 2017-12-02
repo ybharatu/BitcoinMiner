@@ -11,16 +11,15 @@ module USB_rx_sr
 	input wire clk,
 	input wire n_rst,
 	input wire shift_enable,
-	input wire crc_chk,
-	input wire d_orig, //-->WHAT ABOUT THIS?
-	output wire [7:0] rx_data
+	input wire d_orig,
+	output wire [15:0] rx_data
 );
 
 	flex_stp_sr #(8,1) RX_SR
 	(
 		.clk(clk),
 		.n_rst(n_rst),
-		.shift_enable(shift_enable && crc_chk),
+		.shift_enable(shift_enable),
 		.serial_in(d_orig),
 		.parallel_out(rx_data)
 	);

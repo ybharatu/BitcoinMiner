@@ -10,7 +10,7 @@ module USB_crc_16
 (
 	input wire clk,
 	input wire n_rst,
-	input wire clear,
+	input wire crc_clear,
 	input wire shift_enable,
 	input wire d_orig,
 	output logic crc_check_16

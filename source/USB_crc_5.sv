@@ -10,7 +10,7 @@ module USB_crc_5
 (
 	input wire clk,
 	input wire n_rst,
-	input wire clear,
+	input wire crc_clear,
 	input wire shift_enable,
 	input wire d_orig,
 	output logic crc_check_5
@@ -42,13 +42,6 @@ begin
 		q_next[3] = q[2]; 
 		q_next[4] = q[3];
 	
-	/*
-		q_next[0] = (d_orig ^ q[4]);
-		q_next[1] = q[0];
-		q_next[2] = q[1] ^ (q[4] ^ d_orig);
-		q_next[3] = q[2];
-		q_next[4] = q[3];
-	*/
 	end
 	else
 	begin
