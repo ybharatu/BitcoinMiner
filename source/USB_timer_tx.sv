@@ -29,11 +29,11 @@ always_comb
 begin
 	if(transmit_empty)
 	begin
-		value = 6'd5;
+		value = 6'd3;
 	end
 	else
 	begin
-		value = 6'd34;
+		value = 6'd17;
 	end
 end
 
