@@ -1,13 +1,13 @@
 // $Id: $
-// File name:   tb_USB_crc_5.sv
-// Created:     11/28/2017
+// File name:   tb_USB_crc_16.sv
+// Created:     12/1/2017
 // Author:      Yashwanth Bharatula
 // Lab Section: 337-05
 // Version:     1.0  Initial Design Entry
-// Description: Test bench for crc 5
+// Description: Test Bench for crc16
 `timescale 1ns / 10ps
 
-module tb_USB_crc_5 ();
+module tb_USB_crc_16 ();
 
 	// Define parameters
 	// basic test bench parameters
@@ -32,7 +32,7 @@ module tb_USB_crc_5 ();
 	logic tb_clear;
 	logic tb_shift_enable;
 	logic tb_d_orig;
-	logic tb_crc_check_5;
+	logic tb_crc_check_16;
 
 	clocking cb @(posedge tb_clk);
 		 		// 1step means 1 time precision unit, 10ps for this module. We assume the hold time is less than 200ps.
@@ -42,11 +42,11 @@ module tb_USB_crc_5 ();
 			clear = tb_clear,
 			shift_enable = tb_shift_enable,
 			d_orig = tb_d_orig;
-		input	crc_check_5 = tb_crc_check_5;
+		input	crc_check_16 = tb_crc_check_16;
 
 	endclocking
 
-	USB_crc_5 DUT (.clk(tb_clk), .n_rst(tb_n_rst), .clear(tb_clear), .shift_enable(tb_shift_enable), .d_orig(tb_d_orig), .crc_check_5(tb_crc_check_5));
+	USB_crc_16 DUT (.clk(tb_clk), .n_rst(tb_n_rst), .clear(tb_clear), .shift_enable(tb_shift_enable), .d_orig(tb_d_orig), .crc_check_16(tb_crc_check_16));
 
 	task send_bit;
 		input data;
@@ -55,6 +55,16 @@ module tb_USB_crc_5 ();
 		@cb;
 	end
 	endtask
+
+	task send_data;
+		input [15:0] data;
+	begin
+		integer i;
+		for(i = 15; i >= 0; i = i - 1) begin
+			send_bit(data[i]);
+		end
+	end
+	endtask;
 
 	initial
 	begin
@@ -67,24 +77,11 @@ module tb_USB_crc_5 ();
 		cb.n_rst <= 1;
 		@cb;
 		cb.shift_enable <= 1;
-		send_bit(1);
-		send_bit(0);
-		send_bit(1);
-		send_bit(0);
-		send_bit(1);
-		send_bit(0);
-		send_bit(0);
-		send_bit(0);
-		send_bit(1);
-		send_bit(1);
-		send_bit(1);
-
-		send_bit(1);
-		send_bit(0);
-		send_bit(1);
-		send_bit(1);
-		send_bit(1);
-		if(cb.crc_check_5 == 1)
+		send_data(16'b0000000010000000);
+		send_data(16'b0100000011000000);
+		send_data(16'b1111011101011110);
+		
+		if(tb_crc_check_16 == 1)
 			$info("GO0D JOB");
 		else
 			$error("FAILED");
@@ -92,4 +89,3 @@ module tb_USB_crc_5 ();
 	end
 
 endmodule
-
