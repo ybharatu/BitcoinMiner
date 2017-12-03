@@ -78,19 +78,10 @@ module USB_tx_controller
 				tx_enable = 1;
 				if(!byte_sent && !tx_hold)
 					next_state = START_TX;
-				if(tx_hold)
-					next_state = HOLD_TX;
 				if(byte_sent && !tx_hold)
 					next_state = READ;
 			end
-			HOLD_TX: begin
-				next_state = START_TX;
-				transmitting = 1;
-				tx_enable = 0;
-				//if(tx_hold = )
-			end
 			READ: begin
-				next_state = READ;
 				read_enable = 1;
 				tx_enable = 0;
 				transmitting = 1;
@@ -99,20 +90,25 @@ module USB_tx_controller
 				else
 					next_state = CHK_CRC;
 			end
-			CHK_CRC: begin
-				next_state = CHK_CRC;
+			LOAD_CRC: begin
 				crc_enable = 1;
 				read_enable = 0;
 				transmitting = 1;
+				load_enable = 1;
 				if(crc_sent)
+					next_state = TX_CRC;
+				else
+					next_state = CREATE_EOP;
+			end
+			TX_CRC: begin
+				transmitting = 1;
+				load_enable = 0;
+				tx_enable = 1;
+				crc_enable = 0;
+				if(byte_sent)
 					next_state = CREATE_EOP;
 				else
-					next_state = HOLD_CRC;
-			end
-			HOLD_CRC: begin
-				next_state = CHK_CRC;
-				transmitting = 1;
-				crc_enable = 0;
+					next_state = TX_CRC;
 			end
 			CREATE_EOP: begin
 				create_eop = 1;

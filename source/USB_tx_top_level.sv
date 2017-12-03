@@ -37,12 +37,16 @@ module USB_tx_top_level
 
 	USB_timer_tx TIMER (.clk(clk), .n_rst(n_rst), .data_sent(data_sent), .byte_sent(byte_sent), .transmitting(transmitting),
 				.tx_shift(tx_shift), .crc_sent(crc_sent));
+
 	USB_crc_tx CRC (.clk(clk), .clear(clear), .n_rst(n_rst), .tx_out(tx_out), .tx_out_bit(tx_out_bit), .crc_enable(crc_enable), .tx_shift(tx_shift), .crc_16(crc_16));
+
 	USB_encoder ENCODER (.clk(clk), .tx_hold(tx_hold), .create_eop(create_eop), .tx_shift(tx_shift),
 				.tx_out_bit(tx_out_bit), .d_plus_out(d_plus_out), .d_minus_out(d_minus_out));
+
 	USB_controller CTRL (.clk(clk), .n_rst(n_rst), .transmit_empty(transmit_empty), .read_enable(read_enable), .tx_enable(tx_enable),
 				.load_enable(load_enable), .crc_enable(crc_enable), .transmitting(transmitting), .data_sent(data_sent),
 				.byte_sent(byte_sent), .crc_sent(crc_sent), .create_eop(create_eop), .tx_hold(tx_hold), .transmit_start(transmit_start));
+
 	USB_tx_sr TX_SR (.clk(clk), .n_rst(n_rst), .load_enable(load_enable), .tx_enable(tx_enable), .tx_shift(tx_shift), .tx_data(tx_data), .tx_out(tx_out), .crc_16(crc_16), .crc_enable(crc_enable));
 
 	
