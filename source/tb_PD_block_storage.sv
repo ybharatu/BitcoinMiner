@@ -35,11 +35,11 @@ module tb_PD_block_storage ();
 	reg [6:0] tb_i_data_sel;
 	reg [63:0][7:0] tb_chunk_1;
 	reg [15:0][7:0] tb_chunk_2;
-	reg [3:0][7:0] tb_difficulty;
-	reg [79:0][7:0] prev_storage;
-	reg [79:0][7:0] curr_storage;
+	reg [31:0][7:0] tb_difficulty;
+	reg [111:0][7:0] prev_storage;
+	reg [111:0][7:0] curr_storage;
 
-	assign curr_storage = {tb_chunk_2, tb_chunk_1};
+	assign curr_storage = {tb_difficulty,tb_chunk_2,tb_chunk_1};
 	integer i;
 
 	clocking cb @(posedge tb_clk);
@@ -65,18 +65,18 @@ module tb_PD_block_storage ();
 	tb_i_data_sel	= 7'b0;
 	@cb;
 	@cb; //give some time to do nothing
-	//Test 1 - 80 write 80 bytes of memory to storage
+	//Test 1 - 112 write 112 bytes of memory to storage
 	tb_i_data_en = 1'b1;
-	for(i = 0; i < 80; i = i + 1) begin
-		prev_storage = {cb.chunk_2,cb.chunk_1};
+	for(i = 0; i < 112; i = i + 1) begin
 		tb_test_num = tb_test_num + 1;
-		cb.sel <= i;
-		cb.data <= i;
+		tb_i_data_sel <= i;
+		tb_i_data <= i;
 		@cb;
-		assert(curr_storage[i][7:0] == i)
-			$info("Test Case %d Passed",tb_test_num);
+		#CHECK_DELAY;
+		assert(curr_storage[i] == i)
+			$info("Test Case %d Passed,",tb_test_num);
 		else
-			$error("Test Case %d Failed", tb_test_num);
+			$error("Test Case %d Failed, %d is supposed to be %d", tb_test_num, curr_storage[i], i);
 	end
 		
 	end

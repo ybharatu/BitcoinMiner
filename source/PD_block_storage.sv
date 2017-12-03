@@ -13,16 +13,16 @@ module PD_block_storage
 	input clk,
 	output wire [63:0][7:0] chunk_1,
 	output wire [15:0][7:0] chunk_2,
-	output wire [3:0][7:0] difficulty
+	output wire [31:0][7:0] difficulty
 	
 );
 
-reg [79:0][7:0] storage;
-reg [79:0] write_en;
+reg [111:0][7:0] storage;
+reg [111:0] write_en;
 
 always_ff @ (posedge clk) begin
 	integer j;
-	for(j = 0; j < 80; j = j + 1)begin
+	for(j = 0; j < 112; j = j + 1)begin
 		if(write_en[j] == 1)
 			storage[j][7:0] = i_data[7:0];
 		else
@@ -34,10 +34,10 @@ end
 always_comb begin
 	integer i;
 	if(i_data_en) begin
-		for(i = 0; i < 80; i = i + 1) begin
+		for(i = 0; i < 112; i = i + 1) begin
 			if(i_data_sel == i) begin
-				assert(i_data_sel == i)
-					$info("Block storage Decoder detects row %d", i);
+				//assert(i_data_sel == i)
+				//	$info("Block storage Decoder detects row %d", i);
 				write_en[i] = 1'b1;
 			end
 			else begin
@@ -50,7 +50,6 @@ end
 //Be aware of byte order and double check this with how the data is sent via USB
 assign chunk_1[63:0] = storage [63:0];
 assign chunk_2[15:0] = storage [79:64];
-assign difficulty[3:0] = storage [75:71];
-
+assign difficulty[31:0] = storage [111:80];
 
 endmodule

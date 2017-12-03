@@ -9,7 +9,7 @@ module USB_tx_top_level
 (
 	input clk,
 	input n_rst,
-	input [7:0] tx_data,
+	input [15:0] tx_data,
 	input transmit_empty,
 	input transmit_start,
 	output d_plus_out,
@@ -43,7 +43,8 @@ module USB_tx_top_level
 	USB_controller CTRL (.clk(clk), .n_rst(n_rst), .transmit_empty(transmit_empty), .read_enable(read_enable), .tx_enable(tx_enable),
 				.load_enable(load_enable), .crc_enable(crc_enable), .transmitting(transmitting), .data_sent(data_sent),
 				.byte_sent(byte_sent), .crc_sent(crc_sent), .create_eop(create_eop), .tx_hold(tx_hold), .transmit_start(transmit_start));
-	USB_tx_sr TX_SR (.clk(clk), .n_rst(n_rst), .load_enable(load_enable), .tx_enable(tx_enable), .tx_shift(tx_shift), .tx_data(tx_data), .tx_out(tx_out), .tx_sr(crc_16), .crc_enable(crc_enable));
+	USB_tx_sr TX_SR (.clk(clk), .n_rst(n_rst), .load_enable(load_enable), .tx_enable(tx_enable), .tx_shift(tx_shift), .tx_data(tx_data), .tx_out(tx_out), .crc_16(crc_16), .crc_enable(crc_enable));
+
 	
 	
 

@@ -22,13 +22,14 @@ module USB_tx_controller
 	output reg crc_enable,
 	output reg transmitting,
 	output reg crc_clear, //Find use for this
-	output reg create_eop
+	output reg create_eop,
+	output reg crc_enable
 );
-	typedef enum bit [3:0] {IDLE, CREATE_EOP, LOAD, START_TX, HOLD_TX, READ, CHK_CRC, HOLD_CRC}
+	typedef enum bit [3:0] {IDLE, CREATE_EOP, LOAD, START_TX, HOLD_TX, READ, CHK_CRC, HOLD_CRC, LOAD_CRC, TX_CRC, HOLD_CRC}
 	
 	stateType;
 	stateType current_state, next_state;
-
+O
 	always_ff @ (posedge clk, negedge n_rst)
 	begin
 		if(n_rst == 1'b0)
@@ -50,6 +51,8 @@ module USB_tx_controller
 		crc_enable = 0;
 		transmitting = 0;
 		create_eop = 0;
+		crc_enable = 0;
+		crc_clear = 0;
 
 		case(current_state)
 			IDLE: begin
@@ -67,6 +70,7 @@ module USB_tx_controller
 				next_state = START_TX;
 				load_enable = 1;
 				transmitting = 1;
+				crc_clear = 1;
 			end
 			START_TX: begin
 				next_state = START_TX;
@@ -84,6 +88,7 @@ module USB_tx_controller
 				next_state = START_TX;
 				transmitting = 1;
 				tx_enable = 0;
+				if(tx_hold = )
 			end
 			READ: begin
 				next_state = READ;
