@@ -38,6 +38,8 @@ module tb_HM_SHA_256 ();
 	reg tb_out_load;
 	reg [15:0][31:0] tb_data;
 	reg [6:0] tb_count;
+	reg [7:0][79:0] check_data;
+	reg [7:0][79:0] flip_check_data;
 	reg [7:0][31:0] tb_out_hash;
 
 	reg [7:0][31:0] expected_1 = {32'hf20015ad,32'hb410ff61,32'h96177a9c,32'hb00361a3,
@@ -79,6 +81,23 @@ module tb_HM_SHA_256 ();
 	HM_SHA_256 DUT (.n_rst(tb_n_rst), .clk(tb_clk), .halt(tb_halt),
 			.clear(tb_clear), .data(tb_data), .count(tb_count), .out_hash(tb_out_hash), .init(tb_init), .out_load(tb_out_load)); 
 
+	task flip_endian 
+	(
+		input [640:0] data,
+		output [640:0] flipped
+	);
+	begin
+		integer j;
+		integer k;
+		for (j = 0; j < 640; j = j + 8) begin
+			for (k = 0; k < 8; k = k + 1) begin
+				flipped[j+k] = data[632-j+k];
+				$info("k: %0d opp: %0d", k, 632-j+k);
+				flipped[632-j+k] = data[k+j];
+			end
+		end
+	end
+	endtask
 	
 	task wait_hash;
 	begin
@@ -104,6 +123,10 @@ module tb_HM_SHA_256 ();
 	tb_data		= data_1;
 	tb_init		= 1'b0;
 	tb_out_load		= 1'b0;
+	check_data = '0;
+	check_data = 640'h01000000000000000002d01c1fccc21636b607dfd930d31d01c3a62104612a1719011250f3e94742aca4b5ef85488dc37c06c3282295ffec960994b2c0d5ac2a25a957664D1B22371B04864C10572B0F;
+	//check_data[7:0] = 8'd14;
+	flip_endian(check_data, flip_check_data);
 
 	@cb;
 
@@ -175,6 +198,7 @@ module tb_HM_SHA_256 ();
 		$error("To be expected");
 	@cb;
 
+	
 	end
 
 endmodule
