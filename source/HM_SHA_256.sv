@@ -12,7 +12,8 @@ module HM_SHA_256
 	input wire [6:0] count,
 	input wire init,
 	input wire out_load,
-	output reg [7:0][31:0] out_hash
+	output reg [7:0][31:0] out_hash,
+	output reg [31:0] nonce_reg
 
 );
 
@@ -59,6 +60,8 @@ logic [31:0] wsel;
 logic [31:0] ksel;
 logic [7:0][31:0] selected_hash;
 logic [7:0][31:0] out_reg; // Basically out_hash next
+logic [31:0] nonce_next;
+
 
 
 
@@ -101,6 +104,23 @@ always_ff @ ( posedge clk, negedge n_rst) begin //abc registers
 	end
 
 end
+
+
+always_ff @(posedge clk, negedge n_rst) begin //Nonce Reg
+	if(n_rst == 0)
+		nonce_reg <= 0;
+	else
+		nonce <= nonce_next;
+		
+end
+
+always_comb begin
+	if(out_load)
+		nonce_next = w[3];
+	else
+		nonce_next = nonce;
+end
+
 
 always_ff @(posedge clk, negedge n_rst) begin //W Register
 	if(n_rst == 0)
