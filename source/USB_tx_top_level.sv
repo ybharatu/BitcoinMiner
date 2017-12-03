@@ -24,30 +24,30 @@ module USB_tx_top_level
 	logic data_sent;
 	logic create_eop;
 	logic tx_shift;
-	logic crc_sent;
 	logic transmitting;
 	logic byte_sent;
-	logic tx_out;
 	logic tx_hold;
 	logic tx_enable;
 	logic tx_out_bit;
 	logic crc_clear;
+	logic crc_load;
 	logic [15:0] crc_16;
 
 
 	USB_timer_tx TIMER (.clk(clk), .n_rst(n_rst), .data_sent(data_sent), .byte_sent(byte_sent), .transmitting(transmitting),
-				.tx_shift(tx_shift), .crc_sent(crc_sent));
+				.tx_shift(tx_shift), .transmit_empty(transmit_empty));
 
-	USB_crc_tx CRC (.clk(clk), .crc_clear(crc_clear), .n_rst(n_rst), .tx_out(tx_out), .crc_enable(crc_enable), .tx_shift(tx_shift), .crc_16(crc_16));
+	USB_crc_tx CRC (.clk(clk), .tx_hold(tx_hold), .crc_clear(crc_clear), .n_rst(n_rst), .tx_out_bit(tx_out_bit), .crc_enable(crc_enable), .tx_shift(tx_shift), .crc_16(crc_16));
 
-	USB_encoder ENCODER (.clk(clk), .tx_hold(tx_hold), .create_eop(create_eop), .tx_shift(tx_shift),
+	USB_encoder ENCODER (.clk(clk), .n_rst(n_rst),.tx_hold(tx_hold), .create_eop(create_eop), .tx_shift(tx_shift),
 				.tx_out_bit(tx_out_bit), .d_plus_out(d_plus_out), .d_minus_out(d_minus_out));
 
 	USB_tx_controller CTRL (.clk(clk), .n_rst(n_rst), .transmit_empty(transmit_empty), .read_enable(read_enable), .tx_enable(tx_enable),
-				.load_enable(load_enable), .crc_enable(crc_enable), .transmitting(transmitting), .data_sent(data_sent),
-				.byte_sent(byte_sent), .crc_sent(crc_sent), .create_eop(create_eop), .tx_hold(tx_hold), .transmit_start(transmit_start));
+				.load_enable(load_enable), .crc_enable(crc_enable), .crc_load(crc_load), .transmitting(transmitting), .data_sent(data_sent),
+				.byte_sent(byte_sent), .create_eop(create_eop), .transmit_start(transmit_start), .crc_clear(crc_clear));
 
-	USB_tx_sr TX_SR (.clk(clk), .n_rst(n_rst), .load_enable(load_enable), .tx_enable(tx_enable), .tx_shift(tx_shift), .tx_data(tx_data), .tx_out(tx_out), .crc_16(crc_16), .crc_enable(crc_enable));
+	USB_tx_sr TX_SR (.clk(clk), .n_rst(n_rst), .load_enable(load_enable), .tx_enable(tx_enable), .tx_shift(tx_shift), .tx_data(tx_data), .tx_out_bit(tx_out_bit), .crc_16(crc_16), .crc_load(crc_load), 
+				.tx_hold(tx_hold));
 
 	
 	

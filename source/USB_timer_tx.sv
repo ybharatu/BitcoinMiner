@@ -14,17 +14,16 @@ module USB_timer_tx
 	input wire transmit_empty,
 	output logic byte_sent,
 	output logic data_sent,
-	output logic tx_shift,
-	output logic crc_sent
+	output logic tx_shift
 );
 
-logic temp_byte_sent;
-logic [5:0] value;
-logic temp_data_sent;
+logic [4:0] value;
 
-flex_counter #(5) FLEX_COUNTER (.clk(clk), .n_rst(n_rst), .clear(!transmitting), .count_enable(transmitting), .rollover_val(5'd16), .count_out(), .rollover_flag(temp_byte_sent));
+flex_counter #(4) TX_SHIFT (.clk(clk), .n_rst(n_rst), .clear(!transmitting), .count_enable(transmitting), .rollover_val(4'd8), .count_out(), .rollover_flag(tx_shift));
 
-flex_counter #(5) FLEX_COUNTER2 (.clk(clk), .n_rst(n_rst), .clear(!transmitting), .count_enable(temp_byte_sent), .rollover_val(value), .count_out(), .rollover_flag(temp_data_sent));
+flex_counter #(5) FLEX_COUNTER (.clk(clk), .n_rst(n_rst), .clear(!transmitting || byte_sent), .count_enable(tx_shift), .rollover_val(5'd16), .count_out(), .rollover_flag(byte_sent));
+
+flex_counter #(5) FLEX_COUNTER2 (.clk(clk), .n_rst(n_rst), .clear(!transmitting || data_sent), .count_enable(byte_sent), .rollover_val(value), .count_out(), .rollover_flag(data_sent));
 
 always_comb
 begin
@@ -38,9 +37,5 @@ begin
 	end
 end
 
-assign crc_sent = temp_data_sent;
-assign byte_sent = temp_byte_sent;
-assign data_sent = temp_data_sent;
-assign tx_shift = temp_byte_sent;
 
 endmodule

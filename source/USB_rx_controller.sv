@@ -16,13 +16,14 @@ module USB_rx_controller
 	input wire eop,
 	input wire crc_check,
 	input wire d_edge,
+	output logic crc_clear,
 	output reg receiving,
 	output reg write_enable,
 	output reg rcv_error,
 	output reg crc_enable
 );
 
-	typedef enum bit [3:0] {IDLE, START_RCV, PID_WAIT, PID_DONE, RCV_BYTE, RCVING, RCV_PULSE, RCV_DONE, CRC_CHK, ERROR}
+	typedef enum bit [3:0] {IDLE, START_RCV, PID_WAIT, PID_DONE, RCV_BYTE, RCVING, RCV_PULSE, RCV_DONE, CRC_CHK, ERROR, EOP_WAIT}
 	stateType;
 	stateType current_state, next_state;
 
@@ -45,12 +46,14 @@ module USB_rx_controller
 		write_enable = 0;
 		rcv_error = 0;
 		crc_enable = 0;
+		crc_clear = 0;
 
 		case(current_state)
 			IDLE: begin
 				receiving = 0;
 				write_enable = 0;
 				rcv_error = 0;
+				crc_clear = 1;
 				if(d_edge)
 					next_state = START_RCV;
 				else
@@ -125,9 +128,18 @@ module USB_rx_controller
 				write_enable = 0;
 				crc_enable = 0;
 				if(crc_check)
-					next_state = IDLE;
+					next_state = EOP_WAIT;
 				else
 					next_state = ERROR;
+			end
+			EOP_WAIT: begin
+				receiving = 1;
+				write_enable = 0;
+				crc_enable = 0;
+				if(d_edge)
+					next_state = IDLE;
+				else
+					next_state = EOP_WAIT;
 			end
 			default: begin
 				next_state = IDLE;

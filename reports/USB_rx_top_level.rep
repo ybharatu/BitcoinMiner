@@ -7,58 +7,11 @@ Report : timing
         -max_paths 4
 Design : USB_rx_top_level
 Version: K-2015.06-SP1
-Date   : Sun Dec  3 13:01:13 2017
+Date   : Sun Dec  3 13:35:03 2017
 ****************************************
 
 Operating Conditions: typical   Library: osu05_stdcells
 Wire Load Model Mode: top
-
-  Startpoint: RX_CONTROLLER/current_state_reg[1]
-              (rising edge-triggered flip-flop clocked by clk)
-  Endpoint: RX_TIMER/FLEX_COUNTER2_BYTE_RECEIVED/rollover_reg_reg
-            (rising edge-triggered flip-flop clocked by clk)
-  Path Group: clk
-  Path Type: max
-
-  Point                                                   Incr       Path
-  --------------------------------------------------------------------------
-  clock clk (rise edge)                                   0.00       0.00
-  clock network delay (ideal)                             0.00       0.00
-  RX_CONTROLLER/current_state_reg[1]/CLK (DFFSR)          0.00       0.00 r
-  RX_CONTROLLER/current_state_reg[1]/Q (DFFSR)            0.79       0.79 f
-  RX_CONTROLLER/U23/Y (INVX2)                             0.17       0.97 r
-  RX_CONTROLLER/U65/Y (NAND3X1)                           0.21       1.17 f
-  RX_CONTROLLER/U61/Y (NAND3X1)                           0.33       1.51 r
-  RX_CONTROLLER/U15/Y (INVX2)                             0.09       1.59 f
-  RX_CONTROLLER/U27/Y (NAND3X1)                           0.15       1.74 r
-  RX_CONTROLLER/U25/Y (OR2X1)                             0.28       2.02 r
-  RX_CONTROLLER/receiving (USB_rx_controller)             0.00       2.02 r
-  RX_TIMER/receiving (USB_timer_rx)                       0.00       2.02 r
-  RX_TIMER/U15/Y (NAND2X1)                                0.14       2.16 f
-  RX_TIMER/FLEX_COUNTER2_BYTE_RECEIVED/clear (flex_counter_NUM_CNT_BITS4_1)
-                                                          0.00       2.16 f
-  RX_TIMER/FLEX_COUNTER2_BYTE_RECEIVED/U33/Y (NOR2X1)     0.20       2.36 r
-  RX_TIMER/FLEX_COUNTER2_BYTE_RECEIVED/U32/Y (NOR2X1)     0.41       2.77 f
-  RX_TIMER/FLEX_COUNTER2_BYTE_RECEIVED/U21/Y (NAND3X1)
-                                                          0.26       3.03 r
-  RX_TIMER/FLEX_COUNTER2_BYTE_RECEIVED/U15/Y (OAI21X1)
-                                                          0.10       3.14 f
-  RX_TIMER/FLEX_COUNTER2_BYTE_RECEIVED/rollover_reg_reg/D (DFFSR)
-                                                          0.00       3.14 f
-  data arrival time                                                  3.14
-
-  clock clk (rise edge)                                  10.00      10.00
-  clock network delay (ideal)                             0.00      10.00
-  RX_TIMER/FLEX_COUNTER2_BYTE_RECEIVED/rollover_reg_reg/CLK (DFFSR)
-                                                          0.00      10.00 r
-  library setup time                                     -0.10       9.90
-  data required time                                                 9.90
-  --------------------------------------------------------------------------
-  data required time                                                 9.90
-  data arrival time                                                 -3.14
-  --------------------------------------------------------------------------
-  slack (MET)                                                        6.76
-
 
   Startpoint: RX_CONTROLLER/current_state_reg[0]
               (rising edge-triggered flip-flop clocked by clk)
@@ -73,24 +26,24 @@ Wire Load Model Mode: top
   clock network delay (ideal)                             0.00       0.00
   RX_CONTROLLER/current_state_reg[0]/CLK (DFFSR)          0.00       0.00 r
   RX_CONTROLLER/current_state_reg[0]/Q (DFFSR)            0.61       0.61 f
-  RX_CONTROLLER/U18/Y (INVX2)                             0.13       0.75 r
-  RX_CONTROLLER/U66/Y (NOR2X1)                            0.34       1.08 f
-  RX_CONTROLLER/U62/Y (NAND3X1)                           0.33       1.41 r
-  RX_CONTROLLER/U61/Y (NAND3X1)                           0.16       1.58 f
-  RX_CONTROLLER/U15/Y (INVX2)                             0.10       1.68 r
-  RX_CONTROLLER/U27/Y (NAND3X1)                           0.08       1.75 f
-  RX_CONTROLLER/U25/Y (OR2X1)                             0.28       2.04 f
-  RX_CONTROLLER/receiving (USB_rx_controller)             0.00       2.04 f
-  RX_TIMER/receiving (USB_timer_rx)                       0.00       2.04 f
-  RX_TIMER/U16/Y (NAND2X1)                                0.21       2.25 r
+  RX_CONTROLLER/U15/Y (INVX2)                             0.13       0.75 r
+  RX_CONTROLLER/U64/Y (NOR2X1)                            0.34       1.08 f
+  RX_CONTROLLER/U63/Y (NAND3X1)                           0.33       1.41 r
+  RX_CONTROLLER/U59/Y (NAND3X1)                           0.11       1.53 f
+  RX_CONTROLLER/U13/Y (INVX2)                             0.10       1.63 r
+  RX_CONTROLLER/U25/Y (NAND3X1)                           0.08       1.70 f
+  RX_CONTROLLER/U23/Y (OR2X1)                             0.28       1.99 f
+  RX_CONTROLLER/receiving (USB_rx_controller)             0.00       1.99 f
+  RX_TIMER/receiving (USB_timer_rx)                       0.00       1.99 f
+  RX_TIMER/U16/Y (NAND2X1)                                0.21       2.20 r
   RX_TIMER/FLEX_COUNTER/clear (flex_counter_NUM_CNT_BITS4_2)
-                                                          0.00       2.25 r
-  RX_TIMER/FLEX_COUNTER/U33/Y (NOR2X1)                    0.31       2.56 f
-  RX_TIMER/FLEX_COUNTER/U32/Y (NOR2X1)                    0.26       2.82 r
-  RX_TIMER/FLEX_COUNTER/U21/Y (NAND3X1)                   0.07       2.90 f
-  RX_TIMER/FLEX_COUNTER/U15/Y (OAI21X1)                   0.12       3.01 r
-  RX_TIMER/FLEX_COUNTER/rollover_reg_reg/D (DFFSR)        0.00       3.01 r
-  data arrival time                                                  3.01
+                                                          0.00       2.20 r
+  RX_TIMER/FLEX_COUNTER/U33/Y (NOR2X1)                    0.31       2.51 f
+  RX_TIMER/FLEX_COUNTER/U32/Y (NOR2X1)                    0.26       2.77 r
+  RX_TIMER/FLEX_COUNTER/U21/Y (NAND3X1)                   0.07       2.84 f
+  RX_TIMER/FLEX_COUNTER/U15/Y (OAI21X1)                   0.12       2.96 r
+  RX_TIMER/FLEX_COUNTER/rollover_reg_reg/D (DFFSR)        0.00       2.96 r
+  data arrival time                                                  2.96
 
   clock clk (rise edge)                                  10.00      10.00
   clock network delay (ideal)                             0.00      10.00
@@ -99,9 +52,56 @@ Wire Load Model Mode: top
   data required time                                                 9.78
   --------------------------------------------------------------------------
   data required time                                                 9.78
-  data arrival time                                                 -3.01
+  data arrival time                                                 -2.96
   --------------------------------------------------------------------------
-  slack (MET)                                                        6.76
+  slack (MET)                                                        6.82
+
+
+  Startpoint: RX_CONTROLLER/current_state_reg[1]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: RX_TIMER/FLEX_COUNTER2_BYTE_RECEIVED/rollover_reg_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  RX_CONTROLLER/current_state_reg[1]/CLK (DFFSR)          0.00       0.00 r
+  RX_CONTROLLER/current_state_reg[1]/Q (DFFSR)            0.79       0.79 f
+  RX_CONTROLLER/U20/Y (INVX2)                             0.17       0.97 r
+  RX_CONTROLLER/U63/Y (NAND3X1)                           0.17       1.13 f
+  RX_CONTROLLER/U59/Y (NAND3X1)                           0.31       1.44 r
+  RX_CONTROLLER/U13/Y (INVX2)                             0.09       1.53 f
+  RX_CONTROLLER/U25/Y (NAND3X1)                           0.15       1.68 r
+  RX_CONTROLLER/U23/Y (OR2X1)                             0.28       1.96 r
+  RX_CONTROLLER/receiving (USB_rx_controller)             0.00       1.96 r
+  RX_TIMER/receiving (USB_timer_rx)                       0.00       1.96 r
+  RX_TIMER/U15/Y (NAND2X1)                                0.14       2.10 f
+  RX_TIMER/FLEX_COUNTER2_BYTE_RECEIVED/clear (flex_counter_NUM_CNT_BITS4_1)
+                                                          0.00       2.10 f
+  RX_TIMER/FLEX_COUNTER2_BYTE_RECEIVED/U33/Y (NOR2X1)     0.20       2.30 r
+  RX_TIMER/FLEX_COUNTER2_BYTE_RECEIVED/U32/Y (NOR2X1)     0.41       2.71 f
+  RX_TIMER/FLEX_COUNTER2_BYTE_RECEIVED/U21/Y (NAND3X1)
+                                                          0.26       2.97 r
+  RX_TIMER/FLEX_COUNTER2_BYTE_RECEIVED/U15/Y (OAI21X1)
+                                                          0.10       3.07 f
+  RX_TIMER/FLEX_COUNTER2_BYTE_RECEIVED/rollover_reg_reg/D (DFFSR)
+                                                          0.00       3.07 f
+  data arrival time                                                  3.07
+
+  clock clk (rise edge)                                  10.00      10.00
+  clock network delay (ideal)                             0.00      10.00
+  RX_TIMER/FLEX_COUNTER2_BYTE_RECEIVED/rollover_reg_reg/CLK (DFFSR)
+                                                          0.00      10.00 r
+  library setup time                                     -0.10       9.90
+  data required time                                                 9.90
+  --------------------------------------------------------------------------
+  data required time                                                 9.90
+  data arrival time                                                 -3.07
+  --------------------------------------------------------------------------
+  slack (MET)                                                        6.82
 
 
   Startpoint: RX_CONTROLLER/current_state_reg[0]
@@ -117,24 +117,24 @@ Wire Load Model Mode: top
   clock network delay (ideal)                             0.00       0.00
   RX_CONTROLLER/current_state_reg[0]/CLK (DFFSR)          0.00       0.00 r
   RX_CONTROLLER/current_state_reg[0]/Q (DFFSR)            0.61       0.61 f
-  RX_CONTROLLER/U18/Y (INVX2)                             0.13       0.75 r
-  RX_CONTROLLER/U66/Y (NOR2X1)                            0.34       1.08 f
-  RX_CONTROLLER/U62/Y (NAND3X1)                           0.33       1.41 r
-  RX_CONTROLLER/U61/Y (NAND3X1)                           0.16       1.58 f
-  RX_CONTROLLER/U15/Y (INVX2)                             0.10       1.68 r
-  RX_CONTROLLER/U27/Y (NAND3X1)                           0.08       1.75 f
-  RX_CONTROLLER/U25/Y (OR2X1)                             0.28       2.04 f
-  RX_CONTROLLER/receiving (USB_rx_controller)             0.00       2.04 f
-  RX_TIMER/receiving (USB_timer_rx)                       0.00       2.04 f
-  RX_TIMER/U16/Y (NAND2X1)                                0.21       2.25 r
+  RX_CONTROLLER/U15/Y (INVX2)                             0.13       0.75 r
+  RX_CONTROLLER/U64/Y (NOR2X1)                            0.34       1.08 f
+  RX_CONTROLLER/U63/Y (NAND3X1)                           0.33       1.41 r
+  RX_CONTROLLER/U59/Y (NAND3X1)                           0.11       1.53 f
+  RX_CONTROLLER/U13/Y (INVX2)                             0.10       1.63 r
+  RX_CONTROLLER/U25/Y (NAND3X1)                           0.08       1.70 f
+  RX_CONTROLLER/U23/Y (OR2X1)                             0.28       1.99 f
+  RX_CONTROLLER/receiving (USB_rx_controller)             0.00       1.99 f
+  RX_TIMER/receiving (USB_timer_rx)                       0.00       1.99 f
+  RX_TIMER/U16/Y (NAND2X1)                                0.21       2.20 r
   RX_TIMER/FLEX_COUNTER/clear (flex_counter_NUM_CNT_BITS4_2)
-                                                          0.00       2.25 r
-  RX_TIMER/FLEX_COUNTER/U33/Y (NOR2X1)                    0.31       2.56 f
-  RX_TIMER/FLEX_COUNTER/U32/Y (NOR2X1)                    0.26       2.82 r
-  RX_TIMER/FLEX_COUNTER/U25/Y (NAND2X1)                   0.08       2.90 f
-  RX_TIMER/FLEX_COUNTER/U24/Y (OAI21X1)                   0.11       3.01 r
-  RX_TIMER/FLEX_COUNTER/count_reg_reg[0]/D (DFFSR)        0.00       3.01 r
-  data arrival time                                                  3.01
+                                                          0.00       2.20 r
+  RX_TIMER/FLEX_COUNTER/U33/Y (NOR2X1)                    0.31       2.51 f
+  RX_TIMER/FLEX_COUNTER/U32/Y (NOR2X1)                    0.26       2.77 r
+  RX_TIMER/FLEX_COUNTER/U25/Y (NAND2X1)                   0.08       2.85 f
+  RX_TIMER/FLEX_COUNTER/U24/Y (OAI21X1)                   0.11       2.95 r
+  RX_TIMER/FLEX_COUNTER/count_reg_reg[0]/D (DFFSR)        0.00       2.95 r
+  data arrival time                                                  2.95
 
   clock clk (rise edge)                                  10.00      10.00
   clock network delay (ideal)                             0.00      10.00
@@ -143,9 +143,9 @@ Wire Load Model Mode: top
   data required time                                                 9.78
   --------------------------------------------------------------------------
   data required time                                                 9.78
-  data arrival time                                                 -3.01
+  data arrival time                                                 -2.95
   --------------------------------------------------------------------------
-  slack (MET)                                                        6.77
+  slack (MET)                                                        6.82
 
 
   Startpoint: RX_CONTROLLER/current_state_reg[0]
@@ -161,24 +161,24 @@ Wire Load Model Mode: top
   clock network delay (ideal)                             0.00       0.00
   RX_CONTROLLER/current_state_reg[0]/CLK (DFFSR)          0.00       0.00 r
   RX_CONTROLLER/current_state_reg[0]/Q (DFFSR)            0.61       0.61 f
-  RX_CONTROLLER/U18/Y (INVX2)                             0.13       0.75 r
-  RX_CONTROLLER/U66/Y (NOR2X1)                            0.34       1.08 f
-  RX_CONTROLLER/U62/Y (NAND3X1)                           0.33       1.41 r
-  RX_CONTROLLER/U61/Y (NAND3X1)                           0.16       1.58 f
-  RX_CONTROLLER/U15/Y (INVX2)                             0.10       1.68 r
-  RX_CONTROLLER/U27/Y (NAND3X1)                           0.08       1.75 f
-  RX_CONTROLLER/U25/Y (OR2X1)                             0.28       2.04 f
-  RX_CONTROLLER/receiving (USB_rx_controller)             0.00       2.04 f
-  RX_TIMER/receiving (USB_timer_rx)                       0.00       2.04 f
-  RX_TIMER/U16/Y (NAND2X1)                                0.21       2.25 r
+  RX_CONTROLLER/U15/Y (INVX2)                             0.13       0.75 r
+  RX_CONTROLLER/U64/Y (NOR2X1)                            0.34       1.08 f
+  RX_CONTROLLER/U63/Y (NAND3X1)                           0.33       1.41 r
+  RX_CONTROLLER/U59/Y (NAND3X1)                           0.11       1.53 f
+  RX_CONTROLLER/U13/Y (INVX2)                             0.10       1.63 r
+  RX_CONTROLLER/U25/Y (NAND3X1)                           0.08       1.70 f
+  RX_CONTROLLER/U23/Y (OR2X1)                             0.28       1.99 f
+  RX_CONTROLLER/receiving (USB_rx_controller)             0.00       1.99 f
+  RX_TIMER/receiving (USB_timer_rx)                       0.00       1.99 f
+  RX_TIMER/U16/Y (NAND2X1)                                0.21       2.20 r
   RX_TIMER/FLEX_COUNTER/clear (flex_counter_NUM_CNT_BITS4_2)
-                                                          0.00       2.25 r
-  RX_TIMER/FLEX_COUNTER/U33/Y (NOR2X1)                    0.31       2.56 f
-  RX_TIMER/FLEX_COUNTER/U32/Y (NOR2X1)                    0.26       2.82 r
-  RX_TIMER/FLEX_COUNTER/U27/Y (NAND2X1)                   0.08       2.90 f
-  RX_TIMER/FLEX_COUNTER/U26/Y (OAI21X1)                   0.11       3.01 r
-  RX_TIMER/FLEX_COUNTER/count_reg_reg[1]/D (DFFSR)        0.00       3.01 r
-  data arrival time                                                  3.01
+                                                          0.00       2.20 r
+  RX_TIMER/FLEX_COUNTER/U33/Y (NOR2X1)                    0.31       2.51 f
+  RX_TIMER/FLEX_COUNTER/U32/Y (NOR2X1)                    0.26       2.77 r
+  RX_TIMER/FLEX_COUNTER/U27/Y (NAND2X1)                   0.08       2.85 f
+  RX_TIMER/FLEX_COUNTER/U26/Y (OAI21X1)                   0.11       2.95 r
+  RX_TIMER/FLEX_COUNTER/count_reg_reg[1]/D (DFFSR)        0.00       2.95 r
+  data arrival time                                                  2.95
 
   clock clk (rise edge)                                  10.00      10.00
   clock network delay (ideal)                             0.00      10.00
@@ -187,9 +187,9 @@ Wire Load Model Mode: top
   data required time                                                 9.78
   --------------------------------------------------------------------------
   data required time                                                 9.78
-  data arrival time                                                 -3.01
+  data arrival time                                                 -2.95
   --------------------------------------------------------------------------
-  slack (MET)                                                        6.77
+  slack (MET)                                                        6.82
 
 
 1
@@ -198,7 +198,7 @@ Wire Load Model Mode: top
 Report : area
 Design : USB_rx_top_level
 Version: K-2015.06-SP1
-Date   : Sun Dec  3 13:01:13 2017
+Date   : Sun Dec  3 13:35:03 2017
 ****************************************
 
 Library(s) Used:
@@ -206,21 +206,21 @@ Library(s) Used:
     osu05_stdcells (File: /package/eda/cells/OSU/v2.7/synopsys/lib/ami05/osu05_stdcells.db)
 
 Number of ports:                          148
-Number of nets:                           593
-Number of cells:                          475
-Number of combinational cells:            337
+Number of nets:                           591
+Number of cells:                          473
+Number of combinational cells:            335
 Number of sequential cells:               123
 Number of macros/black boxes:               0
-Number of buf/inv:                         81
+Number of buf/inv:                         79
 Number of references:                       9
 
-Combinational area:              91107.000000
-Buf/Inv area:                    11664.000000
+Combinational area:              90594.000000
+Buf/Inv area:                    11376.000000
 Noncombinational area:           95040.000000
 Macro/Black Box area:                0.000000
 Net Interconnect area:      undefined  (No wire load specified)
 
-Total cell area:                186147.000000
+Total cell area:                185634.000000
 Total area:                 undefined
 1
 Loading db file '/package/eda/cells/OSU/v2.7/synopsys/lib/ami05/osu05_stdcells.db'
@@ -234,7 +234,7 @@ Report : power
         -analysis_effort low
 Design : USB_rx_top_level
 Version: K-2015.06-SP1
-Date   : Sun Dec  3 13:01:14 2017
+Date   : Sun Dec  3 13:35:03 2017
 ****************************************
 
 
@@ -260,24 +260,24 @@ Power-specific unit information :
                                        Switch   Int      Leak     Total
 Hierarchy                              Power    Power    Power    Power    %
 --------------------------------------------------------------------------------
-USB_rx_top_level                          1.319   14.294   58.871   15.613 100.0
-  RX_TIMER (USB_timer_rx)                 1.009    5.295   25.877    6.304  40.4
+USB_rx_top_level                          1.315   14.292   58.779   15.607 100.0
+  RX_TIMER (USB_timer_rx)                 1.007    5.295   25.877    6.302  40.4
     FLEX_COUNTER3_BIT_STUFFING (flex_counter_NUM_CNT_BITS4_0)
                                           0.131    1.193    7.253    1.324   8.5
     FLEX_COUNTER2_BYTE_RECEIVED (flex_counter_NUM_CNT_BITS4_1)
                                           0.126    1.178    7.253    1.304   8.4
     FLEX_COUNTER (flex_counter_NUM_CNT_BITS4_2)
                                           0.341    1.585    7.253    1.927  12.3
-  RX_CONTROLLER (USB_rx_controller)    8.13e-02    0.916    5.717    0.997   6.4
-  RX_SR (USB_rx_sr)                    6.78e-02    1.746    5.318    1.813  11.6
+  RX_CONTROLLER (USB_rx_controller)    7.57e-02    0.915    5.625    0.991   6.3
+  RX_SR (USB_rx_sr)                    6.78e-02    1.745    5.318    1.813  11.6
     RX_SR (flex_stp_sr_NUM_BITS8_SHIFT_MSB1)
-                                       6.78e-02    1.746    5.318    1.813  11.6
+                                       6.78e-02    1.745    5.318    1.813  11.6
   CRC (USB_crc_block)                  5.39e-02    4.661   17.642    4.715  30.2
     CRC_16 (USB_crc_16)                3.34e-02    3.382   12.824    3.415  21.9
     CRC_5 (USB_crc_5)                  1.63e-02    1.070    4.131    1.086   7.0
   EDGE_DETECT (USB_edge_detect)        4.47e-02    0.255    0.713    0.300   1.9
   DECODER (USB_decoder)                2.68e-02    0.250    0.888    0.277   1.8
-  EOP_DETECT (USB_eop_detect)          9.87e-03    0.228    0.584    0.238   1.5
+  EOP_DETECT (USB_eop_detect)          1.24e-02    0.228    0.584    0.240   1.5
   SYNC_LOW (USB_sync_low)              4.76e-03    0.469    1.066    0.474   3.0
   SYNC_HIGH (USB_sync_high)            2.12e-02    0.474    1.066    0.495   3.2
 1

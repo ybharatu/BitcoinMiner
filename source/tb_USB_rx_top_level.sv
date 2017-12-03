@@ -127,22 +127,29 @@ module tb_USB_rx_top_level ();
 		//send_byte(8'b11110000);
 		//send_byte(8'b11111101);
 		send_eop;
+		#(BUS_PERIOD);
+/*
 		tb_n_rst = 'b0;
 		@cb;
 		@cb;
 		cb.n_rst <= 'b1;
 		@cb;
+*/
 		send_byte(8'b01010100);
 		send_byte(8'b10000111);
 		send_byte(8'b01011100);
 		send_byte(8'b10111100);
 		send_eop;
+/*
 		tb_n_rst = 'b0;
 		@cb;
 		@cb;
 		cb.n_rst <= 'b1;
 		tb_packet_type = 'b1;
 		@cb;
+*/
+		#(BUS_PERIOD);
+		tb_packet_type = 'b1;
 		send_byte(8'b01010100);
 		send_byte(8'b11000011);
 		send_byte(8'b00000000);
@@ -152,12 +159,16 @@ module tb_USB_rx_top_level ();
 		send_byte(8'b11110111);
 		send_byte(8'b01011110);
 		send_eop;
+/*
 		tb_n_rst = 'b0;
 		@cb;
 		@cb;
 		cb.n_rst <= 'b1;
 		tb_packet_type = 'b1;
 		@cb;
+*/
+		#(BUS_PERIOD);
+		tb_packet_type = 'b1;
 		send_byte(8'b01010100);
 		send_byte(8'b11010010);
 		send_byte(8'b11000100);

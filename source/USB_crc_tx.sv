@@ -13,7 +13,8 @@ module USB_crc_tx
 	input wire crc_clear,
 	input wire tx_shift,
 	input crc_enable,
-	input tx_out,
+	input tx_out_bit,
+	input tx_hold,
 	output logic [15:0] crc_16
 );
 
@@ -34,9 +35,9 @@ end
 
 always_comb 
 begin
-	if(tx_shift)
+	if(tx_shift && !tx_hold && crc_enable)
 	begin
-		q_next[0] = (tx_out ^ q[15]);
+		q_next[0] = (tx_out_bit ^ q[15]);
 		q_next[1] = q[0];
 		q_next[2] = (q_next[0] ^ q[1]);
 		q_next[14:3] = q[13:2];
@@ -52,5 +53,7 @@ begin
 	end
 	
 end
+
+assign crc_16 = q;
 
 endmodule

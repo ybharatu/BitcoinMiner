@@ -68,7 +68,14 @@ module tb_USB_tx_top_level ();
 		cb.n_rst <= 'b1;
 		@cb;
 		cb.transmit_empty <= 'b1;
-		cb.tx_data <= 16'b1111111100001111;
+		cb.tx_data <= 16'b0101010011010010;
+		@(posedge tb_read_enable);
+		cb.tx_data <= 16'b1100010010100010;
+		@(posedge tb_read_enable);
+		cb.tx_data <= 16'b1110011010010001;
+		@(posedge tb_read_enable);
+		cb.tx_data <= 16'b0111000000111000;
+		@(posedge tb_read_enable);
 		@cb;
 		
 	
