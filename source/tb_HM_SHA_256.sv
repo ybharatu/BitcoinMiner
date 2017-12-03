@@ -38,15 +38,23 @@ module tb_HM_SHA_256 ();
 	reg tb_out_load;
 	reg [15:0][31:0] tb_data;
 	reg [6:0] tb_count;
-	reg [7:0][79:0] check_data;
-	reg [7:0][79:0] flip_check_data;
+	reg [19:0][31:0] check_data;
+//	reg [19:0][31:0] flip_check_data;
+//	reg [19:0][31:0] flip_check_data_32;
+
+	reg [31:0][31:0] converted_check_data;
+	reg [15:0][31:0] converted_check_data_1;
+	reg [15:0][31:0] converted_check_data_2;
+
 	reg [7:0][31:0] tb_out_hash;
 
 	reg [7:0][31:0] expected_1 = {32'hf20015ad,32'hb410ff61,32'h96177a9c,32'hb00361a3,
 				      32'h5dae2223,32'h414140de,32'h8f01cfea,32'hba7816bf};
 
 	reg [7:0][31:0] expected_2 = {32'h19DB06C1,32'hF6ECEDD4,32'h64FF2167,32'hA33CE459,
-				      32'h0C3E6039,32'hE5C02693,32'hD20638B8,32'h248D6A61};	   
+				      32'h0C3E6039,32'hE5C02693,32'hD20638B8,32'h248D6A61};	
+
+	reg [7:0][31:0] expected_3 = {256'h000000000003ba27aa200b1cecaad478d2b00432346c3f1f3986da1afd33e506};   
 	
 	reg [15:0][31:0] data_1 = {32'h00000018,32'h00000000,32'h00000000,32'h00000000,
 				   32'h00000000,32'h00000000,32'h00000000,32'h00000000,
@@ -81,19 +89,50 @@ module tb_HM_SHA_256 ();
 	HM_SHA_256 DUT (.n_rst(tb_n_rst), .clk(tb_clk), .halt(tb_halt),
 			.clear(tb_clear), .data(tb_data), .count(tb_count), .out_hash(tb_out_hash), .init(tb_init), .out_load(tb_out_load)); 
 
-	task flip_endian 
-	(
-		input [640:0] data,
-		output [640:0] flipped
-	);
+	task get_formatted_data;
+		input [639:0] data;
+		output [1023:0] converted;
+	begin 
+		converted = '0;
+		converted[1023:384] = data;
+		converted[383] = 1'b1;
+		converted[63:0] = 64'd640;
+	end
+	endtask
+
+	task flip_endian;
+	parameter length = 640;
+	parameter flip_length = 8;
+		input [length - 1:0] data;
+		output [length - 1:0] flipped;
+	
 	begin
 		integer j;
 		integer k;
-		for (j = 0; j < 640; j = j + 8) begin
-			for (k = 0; k < 8; k = k + 1) begin
-				flipped[j+k] = data[632-j+k];
-				$info("k: %0d opp: %0d", k, 632-j+k);
-				flipped[632-j+k] = data[k+j];
+		for (j = 0; j < length; j = j + flip_length) begin
+			for (k = 0; k < flip_length; k = k + 1) begin
+				flipped[j+k] = data[length-flip_length-j+k];
+				$info("k: %0d opp: %0d", k, length-flip_length-j+k);
+				flipped[length-flip_length-j+k] = data[k+j];
+			end
+		end
+	end
+	endtask
+
+	task flip_endian_32;
+	parameter length = 512;
+	parameter flip_length = 32;
+		input [length - 1:0] data;
+		output [length - 1:0] flipped;
+	
+	begin
+		integer j;
+		integer k;
+		for (j = 0; j < length; j = j + flip_length) begin
+			for (k = 0; k < flip_length; k = k + 1) begin
+				flipped[j+k] = data[length-flip_length-j+k];
+				$info("k: %0d opp: %0d", k, length-flip_length-j+k);
+				flipped[length-flip_length-j+k] = data[k+j];
 			end
 		end
 	end
@@ -124,9 +163,14 @@ module tb_HM_SHA_256 ();
 	tb_init		= 1'b0;
 	tb_out_load		= 1'b0;
 	check_data = '0;
-	check_data = 640'h01000000000000000002d01c1fccc21636b607dfd930d31d01c3a62104612a1719011250f3e94742aca4b5ef85488dc37c06c3282295ffec960994b2c0d5ac2a25a957664D1B22371B04864C10572B0F;
+	check_data = 640'h0100000050120119172a610421a6c3011dd330d9df07b63616c2cc1f1cd00200000000006657a9252aacd5c0b2940996ecff952228c3067cc38d4885efb5a4ac4247e9f337221b4d4c86041b0f2b5710;
 	//check_data[7:0] = 8'd14;
-	flip_endian(check_data, flip_check_data);
+	//flip_endian(check_data, flip_check_data);
+	//flip_endian_32(check_data,flip_check_data_32);
+	get_formatted_data(check_data, converted_check_data);
+
+	flip_endian_32(converted_check_data[31:16], converted_check_data_1);
+	flip_endian_32(converted_check_data[15:0], converted_check_data_2);
 
 	@cb;
 
@@ -196,9 +240,6 @@ module tb_HM_SHA_256 ();
 		$info("HOLY SHIT IT WORKS");
 	else
 		$error("To be expected");
-	@cb;
-
-	
 	end
 
 endmodule
