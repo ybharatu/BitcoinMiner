@@ -45,7 +45,7 @@ begin
 	begin
 		q_next = q;
 	end
-	if(clear)
+	if(crc_clear)
 	begin
 		q_next = ~(16'b0);
 	end

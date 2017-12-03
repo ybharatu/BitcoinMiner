@@ -12,7 +12,7 @@ module USB_rx_sr
 	input wire n_rst,
 	input wire shift_enable,
 	input wire d_orig,
-	output wire [15:0] rx_data
+	output wire [7:0] rx_data
 );
 
 	flex_stp_sr #(8,1) RX_SR

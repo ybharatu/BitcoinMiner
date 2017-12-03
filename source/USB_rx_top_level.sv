@@ -13,7 +13,7 @@ module USB_rx_top_level
 	input wire clk,
 	input wire n_rst,
 	input wire packet_type,
-	output logic [15:0] rx_data,
+	output logic [7:0] rx_data,
 	output logic write_enable,
 	output logic rcv_error
 );
@@ -28,9 +28,9 @@ module USB_rx_top_level
 	logic crc_clear;
 	logic crc_check;
 	
-USB_sync_high SYNC_HIGH (.clk(clk), .n_rst(n_rst), .async_in(d_plus_in), .symc_out(d_plus_sync));
+USB_sync_high SYNC_HIGH (.clk(clk), .n_rst(n_rst), .async_in(d_plus_in), .sync_out(d_plus_sync));
 
-USB_sync_low SYNC_LOW (.clk(clk), .n_rst(n_rst), .async_in(d_minus_in), .sync_out(d_miinus_sync));
+USB_sync_low SYNC_LOW (.clk(clk), .n_rst(n_rst), .async_in(d_minus_in), .sync_out(d_minus_sync));
 
 USB_eop_detect EOP_DETECT (.clk(clk), .n_rst(n_rst), .d_plus_sync(d_plus_sync), .d_minus_sync(d_minus_sync), .eop(eop));
 
@@ -43,7 +43,7 @@ USB_crc_block CRC (.clk(clk), .n_rst(n_rst), .crc_clear(crc_clear), .shift_enabl
 USB_rx_sr RX_SR (.clk(clk), .n_rst(n_rst), .shift_enable(shift_enable), .d_orig(d_orig), .rx_data(rx_data));
 
 USB_rx_controller RX_CONTROLLER (.clk(clk), .n_rst(n_rst), .shift_enable(shift_enable), .byte_received(byte_received), .rx_data(rx_data),
-	.eop(eop), .crc_check_5(crc_check_5), .crc_check_16(crc_check_16), .d_edge(d_edge), .receiving(receiving), .write_enable(write_enable),
+	.eop(eop), .crc_check(crc_check), .d_edge(d_edge), .receiving(receiving), .write_enable(write_enable),
 	.rcv_error(rcv_error));
 
 USB_timer_rx RX_TIMER (.clk(clk), .n_rst(n_rst), .d_edge(d_edge), .receiving(receiving), .shift_enable(shift_enable), .byte_received(byte_received));

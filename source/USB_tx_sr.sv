@@ -14,8 +14,9 @@ module USB_tx_sr
 	input wire load_enable,
 	input wire tx_shift,
 	input wire tx_hold,
-	input wire [15:0] read_data,
+	input wire [15:0] tx_data,
 	input wire [15:0] crc_16,
+	input wire crc_enable,
 	output wire tx_out
 );
 

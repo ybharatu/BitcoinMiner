@@ -1,0 +1,2 @@
+Synthesizing design: USB_rx_top_level.sv
+dc_shell-t -x "source -echo do_mapping.tcl"

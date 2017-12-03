@@ -111,7 +111,7 @@ module USB_encoder
 
 					
 				end
-
+				end
 				else
 				begin
 					if(d_plus == 0)

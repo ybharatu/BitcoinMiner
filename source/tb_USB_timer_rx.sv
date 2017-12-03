@@ -70,7 +70,14 @@ module tb_USB_timer_rx ();
 		tb_test_num = tb_test_num + 1;
 		cb.receiving <= 'b1;
 		cb.n_rst <= 'b1;
-		#(800);
+		#(560);
+		cb.d_edge <= 'b1;
+		@cb;
+		@cb;
+		cb.d_edge <= 'b0;
+		#(80);
+		cb.d_edge <= 'b0;
+		#(160);
 		// Test Case 2: Continous Edge detects ( Shift enable should assert every 8 clock cycles )
 		tb_test_num = tb_test_num + 1;
 		cb.d_edge <= 1;
