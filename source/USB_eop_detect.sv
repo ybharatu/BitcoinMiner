@@ -14,7 +14,17 @@ module USB_eop_detect
 	input wire d_minus_sync,
 	output wire eop
 );
+	
+	logic temp_eop;
+	always_ff @(posedge clk, negedge n_rst)
+	begin
+		if(n_rst == 'b0)
+			temp_eop <= 0;
+		else
+			temp_eop <= ~(d_plus_sync | d_minus_sync);
 
-	assign eop = ~(d_plus_sync | d_minus_sync);
-
+	end
+	assign eop = temp_eop;
+	
+	//assign eop = ~(d_plus_sync | d_minus_sync);
 endmodule

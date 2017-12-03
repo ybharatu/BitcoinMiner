@@ -99,6 +99,8 @@ module tb_USB_rx_top_level ();
 		tb_d_plus_in = 0;
 		tb_d_minus_in = 0;
 		#(BUS_PERIOD);
+		#(BUS_PERIOD);
+		tb_d_plus_in = 1;
 	end
 	endtask
 
@@ -117,11 +119,52 @@ module tb_USB_rx_top_level ();
 		cb.n_rst <= 'b1;
 		@cb;
 		send_byte(8'b01010100);
-		send_byte(8'b11110000);
-		send_byte(8'b11111101);
+		send_byte(8'b10110100);
+		send_byte(8'b10101000);
+		send_byte(8'b11110111);
+		//send_byte(8'b11110000);
+		//send_byte(8'b11111101);
 		send_eop;
-		
-		
+		tb_n_rst = 'b0;
+		@cb;
+		@cb;
+		cb.n_rst <= 'b1;
+		@cb;
+		send_byte(8'b01010100);
+		send_byte(8'b10000111);
+		send_byte(8'b01011100);
+		send_byte(8'b10111100);
+		send_eop;
+		tb_n_rst = 'b0;
+		@cb;
+		@cb;
+		cb.n_rst <= 'b1;
+		tb_packet_type = 'b1;
+		@cb;
+		send_byte(8'b01010100);
+		send_byte(8'b11000011);
+		send_byte(8'b00000000);
+		send_byte(8'b10000000);
+		send_byte(8'b01000000);
+		send_byte(8'b11000000);
+		send_byte(8'b11110111);
+		send_byte(8'b01011110);
+		send_eop;
+		tb_n_rst = 'b0;
+		@cb;
+		@cb;
+		cb.n_rst <= 'b1;
+		tb_packet_type = 'b1;
+		@cb;
+		send_byte(8'b01010100);
+		send_byte(8'b11010010);
+		send_byte(8'b11000100);
+		send_byte(8'b10100010);
+		send_byte(8'b11100110);
+		send_byte(8'b10010001);
+		send_byte(8'b01110000);
+		send_byte(8'b00111000);
+		send_eop;
 	end
 
 endmodule
