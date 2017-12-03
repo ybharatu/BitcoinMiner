@@ -13,7 +13,7 @@ module HM_SHA_256
 	input wire init,
 	input wire out_load,
 	output reg [7:0][31:0] out_hash,
-	output reg [31:0] nonce_reg
+	output reg [31:0] nonce
 
 );
 
@@ -108,7 +108,7 @@ end
 
 always_ff @(posedge clk, negedge n_rst) begin //Nonce Reg
 	if(n_rst == 0)
-		nonce_reg <= 0;
+		nonce <= 0;
 	else
 		nonce <= nonce_next;
 		
