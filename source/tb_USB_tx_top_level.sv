@@ -43,7 +43,7 @@ module tb_USB_tx_top_level ();
 		default input #1step output #100ps; // Setup time (01CLK -> 10D) is 94 ps
 		output #800ps n_rst = tb_n_rst; // FIXME: Removal time (01CLK -> 01R) is 281.25ps, but this needs to be 800 to prevent metastable value warnings
 		output  
-			[15:0] tx_data = tb_tx_data,
+			tx_data = tb_tx_data,
 			transmit_empty = tb_transmit_empty,
 			transmit_start = tb_transmit_start;
 		input	d_plus_out = tb_d_plus_out,
@@ -67,6 +67,10 @@ module tb_USB_tx_top_level ();
 		@cb;
 		cb.n_rst <= 'b1;
 		@cb;
+		cb.transmit_empty <= 'b1;
+		cb.tx_data <= 16'b1111111100001111;
+		@cb;
+		
 	
 	end
 

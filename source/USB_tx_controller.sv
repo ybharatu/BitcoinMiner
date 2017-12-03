@@ -62,6 +62,7 @@ module USB_tx_controller
 				crc_enable = 0;
 				transmitting = 0;
 				create_eop = 0;
+				crc_clear = 1;
 				if(transmit_start || transmit_empty)
 					next_state = LOAD;
 			end
@@ -69,7 +70,7 @@ module USB_tx_controller
 				next_state = START_TX;
 				load_enable = 1;
 				transmitting = 1;
-				crc_clear = 1;
+				//crc_clear = 1;
 			end
 			START_TX: begin
 				next_state = START_TX;

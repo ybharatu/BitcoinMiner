@@ -19,3 +19,4 @@ _opt__lock
 *.stran
 *.nfs*
 vsim.wlf
+analyzed/*

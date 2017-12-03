@@ -41,7 +41,9 @@ module tb_USB_rx_top_level ();
 		default input #1step output #100ps; // Setup time (01CLK -> 10D) is 94 ps
 		output #800ps n_rst = tb_n_rst; // FIXME: Removal time (01CLK -> 01R) is 281.25ps, but this needs to be 800 to prevent metastable value warnings
 		output  
-			packet_type = tb_packet_type;
+			packet_type = tb_packet_type,
+			d_plus_in = tb_d_plus_in,
+			d_minus_in = tb_d_minus_in;
 		input	rx_data = tb_rx_data,
 			write_enable = tb_write_enable,
 			rcv_error = tb_rcv_error;
@@ -58,26 +60,26 @@ module tb_USB_rx_top_level ();
 			begin
 				if(tb_d_plus_in == 1)
 				begin
-					tb_d_plus_in = 0;
-					tb_d_minus_in = 1;
+					cb.d_plus_in <= 0;
+					cb.d_minus_in <= 1;
 				end
 				else
 				begin
-					tb_d_plus_in = 1;
-					tb_d_minus_in = 0;
+					cb.d_plus_in <= 1;
+					cb.d_minus_in <= 0;
 				end
 			end
 			else
 			begin
 				if(tb_d_plus_in == 1)
 				begin
-					tb_d_plus_in = 1;
-					tb_d_minus_in = 0;
+					cb.d_plus_in <= 1;
+					cb.d_minus_in <= 0;
 				end
 				else
 				begin
-					tb_d_plus_in = 0;
-					tb_d_minus_in = 1;
+					cb.d_plus_in <= 0;
+					cb.d_minus_in <= 1;
 				end
 			end
 			#(BUS_PERIOD);
@@ -88,19 +90,19 @@ module tb_USB_rx_top_level ();
 	task send_bit;
 		input data;
 	begin	
-		tb_d_plus_in = data;
-		tb_d_minus_in = ~data;
+		cb.d_plus_in <= data;
+		cb.d_minus_in <= ~data;
 		#(BUS_PERIOD);
 	end
 	endtask
 
 	task send_eop;
 	begin
-		tb_d_plus_in = 0;
-		tb_d_minus_in = 0;
+		cb.d_plus_in <= 0;
+		cb.d_minus_in <= 0;
 		#(BUS_PERIOD);
 		#(BUS_PERIOD);
-		tb_d_plus_in = 1;
+		cb.d_plus_in <= 1;
 	end
 	endtask
 
@@ -111,8 +113,8 @@ module tb_USB_rx_top_level ();
 	begin
 		// Initial Reset
 		tb_n_rst = 'b0;
-		tb_d_plus_in = 'b1;
-		tb_d_minus_in = 'b0;
+		cb.d_plus_in <= 'b1;
+		cb.d_minus_in <= 'b0;
 		tb_packet_type = 'b0;
 		@cb;
 		@cb;
