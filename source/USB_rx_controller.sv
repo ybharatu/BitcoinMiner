@@ -96,12 +96,12 @@ module USB_rx_controller
 				receiving = 1;
 				write_enable = 0;
 				crc_enable = 1;
-				if(!eop && !byte_received)
-					next_state = RCVING;
 				if(eop)
 					next_state = ERROR;
-				if(!eop & byte_received)
+				else if(!eop & byte_received)
 					next_state = RCV_PULSE;
+				else
+					next_state = RCVING;
 			end
 			RCV_PULSE: begin
 				receiving = 1;
