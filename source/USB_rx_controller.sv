@@ -21,7 +21,7 @@ module USB_rx_controller
 	output reg rcv_error
 );
 
-	typedef enum bit [3:0] {IDLE, START_RCV, RCV_BYTE, RCVING, RCV_DONE, CRC_CHK, ERROR}
+	typedef enum bit [3:0] {IDLE, START_RCV, PID_WAIT, PID_DONE, RCV_BYTE, RCVING, RCV_DONE, CRC_CHK, ERROR}
 	stateType;
 	stateType current_state, next_state;
 
@@ -64,10 +64,27 @@ module USB_rx_controller
 			RCV_BYTE: begin;
 				receiving = 1;
 				if(rx_data == 8'b01010100) //sync pattern
-					next_state = RCVING;
+					next_state = PID_WAIT;
 				else
 					next_state = ERROR;
 			end
+			PID_WAIT: begin;
+				receiving = 1;
+				if(byte_received && !eop)
+					next_state = PID_DONE;
+				else if(eop)
+					next_state = ERROR;
+				else
+					next_state = PID_WAIT;
+			end
+			PID_DONE: begin;
+				receiving = 1;
+				write_enable = 1;
+				if()
+					next_state = PID_WAIT;
+				else
+					next_state = ERROR;
+			end	
 			ERROR: begin
 				rcv_error = 1;
 				receiving = 1;
