@@ -18,10 +18,11 @@ module USB_rx_controller
 	input wire d_edge,
 	output reg receiving,
 	output reg write_enable,
-	output reg rcv_error
+	output reg rcv_error,
+	output reg crc_enable
 );
 
-	typedef enum bit [3:0] {IDLE, START_RCV, PID_WAIT, PID_DONE, RCV_BYTE, RCVING, RCV_DONE, CRC_CHK, ERROR}
+	typedef enum bit [3:0] {IDLE, START_RCV, PID_WAIT, PID_DONE, RCV_BYTE, RCVING, RCV_PULSE, RCV_DONE, CRC_CHK, ERROR}
 	stateType;
 	stateType current_state, next_state;
 
@@ -43,6 +44,7 @@ module USB_rx_controller
 		receiving = 0;
 		write_enable = 0;
 		rcv_error = 0;
+		crc_enable = 0;
 
 		case(current_state)
 			IDLE: begin
@@ -80,10 +82,7 @@ module USB_rx_controller
 			PID_DONE: begin;
 				receiving = 1;
 				write_enable = 1;
-				if()
-					next_state = PID_WAIT;
-				else
-					next_state = ERROR;
+				next_state = RCVING;
 			end	
 			ERROR: begin
 				rcv_error = 1;
@@ -96,16 +95,24 @@ module USB_rx_controller
 			RCVING: begin
 				receiving = 1;
 				write_enable = 0;
+				crc_enable = 1;
 				if(!eop && !byte_received)
 					next_state = RCVING;
 				if(eop)
 					next_state = ERROR;
 				if(!eop & byte_received)
-					next_state = RCV_DONE;
+					next_state = RCV_PULSE;
+			end
+			RCV_PULSE: begin
+				receiving = 1;
+				write_enable = 1;
+				crc_enable = 1;
+				next_state = RCV_DONE;
 			end
 			RCV_DONE: begin
 				receiving = 1;
-				write_enable = 1;
+				write_enable = 0;
+				crc_enable = 1;
 				if(!eop && shift_enable)
 					next_state = RCVING;
 				else if(eop && shift_enable)
@@ -116,6 +123,7 @@ module USB_rx_controller
 			CRC_CHK: begin
 				receiving = 1;
 				write_enable = 0;
+				crc_enable = 0;
 				if(crc_check)
 					next_state = IDLE;
 				else

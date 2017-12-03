@@ -27,6 +27,7 @@ module USB_rx_top_level
 	logic receiving;
 	logic crc_clear;
 	logic crc_check;
+	logic crc_enable;
 	
 USB_sync_high SYNC_HIGH (.clk(clk), .n_rst(n_rst), .async_in(d_plus_in), .sync_out(d_plus_sync));
 
@@ -38,13 +39,13 @@ USB_decoder DECODER (.clk(clk), .n_rst(n_rst), .d_plus_sync(d_plus_sync), .shift
 
 USB_edge_detect EDGE_DETECT (.clk(clk), .n_rst(n_rst), .d_plus_sync(d_plus_sync), .d_edge(d_edge));
 
-USB_crc_block CRC (.clk(clk), .n_rst(n_rst), .crc_clear(crc_clear), .shift_enable(shift_enable), .d_orig(d_orig), .packet_type(packet_type), .crc_check(crc_check));
+USB_crc_block CRC (.clk(clk), .n_rst(n_rst), .crc_clear(crc_clear), .shift_enable(shift_enable), .d_orig(d_orig), .packet_type(packet_type), .crc_check(crc_check), .crc_enable(crc_enable));
 
 USB_rx_sr RX_SR (.clk(clk), .n_rst(n_rst), .shift_enable(shift_enable), .d_orig(d_orig), .rx_data(rx_data));
 
 USB_rx_controller RX_CONTROLLER (.clk(clk), .n_rst(n_rst), .shift_enable(shift_enable), .byte_received(byte_received), .rx_data(rx_data),
 	.eop(eop), .crc_check(crc_check), .d_edge(d_edge), .receiving(receiving), .write_enable(write_enable),
-	.rcv_error(rcv_error));
+	.rcv_error(rcv_error), .crc_enable(crc_enable));
 
 USB_timer_rx RX_TIMER (.clk(clk), .n_rst(n_rst), .d_edge(d_edge), .receiving(receiving), .shift_enable(shift_enable), .byte_received(byte_received));
 

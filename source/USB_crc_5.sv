@@ -13,6 +13,7 @@ module USB_crc_5
 	input wire crc_clear,
 	input wire shift_enable,
 	input wire d_orig,
+	input wire crc_enable,
 	output logic crc_check_5
 );
 
@@ -33,7 +34,7 @@ end
 
 always_comb 
 begin
-	if(shift_enable)
+	if(shift_enable && crc_enable)
 	begin
 	
 		q_next[0] = (d_orig ^ q[4]);
