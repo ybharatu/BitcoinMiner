@@ -15,13 +15,12 @@ module USB_rx_top_level
 	input wire packet_type,
 	output logic [7:0] rx_data,
 	output logic write_enable,
-	output logic rcv_error
-	
+	output logic rcv_error,
+	output logic eop
 );
 
 	logic d_plus_sync;
 	logic d_minus_sync;
-	logic eop;
 	logic d_orig;
 	logic d_edge;
 	logic shift_enable;
