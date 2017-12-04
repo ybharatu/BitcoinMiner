@@ -6,10 +6,10 @@
 // Version:     1.0  Initial Design Entry
 // Description: Controller for Packet Decoder
 
-`define IN_PID  8'b00000000
-`define OUT_PID 8'b11111111
-`define DATA0   8'b00000000
-`define DATA1   8'b00000000
+`define IN_PID  8'b01101001
+`define OUT_PID 8'b11100001
+`define DATA0   8'b11000011
+`define DATA1   8'b01001011
 `define INTERRUPT   8'b00000000
 `define HASH   8'b00000000
 
@@ -23,25 +23,43 @@ module PD_controller
 	input valid_hash,
 	input hash_done,
 	input packet_done,
+	input eop,
 	output logic i_data_en,
 	output logic i_data_sel,
 	output logic [7:0] i_data,
 	output logic p_error,
-	output logic host_error,
 	output logic stop_calc,
 	output logic new_block,
-	output logic transmit_empty,
-	output logic transmit_start,
+	output logic host_ready,
 	output logic begin_hash,
 	output logic quit_hash,
 	output logic cnt_up
 	
 );
 
-typedef enum bit [4:0] {IDLE, READ_PID, IN_PID, OUT_PID, TRANSMIT_START, TRANSMIT_EMPTY, READ_DATA_PID, WAIT_DATA_TYPE,
-			CHECK_DATA_TYPE, INTERRUPT, PACKET_1_WAIT, WRITE_PACKET_1, PACKET_2_WAIT, WRITE_PACKET_2, BEGIN_HASH, ERROR} stateType;
-
+typedef enum bit [4:0] {IDLE, READ_PID, IN_PID, , WAIT_ADDRESS_IN, READ_ADDRESS_IN, EOP_WAIT, SEND_TRANSFER_PACKET, OUT_PID, WAIT_ADDRESS_OUT, READ_ADDRESS_OUT, VALID_ADDRESS_OUT
+			OUT_EOP_WAIT, WAIT_DATA_TYPE, CHECK_DATA_TYPE, INTERRUPT, PACKET_1_WAIT, WRITE_PACKET_1, PACKET_2_WAIT, WRITE_PACKET_2, NEW_BLOCK, ERROR} stateType;
 stateType current_state, next_state;
+
+logic valid_address;
+logic valid_address_next;
+logic valid_address_enable;
+
+always_ff @ (posedge clk, negedge n_rst)
+begin
+	if(n_rst == 1'b0)
+	begin
+		valid_address <= 'b0;
+	end	
+	else if(valid_address_enable)
+	begin
+		valid_address <= valid_address_next;
+	end
+	else
+	begin
+		valid_address <= valid_address;
+	end
+end
 
 always_ff @ (posedge clk, negedge n_rst)
 begin
@@ -61,7 +79,6 @@ always_comb
 begin
 	next_state = current_state;
 	p_error = 0;
-	host_error = 0;
 	transmit_empty = 0;
 	transmit_start = 0;
 	cnt_up = 0;
@@ -69,6 +86,8 @@ begin
 	new_block = 0;
 	i_data_en = 0;
 	i_data_sel = 0;
+	valid_address_next = 0;
+	valid_address_enable = 0;
 	case(current_state)
 		IDLE: begin
 			if(write_enable)
@@ -81,7 +100,10 @@ begin
 					next_state = IN_PID;
 				else if(rx_data == `OUT_PID) //ADD more cases
 					next_state = OUT_PID;
-				else;
+				else if(rx_data == `DATA0 && valid_address)
+					next_state = WAIT_DATA_TYPE;
+				else if(rx_data == `DATA1 && valid_address)
+					next_state = WAIT_PACKET_2;
 			end
 			else
 			begin
@@ -89,32 +111,59 @@ begin
 			end
 		end
 		IN_PID: begin
-			if(valid_hash)
-				next_state = TRANSMIT_START;
+			next_state = WAIT_ADDRESS_IN;
+		end
+
+		WAIT_ADDRESS_IN: begin
+			if(write_enable)
+				next_state = READ_ADDRESS_IN;
 			else
-				next_state = TRANSMIT_EMPTY;
+				next_state = WAIT_ADDRESS_IN;
 		end
-		TRANSMIT_START: begin
-			transmit_start = 1;
+		READ_ADDRESS_IN: begin
+			if(rx_data == `CORRECT_ADDRESS)
+				next_state = EOP_WAIT;
+			else
+				next_state = IDLE; 
+		end
+		EOP_WAIT: begin
+			if(eop)
+				next_state = SEND_TRANSFER_PACKET;
+			else
+				next_state = EOP_WAIT;
+		end
+		SEND_TRANSFER_PACKET: begin
+			host_ready = 1;
 			next_state = IDLE;
-		end
-		TRANSMIT_EMPTY: begin
-			transmit_empty = 1;
-			next_state = IDLE; // MAY HAVE MORE STATES
 		end
 		OUT_PID: begin
 			if(write_enable)
-				next_state = READ_DATA_PID;
+				next_state = WAIT_ADDRESS_OUT;
 			else
 				next_state = OUT_PID;
 		end
-		READ_DATA_PID: begin
-			if(rx_data == `DATA0)
-				next_state = WAIT_DATA_TYPE;
-			else if(rx_data == `DATA1)
-				next_state = PACKET_2_WAIT;
+		WAIT_ADDRESS_OUT: begin
+			if(write_enable)
+				next_state = READ_ADDRESS_OUT;
 			else
-				next_state = ERROR;
+				next_state = WAIT_ADDRESS_OUT;
+		end
+		READ_ADDRESS_OUT: begin
+			if(rx_data == `CORRECT_ADDRESS)
+				next_state = VALID_ADDRESS_OUT;
+			else
+				next_state = IDLE; 
+		end
+		VALID_ADDRESS_OUT: begin
+			valid_address_next = 1;
+			valid_address_enable = 1;
+			next_state = OUT_EOP_WAIT;
+		end
+		OUT_EOP_WAIT: begin
+			if(eop)
+				next_state = IDLE;
+			else
+				next_state = OUT_EOP_WAIT;
 		end
 		WAIT_DATA_TYPE: begin
 			if(write_enable)
@@ -160,15 +209,16 @@ begin
 			cnt_up = 1;
 			i_data_sel = byte_cnt + 63; //TODO CHECK THAT NUM
 			if(packet_done)
-				next_state = BEGIN_HASH;
+				next_state = NEW_BLOCK;
 			else
 				next_state = PACKET_2_WAIT;
 		end
-		BEGIN_HASH: begin
-			begin_hash = 1;
+		NEW_BLOCK: begin
+			new_block = 1;
+			
 		end
 		ERROR: begin
-		
+			p_error = 1;
 		end
 		
 			
