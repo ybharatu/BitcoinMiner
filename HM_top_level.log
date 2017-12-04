@@ -1,0 +1,1281 @@
+Synthesizing design: HM_top_level.sv
+dc_shell-t -x "source -echo do_mapping.tcl"
+                                        
+                           Design Compiler Graphical 
+                                 DC Ultra (TM)
+                                  DFTMAX (TM)
+                              Power Compiler (TM)
+                                 DesignWare (R)
+                                 DC Expert (TM)
+                               Design Vision (TM)
+                               HDL Compiler (TM)
+                               VHDL Compiler (TM)
+                                  DFT Compiler
+                               Design Compiler(R)
+                                        
+               Version K-2015.06-SP1 for linux64 - Jul 21, 2015 
+                                        
+                    Copyright (c) 1988 - 2015 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+            or distribution of this software is strictly prohibited.
+Initializing...
+Initializing gui preferences from file  /home/ecegrid/a/mg138/.synopsys_dv_prefs.tcl
+# Step 1:  Read in the source file
+analyze -format sverilog -lib WORK {USB_encoder.sv USB_timer_tx.sv USB_crc_tx.sv USB_tx_controller.sv USB_tx_sr.sv  USB_timer_rx.sv USB_crc_16.sv USB_crc_5.sv USB_crc_rx.sv USB_decoder.sv USB_edge_detect.sv USB_eop_detect.sv USB_rx_controller.sv USB_rx_sr.sv USB_sync_high.sv USB_sync_low.sv HM_timer.sv HM_check_hash.sv HM_controller.sv HM_hash_selection.sv HM_SHA_256.sv HM_bus_select.sv PD_block_storage.sv PD_hash_separation.sv flex_counter.sv flex_pts_sr.sv flex_stp_sr.sv flex_counter_fix.sv HM_top_level.sv}
+Running PRESTO HDLC
+Compiling source file ./source/USB_encoder.sv
+Compiling source file ./source/USB_timer_tx.sv
+Compiling source file ./source/USB_crc_tx.sv
+Compiling source file ./source/USB_tx_controller.sv
+Compiling source file ./source/USB_tx_sr.sv
+Compiling source file ./source/USB_timer_rx.sv
+Compiling source file ./source/USB_crc_16.sv
+Compiling source file ./source/USB_crc_5.sv
+Compiling source file ./source/USB_crc_rx.sv
+Compiling source file ./source/USB_decoder.sv
+Compiling source file ./source/USB_edge_detect.sv
+Compiling source file ./source/USB_eop_detect.sv
+Compiling source file ./source/USB_rx_controller.sv
+Compiling source file ./source/USB_rx_sr.sv
+Compiling source file ./source/USB_sync_high.sv
+Compiling source file ./source/USB_sync_low.sv
+Compiling source file ./source/HM_timer.sv
+Compiling source file ./source/HM_check_hash.sv
+Compiling source file ./source/HM_controller.sv
+Compiling source file ./source/HM_hash_selection.sv
+Compiling source file ./source/HM_SHA_256.sv
+Compiling source file ./source/HM_bus_select.sv
+Compiling source file ./source/PD_block_storage.sv
+Compiling source file ./source/PD_hash_separation.sv
+Compiling source file ./source/flex_counter.sv
+Compiling source file ./source/flex_pts_sr.sv
+Compiling source file ./source/flex_stp_sr.sv
+Compiling source file ./source/flex_counter_fix.sv
+Compiling source file ./source/HM_top_level.sv
+Presto compilation completed successfully.
+Loading db file '/package/eda/cells/OSU/v2.7/synopsys/lib/ami05/osu05_stdcells.db'
+Loading db file '/package/eda/synopsys/syn-K-2015.06-SP1/libraries/syn/dw_foundation.sldb'
+elaborate HM_top_level -lib WORK
+Loading db file '/package/eda/synopsys/syn-K-2015.06-SP1/libraries/syn/gtech.db'
+Loading db file '/package/eda/synopsys/syn-K-2015.06-SP1/libraries/syn/standard.sldb'
+  Loading link library 'osu05_stdcells'
+  Loading link library 'gtech'
+Running PRESTO HDLC
+Presto compilation completed successfully.
+Elaborated 1 design.
+Current design is now 'HM_top_level'.
+Information: Building the design 'HM_hash_selection' instantiated from design 'HM_top_level' with
+	the parameters "0". (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'HM_controller'. (HDL-193)
+
+Statistics for case statements in always block at line 33 in file
+	'./source/HM_controller.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            44            |    auto/auto     |
+===============================================
+
+Inferred memory devices in process
+	in routine HM_controller line 23 in file
+		'./source/HM_controller.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|    currState_reg    | Flip-flop |   4   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Information: Building the design 'HM_check_hash'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'HM_bus_select'. (HDL-193)
+
+Inferred tri-state devices in process
+	in routine HM_bus_select line 15 in file
+		'./source/HM_bus_select.sv'.
+==================================================
+| Register Name  |       Type       | Width | MB |
+==================================================
+| valid_hash_tri | Tri-State Buffer |  256  | N  |
+==================================================
+Presto compilation completed successfully.
+Information: Building the design 'HM_SHA_256'. (HDL-193)
+Warning:  ./source/HM_SHA_256.sv:145: signed to unsigned conversion occurs. (VER-318)
+Warning:  ./source/HM_SHA_256.sv:164: signed to unsigned conversion occurs. (VER-318)
+
+Inferred memory devices in process
+	in routine HM_SHA_256 line 88 in file
+		'./source/HM_SHA_256.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|        g_reg        | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+|        h_reg        | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+|        a_reg        | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+|        b_reg        | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+|        c_reg        | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+|        d_reg        | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+|        e_reg        | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+|        f_reg        | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+
+Inferred memory devices in process
+	in routine HM_SHA_256 line 109 in file
+		'./source/HM_SHA_256.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      nonce_reg      | Flip-flop |  32   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+
+Inferred memory devices in process
+	in routine HM_SHA_256 line 125 in file
+		'./source/HM_SHA_256.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|        w_reg        | Flip-flop | 1536  |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+
+Inferred memory devices in process
+	in routine HM_SHA_256 line 132 in file
+		'./source/HM_SHA_256.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|    out_hash_reg     | Flip-flop |  256  |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Information: Building the design 'HM_timer'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'flex_counter_fix' instantiated from design 'HM_timer' with
+	the parameters "7". (HDL-193)
+
+Inferred memory devices in process
+	in routine flex_counter_fix_NUM_CNT_BITS7 line 30 in file
+		'./source/flex_counter_fix.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|  rollover_reg_reg   | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+|    count_reg_reg    | Flip-flop |   7   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+uniquify
+# Step 2: Set design constraints
+# Uncomment below to set timing, area, power, etc. constraints
+# set_max_delay <delay> -from "<input>" -to "<output>"
+# set_max_area 10000000
+# set_max_total_power <power> mW
+create_clock "clk" -name "clk" -period 10
+# Step 3: Compile the design
+compile -map_effort medium
+Information: Checking out the license 'DesignWare'. (SEC-104)
+Information: Evaluating DesignWare library utilization. (UISN-27)
+
+============================================================================
+| DesignWare Building Block Library  |         Version         | Available |
+============================================================================
+| Basic DW Building Blocks           | K-2015.06-DWBB_201506.1 |     *     |
+| Licensed DW Building Blocks        | K-2015.06-DWBB_201506.1 |     *     |
+============================================================================
+
+
+Information: There are 61 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
+
+
+
+  Beginning Pass 1 Mapping
+  ------------------------
+  Processing 'flex_counter_fix_NUM_CNT_BITS7'
+Information: Added key list 'DesignWare' to design 'flex_counter_fix_NUM_CNT_BITS7'. (DDB-72)
+  Processing 'HM_timer'
+  Processing 'HM_SHA_256'
+Information: Added key list 'DesignWare' to design 'HM_SHA_256'. (DDB-72)
+  Processing 'HM_bus_select'
+  Processing 'HM_check_hash'
+  Processing 'HM_controller'
+  Processing 'HM_hash_selection_MODULE_NUM0'
+  Processing 'HM_top_level'
+
+  Updating timing information
+Information: Updating design information... (UID-85)
+
+  Beginning Implementation Selection
+  ----------------------------------
+  Processing 'flex_counter_fix_NUM_CNT_BITS7_DW01_inc_0'
+  Processing 'HM_SHA_256_DW01_add_0'
+  Processing 'HM_SHA_256_DW01_add_1'
+  Processing 'HM_SHA_256_DW01_add_2'
+  Processing 'HM_SHA_256_DW01_add_3'
+  Processing 'HM_SHA_256_DW01_add_4'
+  Processing 'HM_SHA_256_DW01_add_5'
+  Processing 'HM_SHA_256_DW01_add_6'
+  Processing 'HM_SHA_256_DW01_add_7'
+  Processing 'HM_SHA_256_DW01_add_8'
+  Processing 'HM_SHA_256_DW01_add_9'
+  Mapping 'HM_check_hash_DW_cmp_0'
+  Processing 'HM_SHA_256_DW01_add_10'
+  Processing 'HM_SHA_256_DW01_add_11'
+  Processing 'HM_SHA_256_DW01_add_12'
+  Processing 'HM_SHA_256_DW01_add_13'
+  Processing 'HM_SHA_256_DW01_add_14'
+  Processing 'HM_SHA_256_DW01_add_15'
+  Processing 'HM_SHA_256_DW01_add_16'
+  Processing 'HM_SHA_256_DW01_add_17'
+  Processing 'HM_SHA_256_DW01_add_18'
+  Processing 'HM_SHA_256_DW01_add_19'
+  Processing 'HM_SHA_256_DW01_add_20'
+  Processing 'HM_SHA_256_DW01_add_21'
+  Processing 'HM_SHA_256_DW01_add_22'
+  Processing 'HM_SHA_256_DW01_add_23'
+  Processing 'HM_SHA_256_DW01_add_24'
+  Processing 'HM_SHA_256_DW01_add_25'
+  Processing 'HM_SHA_256_DW01_add_26'
+  Processing 'HM_SHA_256_DW01_add_27'
+  Processing 'HM_SHA_256_DW01_add_28'
+  Processing 'HM_SHA_256_DW01_add_29'
+  Processing 'HM_SHA_256_DW01_add_30'
+  Processing 'HM_SHA_256_DW01_add_31'
+  Processing 'HM_SHA_256_DW01_add_32'
+  Processing 'HM_SHA_256_DW01_add_33'
+  Processing 'HM_SHA_256_DW01_add_34'
+  Processing 'HM_SHA_256_DW01_add_35'
+  Processing 'HM_SHA_256_DW01_add_36'
+  Processing 'HM_SHA_256_DW01_add_37'
+  Processing 'HM_SHA_256_DW01_add_38'
+  Processing 'HM_SHA_256_DW01_add_39'
+  Processing 'HM_SHA_256_DW01_add_40'
+  Processing 'HM_SHA_256_DW01_add_41'
+  Processing 'HM_SHA_256_DW01_add_42'
+  Processing 'HM_SHA_256_DW01_add_43'
+  Processing 'HM_SHA_256_DW01_add_44'
+  Processing 'HM_SHA_256_DW01_add_45'
+  Processing 'HM_SHA_256_DW01_add_46'
+  Processing 'HM_SHA_256_DW01_add_47'
+  Processing 'HM_SHA_256_DW01_add_48'
+  Processing 'HM_SHA_256_DW01_add_49'
+  Processing 'HM_SHA_256_DW01_add_50'
+  Processing 'HM_SHA_256_DW01_add_51'
+  Processing 'HM_SHA_256_DW01_add_52'
+  Processing 'HM_SHA_256_DW01_add_53'
+  Processing 'HM_SHA_256_DW01_add_54'
+  Processing 'HM_SHA_256_DW01_add_55'
+  Processing 'HM_SHA_256_DW01_add_56'
+  Processing 'HM_SHA_256_DW01_add_57'
+  Processing 'HM_SHA_256_DW01_add_58'
+  Processing 'HM_SHA_256_DW01_add_59'
+  Processing 'HM_SHA_256_DW01_add_60'
+  Processing 'HM_SHA_256_DW01_add_61'
+  Processing 'HM_SHA_256_DW01_add_62'
+  Processing 'HM_SHA_256_DW01_add_63'
+  Processing 'HM_SHA_256_DW01_add_64'
+  Processing 'HM_SHA_256_DW01_add_65'
+  Processing 'HM_SHA_256_DW01_add_66'
+  Processing 'HM_SHA_256_DW01_add_67'
+  Processing 'HM_SHA_256_DW01_add_68'
+  Processing 'HM_SHA_256_DW01_add_69'
+  Processing 'HM_SHA_256_DW01_add_70'
+  Processing 'HM_SHA_256_DW01_add_71'
+  Processing 'HM_SHA_256_DW01_add_72'
+  Processing 'HM_SHA_256_DW01_add_73'
+  Processing 'HM_SHA_256_DW01_add_74'
+  Processing 'HM_SHA_256_DW01_add_75'
+  Processing 'HM_SHA_256_DW01_add_76'
+  Processing 'HM_SHA_256_DW01_add_77'
+  Processing 'HM_SHA_256_DW01_add_78'
+  Processing 'HM_SHA_256_DW01_add_79'
+  Processing 'HM_SHA_256_DW01_add_80'
+  Processing 'HM_SHA_256_DW01_add_81'
+  Processing 'HM_SHA_256_DW01_add_82'
+  Processing 'HM_SHA_256_DW01_add_83'
+  Processing 'HM_SHA_256_DW01_add_84'
+  Processing 'HM_SHA_256_DW01_add_85'
+  Processing 'HM_SHA_256_DW01_add_86'
+  Processing 'HM_SHA_256_DW01_add_87'
+  Processing 'HM_SHA_256_DW01_add_88'
+  Processing 'HM_SHA_256_DW01_add_89'
+  Processing 'HM_SHA_256_DW01_add_90'
+  Processing 'HM_SHA_256_DW01_add_91'
+  Processing 'HM_SHA_256_DW01_add_92'
+  Processing 'HM_SHA_256_DW01_add_93'
+  Processing 'HM_SHA_256_DW01_add_94'
+  Processing 'HM_SHA_256_DW01_add_95'
+  Processing 'HM_SHA_256_DW01_add_96'
+  Processing 'HM_SHA_256_DW01_add_97'
+  Processing 'HM_SHA_256_DW01_add_98'
+  Processing 'HM_SHA_256_DW01_add_99'
+  Processing 'HM_SHA_256_DW01_add_100'
+  Processing 'HM_SHA_256_DW01_add_101'
+  Processing 'HM_SHA_256_DW01_add_102'
+  Processing 'HM_SHA_256_DW01_add_103'
+  Processing 'HM_SHA_256_DW01_add_104'
+  Processing 'HM_SHA_256_DW01_add_105'
+  Processing 'HM_SHA_256_DW01_add_106'
+  Processing 'HM_SHA_256_DW01_add_107'
+  Processing 'HM_SHA_256_DW01_add_108'
+  Processing 'HM_SHA_256_DW01_add_109'
+  Processing 'HM_SHA_256_DW01_add_110'
+  Processing 'HM_SHA_256_DW01_add_111'
+  Processing 'HM_SHA_256_DW01_add_112'
+  Processing 'HM_SHA_256_DW01_add_113'
+  Processing 'HM_SHA_256_DW01_add_114'
+  Processing 'HM_SHA_256_DW01_add_115'
+  Processing 'HM_SHA_256_DW01_add_116'
+  Processing 'HM_SHA_256_DW01_add_117'
+  Processing 'HM_SHA_256_DW01_add_118'
+  Processing 'HM_SHA_256_DW01_add_119'
+  Processing 'HM_SHA_256_DW01_add_120'
+  Processing 'HM_SHA_256_DW01_add_121'
+  Processing 'HM_SHA_256_DW01_add_122'
+  Processing 'HM_SHA_256_DW01_add_123'
+  Processing 'HM_SHA_256_DW01_add_124'
+  Processing 'HM_SHA_256_DW01_add_125'
+  Processing 'HM_SHA_256_DW01_add_126'
+  Processing 'HM_SHA_256_DW01_add_127'
+  Processing 'HM_SHA_256_DW01_add_128'
+  Processing 'HM_SHA_256_DW01_add_129'
+  Processing 'HM_SHA_256_DW01_add_130'
+  Processing 'HM_SHA_256_DW01_add_131'
+  Processing 'HM_SHA_256_DW01_add_132'
+  Processing 'HM_SHA_256_DW01_add_133'
+  Processing 'HM_SHA_256_DW01_add_134'
+  Processing 'HM_SHA_256_DW01_add_135'
+  Processing 'HM_SHA_256_DW01_add_136'
+  Processing 'HM_SHA_256_DW01_add_137'
+  Processing 'HM_SHA_256_DW01_add_138'
+  Processing 'HM_SHA_256_DW01_add_139'
+  Processing 'HM_SHA_256_DW01_add_140'
+  Processing 'HM_SHA_256_DW01_add_141'
+  Processing 'HM_SHA_256_DW01_add_142'
+  Processing 'HM_SHA_256_DW01_add_143'
+  Processing 'HM_SHA_256_DW01_add_144'
+  Processing 'HM_SHA_256_DW01_add_145'
+  Processing 'HM_SHA_256_DW01_add_146'
+  Processing 'HM_SHA_256_DW01_add_147'
+  Processing 'HM_SHA_256_DW01_add_148'
+  Processing 'HM_SHA_256_DW01_add_149'
+  Processing 'HM_SHA_256_DW01_add_150'
+  Processing 'HM_SHA_256_DW01_add_151'
+  Processing 'HM_SHA_256_DW01_add_152'
+  Processing 'HM_SHA_256_DW01_add_153'
+  Processing 'HM_SHA_256_DW01_add_154'
+  Processing 'HM_SHA_256_DW01_add_155'
+  Processing 'HM_SHA_256_DW01_add_156'
+  Processing 'HM_SHA_256_DW01_add_157'
+  Processing 'HM_SHA_256_DW01_add_158'
+  Processing 'HM_SHA_256_DW01_add_159'
+
+  Beginning Mapping Optimizations  (Medium effort)
+  -------------------------------
+  Mapping Optimization (Phase 1)
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:01:00 24942024.0      0.63       4.6      19.1 SHA/*cell*115721/U189/Y  
+    0:01:00 24942024.0      0.63       4.6      19.1 SHA/*cell*115721/U189/Y  
+    0:01:00 24938352.0      0.23       3.0      19.1 SHA/*cell*115721/U101/Y  
+    0:01:00 24937776.0      0.19       2.9      19.1 SHA/*cell*115721/U79/Y   
+    0:01:00 24936480.0      0.19       2.9      19.1 SHA/*cell*115721/*cell*115728/Y
+    0:01:03 24946128.0      0.66       4.2      19.1 SHA/*cell*115935/U121/Y  
+    0:01:03 24941592.0      0.19       3.0      19.1 SHA/*cell*115935/*cell*115944/Y
+    0:01:03 24939504.0      0.19       3.0      19.1 SHA/*cell*115935/*cell*115966/Y
+    0:01:03 24936336.0      0.19       2.9      19.1 SHA/*cell*115935/U35/Y   
+    0:01:04 24903711.0      0.67       4.3      19.1 SHA/*cell*116070/U146/Y  
+    0:01:04 24900543.0      0.22       3.3      19.1 SHA/*cell*116070/*cell*116080/Y
+    0:01:04 24897663.0      0.19       3.2      19.1 SHA/*cell*116070/U106/Y  
+    0:01:04 24903711.0      0.67       4.3      19.1 SHA/*cell*116167/U146/Y  
+    0:01:04 24900543.0      0.22       3.3      19.1 SHA/*cell*116167/*cell*116177/Y
+    0:01:04 24897663.0      0.19       3.2      19.1 SHA/*cell*116167/U106/Y  
+    0:01:04 24903711.0      0.67       4.3      19.1 SHA/*cell*116264/U146/Y  
+    0:01:04 24900543.0      0.22       3.3      19.1 SHA/*cell*116264/*cell*116274/Y
+    0:01:04 24897663.0      0.19       3.2      19.1 SHA/*cell*116264/U106/Y  
+    0:01:05 24903927.0      0.87       4.9      19.1 SHA/*cell*116379/U130/Y  
+    0:01:05 24900327.0      0.19       3.2      19.1 SHA/*cell*116379/*cell*116386/Y
+    0:01:05 24899103.0      0.19       3.2      19.1 SHA/*cell*116379/U96/Y   
+    0:01:05 24894999.0      0.19       3.0      19.1 SHA/*cell*116379/U22/Y   
+    0:01:10 24908715.0      0.92       5.0      19.1 SHA/*cell*116665/U1/Y    
+    0:01:10 24903675.0      0.19       2.9      19.1 SHA/*cell*116665/*cell*116677/Y
+    0:01:10 24903243.0      0.19       2.9      19.1 SHA/*cell*116665/*cell*116688/Y
+    0:01:10 24901947.0      0.19       2.9      19.1 SHA/*cell*116665/U117/Y  
+    0:01:10 24900939.0      0.19       2.9      19.1 SHA/*cell*116665/*cell*116701/Y
+    0:01:10 24873849.0      0.46       3.4      19.1 SHA/*cell*116777/U166/Y  
+    0:01:10 24870825.0      0.32       3.2      19.1 SHA/*cell*116777/*cell*116795/Y
+    0:01:10 24869385.0      0.32       3.2      19.1 SHA/*cell*116777/*cell*116812/Y
+    0:01:10 24867441.0      0.29       3.2      19.1 SHA/*cell*116777/U31/Y   
+    0:01:10 24866577.0      0.27       3.2      19.1 SHA/*cell*116777/U188/Y  
+    0:01:11 24870492.0      0.66       3.9      19.1 SHA/*cell*116942/U178/Y  
+    0:01:11 24868764.0      0.48       3.5      19.1 SHA/*cell*116942/U101/Y  
+    0:01:11 24865740.0      0.43       3.4      19.1 SHA/*cell*116942/U35/Y   
+    0:01:11 24864228.0      0.41       3.4      19.1 SHA/*cell*116942/U17/Y   
+    0:01:12 24878538.0      0.54       3.6      19.1 SHA/*cell*117056/U182/Y  
+    0:01:12 24873498.0      0.30       3.2      19.1 SHA/*cell*117056/*cell*117069/Y
+    0:01:12 24872058.0      0.30       3.2      19.1 SHA/*cell*117056/U111/Y  
+    0:01:12 24869826.0      0.27       3.2      19.1 SHA/*cell*117056/U21/Y   
+    0:01:12 24868386.0      0.26       3.2      19.1 SHA/*cell*117056/U225/Y  
+    0:01:12 24871167.0      0.19       3.0      19.1 SHA/*cell*117210/U180/Y  
+    0:01:12 24868863.0      0.19       2.9      19.1 SHA/*cell*117210/*cell*117231/Y
+    0:01:12 24867279.0      0.19       2.9      19.1 SHA/*cell*117210/*cell*117253/Y
+    0:01:12 24866127.0      0.19       2.9      19.1 SHA/*cell*117210/*cell*117229/Y
+    0:01:12 24837705.0      0.55       3.8      19.1 SHA/*cell*117327/U7/Y    
+    0:01:12 24834105.0      0.23       3.1      19.1 SHA/*cell*117327/U92/Y   
+    0:01:12 24833529.0      0.23       3.1      19.1 SHA/*cell*117327/U78/Y   
+    0:01:12 24831369.0      0.19       3.1      19.1 SHA/*cell*117327/U32/Y   
+    0:01:12 24829569.0      0.19       3.1      19.1 SHA/*cell*117327/U8/Y    
+    0:01:13 24836904.0      0.26       3.2      19.1 SHA/*cell*117435/U239/Y  
+    0:01:13 24835464.0      0.19       3.0      19.1 SHA/*cell*117435/*cell*117446/Y
+    0:01:13 24834456.0      0.19       3.0      19.1 SHA/*cell*117435/U68/Y   
+    0:01:13 24832512.0      0.19       3.0      19.1 SHA/*cell*117435/U36/Y   
+    0:01:13 24831072.0      0.19       2.9      19.1 SHA/*cell*117435/U8/Y    
+    0:01:13 24801417.0      0.19       3.1      19.1 SHA/*cell*117542/U110/Y  
+    0:01:13 24800985.0      0.19       3.0      19.1 SHA/*cell*117542/*cell*117552/Y
+    0:01:13 24799977.0      0.19       3.0      19.1 SHA/*cell*117542/U68/Y   
+    0:01:13 24797817.0      0.19       3.0      19.1 SHA/*cell*117542/*cell*117556/Y
+    0:01:13 24796521.0      0.19       3.0      19.1 SHA/*cell*117542/U8/Y    
+    0:01:13 24766299.0      0.19       3.0      19.1 SHA/*cell*117648/U191/Y  
+    0:01:13 24765003.0      0.19       3.0      19.1 SHA/*cell*117648/*cell*117666/Y
+    0:01:13 24764283.0      0.19       3.0      19.1 SHA/*cell*117648/U6/Y    
+    0:01:13 24763275.0      0.19       3.0      19.1 SHA/*cell*117648/*cell*117668/Y
+    0:01:13 24739686.0      0.19       3.1      19.1 SHA/*cell*117768/U254/Y  
+    0:01:13 24735870.0      0.19       2.9      19.1 SHA/*cell*117768/*cell*117784/Y
+    0:01:14 24734574.0      0.19       2.9      19.1 SHA/*cell*117768/U53/Y   
+    0:01:14 24732630.0      0.19       2.9      19.1 SHA/*cell*117768/U83/Y   
+    0:01:14 24704127.0      0.38       3.3      19.1 SHA/*cell*117926/U141/Y  
+    0:01:14 24700887.0      0.19       3.0      19.1 SHA/*cell*117926/U90/Y   
+    0:01:14 24700239.0      0.19       3.0      19.1 SHA/*cell*117926/U78/Y   
+    0:01:14 24698367.0      0.19       3.0      19.1 SHA/*cell*117926/U40/Y   
+    0:01:14 24696423.0      0.19       2.9      19.1 SHA/*cell*117926/U12/Y   
+    0:01:14 24669648.0      0.47       3.5      19.1 SHA/*cell*118035/U235/Y  
+    0:01:14 24667056.0      0.19       3.1      19.1 SHA/*cell*118035/*cell*118055/Y
+    0:01:14 24665112.0      0.19       3.1      19.1 SHA/*cell*118035/U45/Y   
+    0:01:14 24663312.0      0.19       3.1      19.1 SHA/*cell*118035/U31/Y   
+    0:01:14 24670152.0      0.52       3.6      19.1 SHA/*cell*118151/U144/Y  
+    0:01:15 24667200.0      0.20       3.1      19.1 SHA/*cell*118151/U6/Y    
+    0:01:15 24666840.0      0.19       3.1      19.1 SHA/*cell*118151/*cell*118167/Y
+    0:01:15 24665112.0      0.19       3.1      19.1 SHA/*cell*118151/U45/Y   
+    0:01:15 24663744.0      0.19       3.1      19.1 SHA/*cell*118151/U31/Y   
+    0:01:15 24672645.0      0.31       3.3      19.1 SHA/*cell*118274/U96/Y   
+    0:01:15 24668037.0      0.19       2.9      19.1 SHA/*cell*118274/*cell*118286/Y
+    0:01:15 24666309.0      0.19       2.9      19.1 SHA/*cell*118274/*cell*118298/Y
+    0:01:15 24663717.0      0.19       2.9      19.1 SHA/*cell*118274/*cell*118307/Y
+    0:01:15 24637878.0      0.19       3.0      19.1 SHA/*cell*118405/U105/Y  
+    0:01:15 24634350.0      0.19       2.9      19.1 SHA/*cell*118405/U203/Y  
+    0:01:15 24632334.0      0.19       2.9      19.1 SHA/*cell*118405/U28/Y   
+    0:01:15 24631326.0      0.19       2.9      19.1 SHA/*cell*118405/U143/Y  
+    0:01:15 24605271.0      0.19       3.0      19.1 SHA/*cell*118534/U56/Y   
+    0:01:15 24601959.0      0.19       2.9      19.1 SHA/*cell*118534/U203/Y  
+    0:01:16 24599799.0      0.19       2.9      19.1 SHA/*cell*118534/U28/Y   
+    0:01:16 24598791.0      0.19       2.9      19.1 SHA/*cell*118534/U143/Y  
+    0:01:16 24571242.0      0.19       2.9      19.1 SHA/*cell*118665/U229/Y  
+    0:01:16 24569370.0      0.19       2.9      19.1 SHA/*cell*118665/*cell*118688/Y
+    0:01:16 24567930.0      0.19       2.9      19.1 SHA/*cell*118665/U25/Y   
+    0:01:16 24566562.0      0.19       2.9      19.1 SHA/*cell*118665/U165/Y  
+    0:01:16 24538779.0      0.34       3.3      19.1 SHA/*cell*118809/U131/Y  
+    0:01:16 24536403.0      0.19       3.0      19.1 SHA/*cell*118809/*cell*118822/Y
+    0:01:16 24536259.0      0.19       3.0      19.1 SHA/*cell*118809/*cell*118835/Y
+    0:01:16 24534531.0      0.19       3.0      19.1 SHA/*cell*118809/U50/Y   
+    0:01:16 24532587.0      0.19       3.0      19.1 SHA/*cell*118809/U22/Y   
+    0:01:16 24542244.0      0.19       3.1      19.1 SHA/*cell*118918/U114/Y  
+    0:01:16 24537780.0      0.19       2.9      19.1 SHA/*cell*118918/U225/Y  
+    0:01:17 24535908.0      0.19       2.9      19.1 SHA/*cell*118918/U135/Y  
+    0:01:17 24535044.0      0.19       2.9      19.1 SHA/*cell*118918/U20/Y   
+    0:01:20 24533460.0      0.19       2.9      19.1                          
+    0:01:20 24533460.0      0.19       2.9      19.1                          
+    0:01:20 24533460.0      0.19       2.9      19.1                          
+    0:01:20 24533460.0      0.19       2.9      19.1                          
+    0:01:20 24533460.0      0.19       2.9      19.1                          
+    0:01:29 21608892.0      0.77      15.8      19.1                          
+    0:01:30 21610035.0      0.42       7.5      19.1                          
+    0:01:31 21609891.0      0.38       6.7      19.1                          
+    0:01:31 21610683.0      0.30       5.1      19.1                          
+    0:01:32 21610611.0      0.28       4.9      19.1                          
+    0:01:33 21611187.0      0.24       3.7      19.1                          
+    0:01:33 21612051.0      0.21       3.4      19.1                          
+    0:01:34 21613491.0      0.19       2.6      19.1                          
+    0:01:35 21615867.0      0.18       2.0      19.1                          
+    0:01:35 21618819.0      0.11       0.8      19.1                          
+    0:01:36 21620115.0      0.07       0.3      19.1                          
+    0:01:36 21621195.0      0.06       0.2      19.1                          
+    0:01:37 21621411.0      0.05       0.2      19.1                          
+    0:01:37 21622887.0      0.04       0.0      19.1                          
+    0:01:37 21623247.0      0.00       0.0      19.1                          
+    0:01:38 21623247.0      0.00       0.0      19.1                          
+    0:01:38 21623247.0      0.00       0.0      19.1                          
+    0:01:38 21623247.0      0.00       0.0      19.1                          
+    0:01:39 21640887.0      0.00       0.0      10.4                          
+    0:01:40 21656871.0      0.00       0.0       3.2                          
+    0:01:41 21662055.0      0.01       0.0       0.8                          
+    0:01:41 21663639.0      0.01       0.0       0.0                          
+    0:01:41 21663855.0      0.01       0.0       0.0                          
+    0:01:41 21663855.0      0.01       0.0       0.0                          
+    0:01:41 21663855.0      0.01       0.0       0.0                          
+    0:01:41 21663855.0      0.01       0.0       0.0                          
+
+
+
+  Beginning Delay Optimization Phase
+  ----------------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:01:41 21663855.0      0.01       0.0       0.0                          
+    0:01:41 21663927.0      0.00       0.0       0.0                          
+    0:01:42 21663927.0      0.00       0.0       0.0                          
+
+
+  Beginning Area-Recovery Phase  (cleanup)
+  -----------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:01:42 21663927.0      0.00       0.0       0.0                          
+    0:01:42 21663927.0      0.00       0.0       0.0                          
+    0:01:47 21039543.0      0.87      11.4       0.0                          
+    0:01:49 20759967.0      0.87      11.3       0.0                          
+    0:01:50 20708415.0      0.87      11.4       0.0                          
+    0:01:51 20696175.0      0.87      11.5       0.0                          
+    0:01:51 20693295.0      0.87      11.2       0.0                          
+    0:01:51 20693295.0      0.87      11.2       0.0                          
+    0:01:51 20693223.0      0.64       7.6       0.0 SHA/out_hash_reg[6][31]/D
+    0:01:52 20693223.0      0.54       7.1       0.0 SHA/out_hash_reg[0][31]/D
+    0:01:52 20695527.0      0.53       6.2       0.0 SHA/out_hash_reg[0][31]/D
+    0:01:52 20700783.0      0.47       2.9       0.0 SHA/out_hash_reg[3][31]/D
+    0:01:52 20702727.0      0.21       1.7       0.0 SHA/out_hash_reg[1][31]/D
+    0:01:52 20705526.0      0.03       0.1       0.0 SHA/a_reg[28]/D          
+    0:01:53 20706246.0      0.00       0.0       0.0                          
+    0:01:53 20703582.0      0.35       3.9       0.0                          
+    0:01:53 20703510.0      0.35       3.9       0.0                          
+    0:01:53 20703510.0      0.35       3.9       0.0                          
+    0:01:53 20703510.0      0.35       3.9       0.0                          
+    0:01:53 20703510.0      0.35       3.9       0.0                          
+    0:01:53 20703510.0      0.35       3.9       0.0                          
+    0:01:53 20703510.0      0.35       3.9       0.0                          
+    0:01:54 20705094.0      0.01       0.0       0.0 SHA/out_hash_reg[1][31]/D
+    0:01:54 20705670.0      0.00       0.0       0.0                          
+Loading db file '/package/eda/cells/OSU/v2.7/synopsys/lib/ami05/osu05_stdcells.db'
+
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
+
+
+  Optimization Complete
+  ---------------------
+Warning: Design 'HM_top_level' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+     Net 'TIMER/HASH_CNT/clk': 2092 load(s), 1 driver(s)
+# Step 4: Output reports
+report_timing -path full -delay max -max_paths 4 -nworst 1 > reports/HM_top_level.rep
+report_area >> reports/HM_top_level.rep
+report_power -hier >> reports/HM_top_level.rep
+# Step 5: Output final VHDL and Verilog files
+write_file -format verilog -hierarchy -output "mapped/HM_top_level.v"
+Writing verilog file '/home/ecegrid/a/mg138/ece337/BitcoinMiner/mapped/HM_top_level.v'.
+Warning: Verilog 'assign' or 'tran' statements are written out. (VO-4)
+echo "\nScript Done\n"
+
+Script Done
+
+echo "\nChecking Design\n"
+
+Checking Design
+
+check_design
+ 
+****************************************
+check_design summary:
+Version:     K-2015.06-SP1
+Date:        Mon Dec  4 17:48:11 2017
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Inputs/Outputs                                                    323
+    Unconnected ports (LINT-28)                                   323
+
+Cells                                                             173
+    Connected to power or ground (LINT-32)                        171
+    Nets connected to multiple pins on same cell (LINT-33)          2
+--------------------------------------------------------------------------------
+
+Warning: In design 'flex_counter_fix_NUM_CNT_BITS7_DW01_inc_0', port 'A[7]' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_check_hash_DW_cmp_0', port 'TC' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_check_hash_DW_cmp_0', port 'GE_LT' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_check_hash_DW_cmp_0', port 'GE_GT_EQ' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_check_hash_DW_cmp_0', port 'EQ_NE' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_166', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_166', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_168', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_168', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_172', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_172', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_173', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_173', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_179', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_179', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_180', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_180', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_182', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_182', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_183', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_183', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_184', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_184', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_185', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_185', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_186', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_186', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_187', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_187', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_188', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_188', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_189', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_189', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_190', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_190', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_191', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_191', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_192', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_192', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_193', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_193', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_194', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_194', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_196', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_196', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_197', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_197', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_198', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_198', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_199', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_199', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_200', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_200', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_201', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_201', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_202', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_202', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_203', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_203', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_204', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_204', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_205', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_205', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_206', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_206', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_207', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_207', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_208', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_208', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_209', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_209', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_210', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_210', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_211', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_211', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_212', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_212', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_213', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_213', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_214', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_214', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_215', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_215', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_216', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_216', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_217', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_217', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_218', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_218', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_219', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_219', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_220', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_220', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_221', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_221', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_222', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_222', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_223', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_223', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_224', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_224', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_225', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_225', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_226', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_226', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_227', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_227', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_228', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_228', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_229', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_229', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_230', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_230', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_231', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_231', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_232', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_232', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_233', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_233', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_234', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_234', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_235', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_235', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_236', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_236', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_237', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_237', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_238', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_238', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_239', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_239', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_240', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_240', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_241', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_241', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_242', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_242', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_243', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_243', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_244', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_244', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_245', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_245', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_246', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_246', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_247', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_247', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_248', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_248', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_249', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_249', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_250', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_250', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_251', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_251', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_252', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_252', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_253', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_253', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_254', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_254', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_255', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_255', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_256', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_256', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_257', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_257', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_258', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_258', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_259', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_259', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_260', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_260', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_261', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_261', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_262', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_262', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_263', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_263', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_264', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_264', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_265', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_265', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_266', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_266', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_267', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_267', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_268', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_268', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_269', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_269', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_270', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_270', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_271', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_271', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_272', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_272', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_273', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_273', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_274', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_274', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_275', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_275', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_276', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_276', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_277', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_277', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_278', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_278', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_279', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_279', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_280', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_280', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_281', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_281', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_282', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_282', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_283', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_283', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_284', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_284', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_286', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_286', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_287', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_287', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_288', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_288', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_289', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_289', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_290', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_290', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_291', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_291', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_292', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_292', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_293', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_293', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_294', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_294', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_295', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_295', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_296', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_296', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_297', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_297', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_298', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_298', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_299', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_299', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_300', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_300', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_301', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_301', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_302', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_302', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_303', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_303', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_304', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_304', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_305', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_305', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_306', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_306', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_307', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_307', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_308', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_308', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_309', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_309', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_310', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_310', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_311', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_311', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_312', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_312', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_313', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_313', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_314', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_314', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_315', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_315', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_316', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_316', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_317', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_317', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_318', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_318', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_319', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_319', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_320', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_320', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_321', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_321', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_322', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_322', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_323', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_323', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_359', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_359', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_440', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_440', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_454', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_454', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_456', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_456', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_457', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_457', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_458', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_458', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_459', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_459', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_460', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_460', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_463', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_463', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_464', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_464', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_465', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_465', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_467', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_467', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_469', port 'CI' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_SHA_256_DW01_add_469', port 'CO' is not connected to any nets. (LINT-28)
+Warning: In design 'HM_check_hash', a pin on submodule 'lt_18' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'TC' is connected to logic 0. 
+Warning: In design 'HM_check_hash', a pin on submodule 'lt_18' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'GE_LT' is connected to logic 1. 
+Warning: In design 'HM_check_hash', a pin on submodule 'lt_18' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'GE_GT_EQ' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I2' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I3' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I4' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I5' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I9' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I10' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_3_root_add_0_root_add_191_4' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I2' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I6' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I7' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I3' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I4' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I5' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I9' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I10' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I10' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I8' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I11' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I12' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I13' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I14' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I15' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I16' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I8' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I8' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I11' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I11' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I12' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I12' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I13' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I13' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I14' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I14' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I15' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I16' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I16' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_212_8' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_212_7' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_212_4' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_212_2' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_212' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_212_6' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_212_5' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_212_3' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_204' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I36' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I37' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I39' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I29' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I30' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I33' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I38' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I40' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I41' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I42' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I43' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I44' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I45' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I46' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I47' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I48' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I18' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I19' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I21' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I22' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I23' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I24' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I25' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I26' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I27' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I28' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I31' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I32' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I34' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I35' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I36' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I37' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I38' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I39' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I40' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I41' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I42' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I43' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I44' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I45' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I46' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I47' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I48' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I17' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I20' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I17' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I17' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I18' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I18' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I19' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I19' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I20' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I20' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I21' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I21' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I22' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I22' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I23' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I23' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I24' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I24' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I25' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I25' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I26' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I26' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I27' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I27' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I28' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I28' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I29' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I29' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I30' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I30' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I31' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I31' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I32' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I32' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I33' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I33' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I34' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I34' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_154_3_I35' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I35' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I36' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I37' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I38' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I39' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I40' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I41' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I42' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I43' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I44' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I45' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I46' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I47' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_2_root_add_0_root_add_191_4' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_200' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_204' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_191_4' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_191_4' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I48' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I15' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I9' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I7' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I7' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_1_root_add_0_root_add_154_3_I6' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I6' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I5' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I4' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I2' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_SHA_256', a pin on submodule 'add_0_root_add_0_root_add_154_3_I3' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'CI' is connected to logic 0. 
+Warning: In design 'HM_timer', a pin on submodule 'HASH_CNT' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'clear' is connected to logic 0. 
+Warning: In design 'HM_timer', a pin on submodule 'HASH_CNT' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'rollover_val[6]' is connected to logic 0. 
+Warning: In design 'HM_timer', a pin on submodule 'HASH_CNT' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'rollover_val[5]' is connected to logic 1. 
+Warning: In design 'HM_timer', a pin on submodule 'HASH_CNT' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'rollover_val[4]' is connected to logic 1. 
+Warning: In design 'HM_timer', a pin on submodule 'HASH_CNT' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'rollover_val[3]' is connected to logic 1. 
+Warning: In design 'HM_timer', a pin on submodule 'HASH_CNT' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'rollover_val[2]' is connected to logic 1. 
+Warning: In design 'HM_timer', a pin on submodule 'HASH_CNT' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'rollover_val[1]' is connected to logic 1. 
+Warning: In design 'HM_timer', a pin on submodule 'HASH_CNT' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'rollover_val[0]' is connected to logic 1. 
+Warning: In design 'flex_counter_fix_NUM_CNT_BITS7', a pin on submodule 'r300' is connected to logic 1 or logic 0. (LINT-32)
+   Pin 'A[7]' is connected to logic 0. 
+Warning: In design 'HM_check_hash', the same net is connected to more than one pin on submodule 'lt_18'. (LINT-33)
+   Net 'n1' is connected to pins 'TC', 'GE_GT_EQ''.
+Warning: In design 'HM_timer', the same net is connected to more than one pin on submodule 'HASH_CNT'. (LINT-33)
+   Net '*Logic1*' is connected to pins 'rollover_val[5]', 'rollover_val[4]'', 'rollover_val[3]', 'rollover_val[2]', 'rollover_val[1]', 'rollover_val[0]'.
+quit
+
+Thank you...
+Done
+
+

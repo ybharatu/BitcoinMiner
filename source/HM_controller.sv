@@ -10,8 +10,10 @@ module HM_controller
 (
 	input begin_hash, quit_hash,
 	input hash_rollover,
+	input valid_hash,
 	input clk, n_rst,	
 	output logic cnt_up, hash_done, clear, halt, init, out_load,
+	output logic increment;
 	output logic [1:0] hash_select
 );
 
@@ -115,8 +117,25 @@ begin
 		HASH_CHECK: begin
 			hash_done = 1;
 			halt = 1;
-			nextState = IDLE;
+			if(valid_hash_flag)
+				nextState = HOLD_HASH;
+			else
+				nextState = INCREMENT;
 		end
+		HOLD_HASH: begin
+			hash_done = 1;
+			halt = 1;
+			if(quit_hash)
+				nextState = IDLE;
+			if(begin_hash)
+				nextState = INIT_LOAD1;
+		end
+		INCREMENT: begin
+			increment = 1;
+			nextState = INIT_LOAD1;
+		end
+		
+		
 		default: begin
 			nextState = currState;
 		end

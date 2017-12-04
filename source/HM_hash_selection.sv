@@ -18,9 +18,9 @@ module HM_hash_selection
 );
 
 always_comb
-begin
+begin //191 zeros and 64'h256
 	if(hash_select == 'd2)
-		data = {prev_hash, 1'b1, 191'b0, 64'd256};
+		data = {32'h00000100,32'h0,32'h0,32'h0,32'h0,32'h0,32'h0,32'h80000000,prev_hash};
 	else
 		data = data_to_hash + MODULE_NUM;
 end

@@ -7,7 +7,7 @@
 // Description: Test Bench for RX Top Level File
 
 `timescale 1ns / 10ps
-`define SYNC_BYTE 8'b10000000 //LSB first
+
 
 module tb_USB_rx_top_level ();
 
@@ -36,6 +36,7 @@ module tb_USB_rx_top_level ();
 	logic [7:0] tb_rx_data;
 	logic tb_write_enable;
 	logic tb_rcv_error;
+	logic tb_eop;
 	
 	clocking cb @(posedge tb_clk);
 		 		// 1step means 1 time precision unit, 10ps for this module. We assume the hold time is less than 200ps.
@@ -48,6 +49,7 @@ module tb_USB_rx_top_level ();
 		input	rx_data = tb_rx_data,
 			write_enable = tb_write_enable,
 			rcv_error = tb_rcv_error;
+			eop = tb_eop;
 
 	endclocking
 
@@ -127,6 +129,8 @@ module tb_USB_rx_top_level ();
 		@cb;
 		cb.n_rst <= 'b1;
 		@cb;
+
+		//Test 1:
 		send_sync();
 		send_byte(8'b10110100);
 		send_byte(8'b10101000);
@@ -135,26 +139,13 @@ module tb_USB_rx_top_level ();
 		//send_byte(8'b11111101);
 		send_eop;
 		#(BUS_PERIOD);
-/*
-		tb_n_rst = 'b0;
-		@cb;
-		@cb;
-		cb.n_rst <= 'b1;
-		@cb;
-*/
+
 		send_sync();
 		send_byte(8'b10000111);
 		send_byte(8'b01011100);
 		send_byte(8'b10111100);
 		send_eop;
-/*
-		tb_n_rst = 'b0;
-		@cb;
-		@cb;
-		cb.n_rst <= 'b1;
-		tb_packet_type = 'b1;
-		@cb;
-*/
+
 		#(BUS_PERIOD);
 		tb_packet_type = 'b1;
 		send_sync();
@@ -166,14 +157,7 @@ module tb_USB_rx_top_level ();
 		send_byte(8'b11110111);
 		send_byte(8'b01011110);
 		send_eop;
-/*
-		tb_n_rst = 'b0;
-		@cb;
-		@cb;
-		cb.n_rst <= 'b1;
-		tb_packet_type = 'b1;
-		@cb;
-*/
+
 		#(BUS_PERIOD);
 		tb_packet_type = 'b1;
 		send_sync();
