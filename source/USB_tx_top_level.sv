@@ -34,8 +34,8 @@ module USB_tx_top_level
 	logic [15:0] crc_16;
 
 
-	USB_timer_tx TIMER (.clk(clk), .n_rst(n_rst), .data_sent(data_sent), .byte_sent(byte_sent), .transmitting(transmitting),
-				.tx_shift(tx_shift), .transmit_empty(transmit_empty));
+	USB_timer_tx TIMER (.clk(clk), .n_rst(n_rst), .data_sent(data_sent), .byte_sent(byte_sent), .tx_hold(tx_hold), .transmitting(transmitting),
+				.tx_shift(tx_shift), .transmit_empty(transmit_empty), .transmit_start(transmit_start));
 
 	USB_crc_tx CRC (.clk(clk), .tx_hold(tx_hold), .crc_clear(crc_clear), .n_rst(n_rst), .tx_out_bit(tx_out_bit), .crc_enable(crc_enable), .tx_shift(tx_shift), .crc_16(crc_16));
 

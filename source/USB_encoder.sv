@@ -34,7 +34,7 @@ module USB_encoder
 	(
 		.clk(clk), 
 		.n_rst(n_rst), 
-		.clear(!tx_out_bit || eop_wait || restart), 
+		.clear((!tx_out_bit && tx_shift) || eop_wait || restart), 
 		.count_enable(tx_out_bit && tx_shift), 
 		.rollover_val(4'd6), 
 		.count_out(),
@@ -73,8 +73,16 @@ module USB_encoder
 	begin
 		next_state = current_state;
 		d = stuff_bit ? 0 : tx_out_bit;
-		//d_plus_out = 1;
-		//d_minus_out = 0;
+		if(d_plus == 0)
+		begin
+			d_plus_out = 0;
+			d_minus_out = 1;
+		end
+		else
+		begin
+			d_plus_out = 1;
+			d_minus_out = 0;
+		end
 		hold_eop = 0;
 		restart = 0;
 		case(current_state)
@@ -114,6 +122,8 @@ module USB_encoder
 				end
 				else
 				begin
+				if(d == 1)
+				begin
 					if(d_plus == 0)
 					begin
 						d_plus_out = 0;
@@ -124,6 +134,22 @@ module USB_encoder
 						d_plus_out = 1;
 						d_minus_out = 0;
 					end
+				end
+				else
+				begin
+					if(d_plus == 0)
+					begin
+						d_plus_out = 0;
+						d_minus_out = 1;
+					end
+					else
+					begin
+						d_plus_out = 1;
+						d_minus_out = 0;
+					end
+
+					
+				end
 				end
 				
 				if(create_eop) next_state = WAIT;
