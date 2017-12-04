@@ -29,6 +29,7 @@ module tb_USB_tx_top_level ();
 
 
 	integer tb_test_num = 0;
+	integer failed = 0;
 	logic tb_n_rst;
 	logic [15:0] tb_tx_data;
 	logic tb_transmit_empty;
@@ -39,9 +40,15 @@ module tb_USB_tx_top_level ();
 	logic tb_tx_error;
 	logic eop;
 	
+	//logic tb_d_plus_in;
+	//logic tb_d_minus_in;
+	//logic tb_n_rst;
+	logic tb_packet_type;
+	logic [7:0] tb_rx_data;
+	logic tb_write_enable;
+	logic tb_rcv_error;
+
 	assign eop = !tb_d_plus_out && !tb_d_minus_out;
-
-
 
 	clocking cb @(posedge tb_clk);
 		 		// 1step means 1 time precision unit, 10ps for this module. We assume the hold time is less than 200ps.
@@ -58,15 +65,17 @@ module tb_USB_tx_top_level ();
 
 	endclocking
 	
-	USB_tx_top_level TOP_LEVEL (.clk(tb_clk), .n_rst(tb_n_rst), .tx_data(tb_tx_data), .transmit_empty(tb_transmit_empty), .transmit_start(tb_transmit_start), .d_plus_out(tb_d_plus_out), 
+	USB_tx_top_level TX_TOP_LEVEL (.clk(tb_clk), .n_rst(tb_n_rst), .tx_data(tb_tx_data), .transmit_empty(tb_transmit_empty), .transmit_start(tb_transmit_start), .d_plus_out(tb_d_plus_out), 
 		.d_minus_out(tb_d_minus_out), .read_enable(tb_read_enable), .tx_error(tb_tx_error));
+	USB_rx_top_level RX_TOP_LEVEL (.clk(tb_clk), .d_plus_in(tb_d_plus_out), .d_minus_in(tb_d_minus_out), .n_rst(tb_n_rst), .packet_type(tb_packet_type), .rx_data(tb_rx_data), 
+		.write_enable(tb_write_enable), .rcv_error(tb_rcv_error));
 
 	task send_hash;
 		input [255:0] hash;
 	begin
 		integer i;
 		cb.transmit_start <= 'b1;
-		cb.tx_data <= 16'b0101010011010010;
+		cb.tx_data <= 16'b1000000011010010;
 		@cb;
 		@cb;
 		cb.transmit_start <= 'b0;
@@ -104,8 +113,26 @@ module tb_USB_tx_top_level ();
 		cb.tx_data <= hash[31:16];
 		@(posedge tb_read_enable);
 		cb.tx_data <= hash[15:0];
-		@(posedge eop);
+		@(negedge eop);
 		
+	end
+	endtask
+
+	task check_hash;
+		input [255:0] data;
+	begin
+		
+		tb_packet_type = 1;
+		@(posedge tb_write_enable);
+		if(tb_rx_data == data[255:240])
+		begin	
+			failed = failed + 1;
+			$info("PASSED byte %d: ", failed);
+		end		
+		else
+		begin
+			$error("ERROR:");
+		end
 	end
 	endtask
 
@@ -121,7 +148,7 @@ module tb_USB_tx_top_level ();
 		cb.n_rst <= 'b1;
 		@cb;
 		cb.transmit_empty <= 'b1;
-		cb.tx_data <= 16'b0101010011010010;
+		cb.tx_data <= 16'b1000000011010010;
 		@cb;
 		cb.transmit_empty <= 'b0;
 		@(posedge tb_read_enable);
@@ -131,7 +158,7 @@ module tb_USB_tx_top_level ();
 		@(posedge eop);
 
 		cb.transmit_empty <= 'b1;
-		cb.tx_data <= 16'b0101010011000011;
+		cb.tx_data <= 16'b1000000011000011;
 		@cb;
 		@cb;
 		cb.transmit_empty <= 'b0;
@@ -139,17 +166,18 @@ module tb_USB_tx_top_level ();
 		cb.tx_data <= 16'h2345;
 		@(posedge tb_read_enable);
 		cb.tx_data <= 16'h6789;
-		@(posedge eop);
+		@(negedge eop);
 
-		send_hash(256'h00000000000080b66c911bd5ba14a74260057311eaeb1982802f7010f1a9f090); //BE4E HASH 100001
+
+		fork
+			send_hash(256'h00000000000080b66c911bd5ba14a74260057311eaeb1982802f7010f1a9f090); //BE4E HASH 100001
+			check_hash(256'h00000000000080b66c911bd5ba14a74260057311eaeb1982802f7010f1a9f090);
+		join
+
 
 		send_hash(256'h000000000003ba27aa200b1cecaad478d2b00432346c3f1f3986da1afd33e506); //74B5 HASH 100000
 
 		send_hash(256'h000000000002d01c1fccc21636b607dfd930d31d01c3a62104612a1719011250); //A7AA HASH 99999
-
-		
-		
-	
 	end
 
 

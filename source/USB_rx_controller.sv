@@ -5,7 +5,7 @@
 // Lab Section: 337-05
 // Version:     1.0  Initial Design Entry
 // Description: USB Receiver Controller
-`define SYNC_BYTE 8'b10000000
+`define SYNC_BYTE 8'b00000001
 
 module USB_rx_controller
 (
