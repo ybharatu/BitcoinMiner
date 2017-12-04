@@ -7,6 +7,7 @@
 // Description: Test Bench for RX Top Level File
 
 `timescale 1ns / 10ps
+`define SYNC_BYTE 8'b10000000 //LSB first
 
 module tb_USB_rx_top_level ();
 
@@ -54,7 +55,7 @@ module tb_USB_rx_top_level ();
 		input [7:0] data;
 	begin
 		integer i;
-		for(i = 7; i >= 0; i = i - 1)
+		for(i = 0; i < 8; i = i + 1)
 		begin
 			if(data[i] == 0)
 			begin
@@ -84,6 +85,12 @@ module tb_USB_rx_top_level ();
 			end
 			#(BUS_PERIOD);
 		end
+	end
+	endtask
+	
+	task send_sync;
+	begin
+		send_byte(`SYNC_BYTE);
 	end
 	endtask
 
@@ -120,7 +127,7 @@ module tb_USB_rx_top_level ();
 		@cb;
 		cb.n_rst <= 'b1;
 		@cb;
-		send_byte(8'b01010100);
+		send_sync();
 		send_byte(8'b10110100);
 		send_byte(8'b10101000);
 		send_byte(8'b11110111);
@@ -135,7 +142,7 @@ module tb_USB_rx_top_level ();
 		cb.n_rst <= 'b1;
 		@cb;
 */
-		send_byte(8'b01010100);
+		send_sync();
 		send_byte(8'b10000111);
 		send_byte(8'b01011100);
 		send_byte(8'b10111100);
@@ -150,7 +157,7 @@ module tb_USB_rx_top_level ();
 */
 		#(BUS_PERIOD);
 		tb_packet_type = 'b1;
-		send_byte(8'b01010100);
+		send_sync();
 		send_byte(8'b11000011);
 		send_byte(8'b00000000);
 		send_byte(8'b10000000);
@@ -169,7 +176,7 @@ module tb_USB_rx_top_level ();
 */
 		#(BUS_PERIOD);
 		tb_packet_type = 'b1;
-		send_byte(8'b01010100);
+		send_sync();
 		send_byte(8'b11010010);
 		send_byte(8'b11000100);
 		send_byte(8'b10100010);

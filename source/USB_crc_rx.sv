@@ -6,7 +6,7 @@
 // Version:     1.0  Initial Design Entry
 // Description: CRC Block
 
-module USB_crc_block
+module USB_crc_rx
 (
 	input wire clk,
 	input wire n_rst,

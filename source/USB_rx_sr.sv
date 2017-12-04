@@ -15,7 +15,7 @@ module USB_rx_sr
 	output wire [7:0] rx_data
 );
 
-	flex_stp_sr #(8,1) RX_SR
+	flex_stp_sr #(8,0) RX_SR
 	(
 		.clk(clk),
 		.n_rst(n_rst),

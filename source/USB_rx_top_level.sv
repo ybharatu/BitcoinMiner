@@ -40,7 +40,7 @@ USB_decoder DECODER (.clk(clk), .n_rst(n_rst), .d_plus_sync(d_plus_sync), .shift
 
 USB_edge_detect EDGE_DETECT (.clk(clk), .n_rst(n_rst), .d_plus_sync(d_plus_sync), .d_edge(d_edge));
 
-USB_crc_block CRC (.clk(clk), .n_rst(n_rst), .crc_clear(crc_clear), .shift_enable(shift_enable), .d_orig(d_orig), .packet_type(packet_type), .crc_check(crc_check), .crc_enable(crc_enable));
+USB_crc_rx CRC (.clk(clk), .n_rst(n_rst), .crc_clear(crc_clear), .shift_enable(shift_enable), .d_orig(d_orig), .packet_type(packet_type), .crc_check(crc_check), .crc_enable(crc_enable));
 
 USB_rx_sr RX_SR (.clk(clk), .n_rst(n_rst), .shift_enable(shift_enable), .d_orig(d_orig), .rx_data(rx_data));
 

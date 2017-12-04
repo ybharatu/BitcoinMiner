@@ -5,6 +5,7 @@
 // Lab Section: 337-05
 // Version:     1.0  Initial Design Entry
 // Description: USB Receiver Controller
+`define SYNC_BYTE 8'b10000000
 
 module USB_rx_controller
 (
@@ -68,7 +69,7 @@ module USB_rx_controller
 			end
 			RCV_BYTE: begin;
 				receiving = 1;
-				if(rx_data == 8'b01010100) //sync pattern
+				if(rx_data == `SYNC_BYTE) //sync pattern
 					next_state = PID_WAIT;
 				else
 					next_state = ERROR;

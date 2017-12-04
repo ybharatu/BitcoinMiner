@@ -5,6 +5,7 @@
 // Lab Section: 337-05
 // Version:     1.0  Initial Design Entry
 // Description: Main Controller for Hashing Module
+
 module HM_controller
 (
 	input begin_hash, quit_hash,
