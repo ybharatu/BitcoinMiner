@@ -28,7 +28,7 @@ COMPONENT_FILES	:= $(USB_TX_FILES) $(USB_RX_FILES) $(HM_FILES) $(PD_FILES) $(EXT
 # Specify the name of the top level file (do not include the source folder in the name)
 # NOTE: YOU WILL NEED TO SET THIS VARIABLE'S VALUE WHEN WORKING WITH HEIRARCHICAL DESIGNS
 # AND THE AUTOMATED GRADING SYSTEM
-TOP_LEVEL_FILE	:= USB_rx_top_level.sv
+TOP_LEVEL_FILE	:= USB_tx_top_level.sv
 
 # Specify the filepath of the test bench you want to use (ie. tb_top_level.sv)
 # (do not include the source folder in the name)

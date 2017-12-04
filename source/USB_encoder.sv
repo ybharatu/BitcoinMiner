@@ -34,7 +34,7 @@ module USB_encoder
 	(
 		.clk(clk), 
 		.n_rst(n_rst), 
-		.clear(!tx_out_bit || eop_wait || restart), 
+		.clear((!tx_out_bit && tx_shift) || eop_wait || restart), 
 		.count_enable(tx_out_bit && tx_shift), 
 		.rollover_val(4'd6), 
 		.count_out(),
