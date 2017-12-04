@@ -12,6 +12,8 @@ module USB_timer_tx
 	input wire n_rst,
 	input wire transmitting,
 	input wire transmit_empty,
+	input wire transmit_start,
+	input wire tx_hold,
 	output logic byte_sent,
 	output logic data_sent,
 	output logic tx_shift
@@ -21,21 +23,59 @@ logic [4:0] value;
 
 flex_counter #(4) TX_SHIFT (.clk(clk), .n_rst(n_rst), .clear(!transmitting), .count_enable(transmitting), .rollover_val(4'd8), .count_out(), .rollover_flag(tx_shift));
 
-flex_counter #(5) FLEX_COUNTER (.clk(clk), .n_rst(n_rst), .clear(!transmitting || byte_sent), .count_enable(tx_shift), .rollover_val(5'd16), .count_out(), .rollover_flag(byte_sent));
+flex_counter #(5) FLEX_COUNTER (.clk(clk), .n_rst(n_rst), .clear(!transmitting || byte_sent), .count_enable(tx_shift && !tx_hold), .rollover_val(5'd16), .count_out(), .rollover_flag(byte_sent));
 
 flex_counter #(5) FLEX_COUNTER2 (.clk(clk), .n_rst(n_rst), .clear(!transmitting || data_sent), .count_enable(byte_sent), .rollover_val(value), .count_out(), .rollover_flag(data_sent));
 
-always_comb
+
+typedef enum bit [1:0] {IDLE, HOLD_EMPTY, HOLD_START}
+		stateType;
+		stateType current_state, next_state;
+
+always_ff @ (posedge clk, negedge n_rst)
 begin
-	if(transmit_empty)
+	if(n_rst == 1'b0)
 	begin
-		value = 5'd3;
-	end
+		current_state <= IDLE;
+	end	
 	else
 	begin
-		value = 5'd17;
+		current_state <= next_state;
 	end
 end
 
+// State Machine
+always_comb
+	begin
+
+		case(current_state)
+				
+				IDLE: begin
+					value = 'b0;
+					if(transmit_empty)
+						next_state = HOLD_EMPTY;
+					else if(transmit_start)
+						next_state = HOLD_START;
+					else
+						next_state = IDLE; 
+				end
+	
+				HOLD_EMPTY: begin
+					value = 5'd3;
+					if(data_sent)
+						next_state = IDLE;
+					else
+						next_state = HOLD_EMPTY;
+				end
+				
+				HOLD_START: begin
+					value = 5'd17;
+					if(data_sent)
+						next_state = IDLE;
+					else
+						next_state = HOLD_START;
+				end
+		endcase
+	end
 
 endmodule

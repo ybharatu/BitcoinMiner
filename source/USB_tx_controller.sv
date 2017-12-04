@@ -69,7 +69,7 @@ module USB_tx_controller
 
 			LOAD_INIT: begin
 				crc_enable = 0;
-				load_enable = 0;
+				load_enable = 1;
 				transmitting = 1;
 				next_state = TRANSMIT_INIT;
 			end

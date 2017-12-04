@@ -54,6 +54,6 @@ begin
 	
 end
 
-assign crc_16 = q;
+assign crc_16 = ~q;
 
 endmodule
