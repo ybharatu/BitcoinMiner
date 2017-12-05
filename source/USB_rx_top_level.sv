@@ -47,7 +47,7 @@ USB_rx_controller RX_CONTROLLER (.clk(clk), .n_rst(n_rst), .shift_enable(shift_e
 	.eop(eop), .crc_check(crc_check), .d_edge(d_edge), .receiving(receiving), .write_enable(write_enable),
 	.rcv_error(rcv_error), .crc_enable(crc_enable), .crc_clear(crc_clear));
 
-USB_timer_rx RX_TIMER (.clk(clk), .n_rst(n_rst), .d_edge(d_edge), .receiving(receiving), .shift_enable(shift_enable), .byte_received(byte_received));
+USB_timer_rx RX_TIMER (.clk(clk), .n_rst(n_rst), .d_edge(d_edge), .receiving(receiving), .shift_enable(shift_enable), .byte_received(byte_received), .eop(eop));
 
 endmodule
 

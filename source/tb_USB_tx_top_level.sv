@@ -138,6 +138,7 @@ module tb_USB_tx_top_level ();
 
 	initial
 	begin
+		tb_packet_type = 1;
 		// Initial Reset
 		tb_n_rst = 'b0;
 		cb.tx_data <= 'b0;
@@ -155,7 +156,8 @@ module tb_USB_tx_top_level ();
 		cb.tx_data <= 16'h0001;
 		@(posedge tb_read_enable);
 		cb.tx_data <= 16'h0203;
-		@(posedge eop);
+		@(negedge eop);
+		#(BUS_PERIOD);
 
 		cb.transmit_empty <= 'b1;
 		cb.tx_data <= 16'b1000000011000011;
@@ -167,6 +169,8 @@ module tb_USB_tx_top_level ();
 		@(posedge tb_read_enable);
 		cb.tx_data <= 16'h6789;
 		@(negedge eop);
+		#(BUS_PERIOD);
+
 
 
 		fork

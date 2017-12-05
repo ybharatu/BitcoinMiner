@@ -12,12 +12,13 @@ module HM_controller
 	input hash_rollover,
 	input valid_hash,
 	input clk, n_rst,	
+	input valid_hash_flag,
 	output logic cnt_up, hash_done, clear, halt, init, out_load,
-	output logic increment;
+	output logic increment,
 	output logic [1:0] hash_select
 );
 
-typedef enum bit [3:0] {IDLE, INIT_LOAD1, CALC_HASH1, OUT_LOAD1, INIT_LOAD2, CALC_HASH2, OUT_LOAD2, INIT_LOAD3, CALC_HASH3, OUT_LOAD3, HASH_CHECK} states;
+typedef enum bit [3:0] {IDLE, INIT_LOAD1, CALC_HASH1, OUT_LOAD1, INIT_LOAD2, CALC_HASH2, OUT_LOAD2, INIT_LOAD3, CALC_HASH3, OUT_LOAD3, HASH_CHECK, INCREMENT, HOLD_HASH} states;
 
 states currState;
 states nextState;
