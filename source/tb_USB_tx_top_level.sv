@@ -157,44 +157,7 @@ module tb_USB_tx_top_level ();
 	end
 	endtask
 	
-	task send_header;
-		input [639:0] header;
-	begin
-		integer i;
-		/*
-		cb.transmit_start <= 'b1;
-		cb.tx_data <= 16'b1000000011010010;
-		@cb;
-		@cb;
-		cb.transmit_start <= 'b0;
-		@cb;
-		@cb;
-		send_hash_chunk(header[639:384]);
-		cb.transmit_start <= 'b1;
-		@(negedge eop);
-				cb.tx_data <= 16'b1000000011010010;
-		@cb;
-		@cb;
-		cb.transmit_start <= 'b0;
-		@cb;
-		@cb;
-		send_hash_chunk(header[383:128]);
-		@(negedge eop);
-		cb.transmit_start <= 'b1;
-		cb.tx_data <= 16'b1000000011010010;
-		@cb;
-		@cb;
-		cb.transmit_start <= 'b0;
-		@cb;
-		@cb;
-		send_hash_chunk(header[127:0]);
-*/
-		send_hash(header[639:384]);
-		send_hash(header[383:128]);
-		send_hash(header[127:0]);
-		
-	end
-	endtask
+
 
 	task check_hash;
 		input [255:0] data;
@@ -262,7 +225,6 @@ module tb_USB_tx_top_level ();
 		send_hash(256'h000000000002d01c1fccc21636b607dfd930d31d01c3a62104612a1719011250); //A7AA HASH 99999
 		
 		// transfer #1
-		send_header(640'h0100000050120119172a610421a6c3011dd330d9df07b63616c2cc1f1cd00200000000006657a9252aacd5c0b2940996ecff952228c3067cc38d4885efb5a4ac4247e9f337221b4d4c86041b0f2b5710);
 	end
 
 

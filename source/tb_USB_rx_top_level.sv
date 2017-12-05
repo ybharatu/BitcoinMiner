@@ -53,6 +53,129 @@ module tb_USB_rx_top_level ();
 
 	endclocking
 
+	task send_header;
+		input [639:0] header;
+		input [255:0] difficulty;
+	begin
+		integer i;
+		integer j;
+		integer one_cnt = 0;
+		reg [111:0][7:0] data = {header, dificulty};
+		send_sync();
+		send_pid(`DATA0);
+
+		for(i = 111; i >= 48; i = i - 1)
+		begin
+			for(j = 0; j < 8; j = j + 1)
+			begin
+				if(one_cnt == 6)
+				begin
+					j = j - 1; //STUFF BIT
+					one_cnt = 0;
+					if(tb_d_plus_in == 1)
+					begin
+						cb.d_plus_in <= 0;
+						cb.d_minus_in <= 1;
+					end
+					else
+					begin
+						cb.d_plus_in <= 1;
+						cb.d_minus_in <= 0;
+					end
+				end
+				else if(data[i][j] == 0)
+				begin
+					one_cnt = 0;
+					if(tb_d_plus_in == 1)
+					begin
+						cb.d_plus_in <= 0;
+						cb.d_minus_in <= 1;
+					end
+					else
+					begin
+						cb.d_plus_in <= 1;
+						cb.d_minus_in <= 0;
+					end
+				end
+				else
+				begin
+					one_cnt = one_cnt + 1;
+					if(tb_d_plus_in == 1)
+					begin
+						cb.d_plus_in <= 1;
+						cb.d_minus_in <= 0;
+					end
+					else
+					begin
+						cb.d_plus_in <= 0;
+						cb.d_minus_in <= 1;
+					end
+				end
+				#(BUS_PERIOD);
+			end
+		end;
+		send_crc_16(16'h669D)
+		send_eop();
+		#(BUS_PERIOD);
+		send_sync();
+		send_pid(`DATA0);
+		
+		for(i = 48; i >= 64; i = i - 1)
+		begin
+			for(j = 0; j < 8; j = j + 1)
+			begin
+				if(one_cnt == 6)
+				begin
+					i = i - 1; //STUFF BIT
+					one_cnt = 0;
+					if(tb_d_plus_in == 1)
+					begin
+						cb.d_plus_in <= 0;
+						cb.d_minus_in <= 1;
+					end
+					else
+					begin
+						cb.d_plus_in <= 1;
+						cb.d_minus_in <= 0;
+					end
+				end
+				else if(data[i][j] == 0)
+				begin
+					one_cnt = 0;
+					if(tb_d_plus_in == 1)
+					begin
+						cb.d_plus_in <= 0;
+						cb.d_minus_in <= 1;
+					end
+					else
+					begin
+						cb.d_plus_in <= 1;
+						cb.d_minus_in <= 0;
+					end
+				end
+				else
+				begin
+					one_cnt = one_cnt + 1;
+					if(tb_d_plus_in == 1)
+					begin
+						cb.d_plus_in <= 1;
+						cb.d_minus_in <= 0;
+					end
+					else
+					begin
+						cb.d_plus_in <= 0;
+						cb.d_minus_in <= 1;
+					end
+				end
+				#(BUS_PERIOD);
+			end
+		end
+		send_eop();
+
+	end
+	endtask
+
+
 	task send_byte;
 		input [7:0] data;
 	begin
@@ -95,6 +218,12 @@ module tb_USB_rx_top_level ();
 		send_byte(`SYNC_BYTE);
 	end
 	endtask
+
+	task send_pid
+		input [7:0] pid;
+	begin
+		send_byte(pid);
+	end
 
 	task send_bit;
 		input data;
@@ -169,6 +298,11 @@ module tb_USB_rx_top_level ();
 		send_byte(8'b01110000);
 		send_byte(8'b00111000);
 		send_eop;
+		
+		//Sending a whole block header
+		#(BUS_PERIOD); 
+		// First 512 :   0100000050120119172a610421a6c3011dd330d9df07b63616c2cc1f1cd00200000000006657a9252aacd5c0b2940996ecff952228c3067cc38d4885efb5a4ac
+		send_header(640'h0100000050120119172a610421a6c3011dd330d9df07b63616c2cc1f1cd00200000000006657a9252aacd5c0b2940996ecff952228c3067cc38d4885efb5a4ac4247e9f337221b4d4c86041b0f2b5710,256'h);
 	end
 
 endmodule
