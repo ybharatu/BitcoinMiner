@@ -14,6 +14,7 @@ module USB_tx_controller
 	input wire data_sent,
 	input wire byte_sent,
 	input wire transmit_start,
+	input wire tx_shift,
 	output reg crc_load,
 	output reg read_enable,
 	output reg load_enable,
@@ -23,7 +24,7 @@ module USB_tx_controller
 	output reg crc_clear, //Find use for this
 	output reg create_eop
 );
-	typedef enum bit [3:0] {IDLE, LOAD_INIT, TRANSMIT_INIT, READ_INIT ,CREATE_EOP, LOAD, START_TX, READ, CHK_CRC, HOLD_CRC, LOAD_CRC, TX_CRC}
+	typedef enum bit [3:0] {IDLE, LOAD_INIT, TRANSMIT_INIT, READ_INIT ,CREATE_EOP, LOAD, START_TX, READ, CHK_CRC, HOLD_CRC, LOAD_CRC, TX_CRC, EOP_WAIT}
 	
 	stateType;
 	stateType current_state, next_state;

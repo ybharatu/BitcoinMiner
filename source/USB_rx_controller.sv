@@ -134,7 +134,7 @@ module USB_rx_controller
 					next_state = ERROR;
 			end
 			EOP_WAIT: begin
-				receiving = 1;
+				receiving = 0;
 				write_enable = 0;
 				crc_enable = 0;
 				if(d_edge)

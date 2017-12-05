@@ -14,7 +14,8 @@ module USB_timer_rx
 	input wire n_rst,
 	input wire eop,
 	output logic shift_enable,
-	output logic byte_received
+	output logic byte_received,
+	output logic rx_hold
 );
 
 logic temp_shift_enable;
@@ -34,14 +35,14 @@ typedef enum bit [3:0] {IDLE, SHIFT_ENABLE, CNT1, CNT2, CNT3, CNT4, CNT5, CNT6, 
 
 //flex_counter #(4) FLEX_COUNTER (.clk(clk), .n_rst(n_rst), .clear(!receiving || d_edge), .count_enable(receiving), .rollover_val(4'd8), .count_out(), .rollover_flag(rf_1));
 
-flex_counter #(4) FLEX_COUNTER2_BYTE_RECEIVED (.clk(clk), .n_rst(n_rst), .clear(!receiving || temp_byte_received), .count_enable(shift_enable), .rollover_val(4'd8), .count_out(), .rollover_flag(temp_byte_received));
+flex_counter #(4) FLEX_COUNTER2_BYTE_RECEIVED (.clk(clk), .n_rst(n_rst), .clear(!receiving || temp_byte_received), .count_enable(shift_enable && !rx_hold), .rollover_val(4'd8), .count_out(), .rollover_flag(temp_byte_received));
 
-flex_counter #(4) FLEX_COUNTER3_BIT_STUFFING (.clk(clk), .n_rst(n_rst), .clear(d_edge), .count_enable(!d_edge & shift_enable), .rollover_val(4'd6), .count_out(), .rollover_flag(rf_2));
+flex_counter #(4) FLEX_COUNTER3_BIT_STUFFING (.clk(clk), .n_rst(n_rst), .clear(d_edge), .count_enable(!d_edge & shift_enable), .rollover_val(4'd7), .count_out(), .rollover_flag(rf_2));
 
 
 always_comb
 begin
-	if(!rf_2 && rf_1 && receiving)
+	if(rf_1 && receiving)
 	begin
 		shift_enable = 1;
 	end
@@ -63,15 +64,18 @@ always_ff @ (posedge clk, negedge n_rst)
 			current_state <= next_state;
 		end
 	end
+
 always_ff @ (posedge clk, negedge n_rst)
 	begin
 		if(n_rst == 1'b0)
 		begin
 			rcv_reg <= 0;
+			rx_hold <= 0;
 		end	
 		else
 		begin
 			rcv_reg <= receiving;
+			rx_hold <= rf_2;
 		end
 	end
 
@@ -84,7 +88,7 @@ always_comb
 		case(current_state)
 			IDLE: begin
 				next_state = IDLE;
-				if(d_edge) next_state = SHIFT_ENABLE;
+				if(d_edge && !eop) next_state = SHIFT_ENABLE;
 			end
 			SHIFT_ENABLE: begin
 				next_state = CNT1;

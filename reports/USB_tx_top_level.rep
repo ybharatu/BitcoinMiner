@@ -7,7 +7,7 @@ Report : timing
         -max_paths 4
 Design : USB_tx_top_level
 Version: K-2015.06-SP1
-Date   : Sun Dec  3 21:17:56 2017
+Date   : Tue Dec  5 00:54:15 2017
 ****************************************
 
 Operating Conditions: typical   Library: osu05_stdcells
@@ -199,29 +199,29 @@ Wire Load Model Mode: top
 Report : area
 Design : USB_tx_top_level
 Version: K-2015.06-SP1
-Date   : Sun Dec  3 21:17:56 2017
+Date   : Tue Dec  5 00:54:15 2017
 ****************************************
 
 Library(s) Used:
 
     osu05_stdcells (File: /package/eda/cells/OSU/v2.7/synopsys/lib/ami05/osu05_stdcells.db)
 
-Number of ports:                          210
-Number of nets:                           848
-Number of cells:                          649
-Number of combinational cells:            489
-Number of sequential cells:               149
+Number of ports:                          211
+Number of nets:                           867
+Number of cells:                          668
+Number of combinational cells:            506
+Number of sequential cells:               151
 Number of macros/black boxes:               0
-Number of buf/inv:                        130
+Number of buf/inv:                        135
 Number of references:                       5
 
-Combinational area:             137079.000000
-Buf/Inv area:                    18720.000000
-Noncombinational area:          109296.000000
+Combinational area:             141516.000000
+Buf/Inv area:                    19584.000000
+Noncombinational area:          110880.000000
 Macro/Black Box area:                0.000000
 Net Interconnect area:      undefined  (No wire load specified)
 
-Total cell area:                246375.000000
+Total cell area:                252396.000000
 Total area:                 undefined
 1
 Loading db file '/package/eda/cells/OSU/v2.7/synopsys/lib/ami05/osu05_stdcells.db'
@@ -235,7 +235,7 @@ Report : power
         -analysis_effort low
 Design : USB_tx_top_level
 Version: K-2015.06-SP1
-Date   : Sun Dec  3 21:17:56 2017
+Date   : Tue Dec  5 00:54:15 2017
 ****************************************
 
 
@@ -261,22 +261,22 @@ Power-specific unit information :
                                        Switch   Int      Leak     Total
 Hierarchy                              Power    Power    Power    Power    %
 --------------------------------------------------------------------------------
-USB_tx_top_level                          1.718   16.682   79.217   18.400 100.0
-  TX_SR (USB_tx_sr)                       0.548    4.191   14.141    4.740  25.8
+USB_tx_top_level                          1.715   16.885   81.071   18.601 100.0
+  TX_SR (USB_tx_sr)                       0.548    4.191   14.141    4.740  25.5
     TX_SR (flex_pts_sr_NUM_BITS16_SHIFT_MSB1)
-                                          0.387    3.965   11.901    4.352  23.7
-  CTRL (USB_tx_controller)                0.187    1.006    5.088    1.193   6.5
-  ENCODER (USB_encoder)                7.75e-02    2.963   19.455    3.040  16.5
+                                          0.387    3.965   11.901    4.352  23.4
+  CTRL (USB_tx_controller)                0.187    1.006    5.088    1.193   6.4
+  ENCODER (USB_encoder)                7.45e-02    3.166   21.308    3.241  17.4
     FLEX_COUNTER2 (flex_counter_NUM_CNT_BITS5_0)
-                                          0.000    1.228    9.183    1.228   6.7
+                                          0.000    1.228    9.183    1.228   6.6
     FLEX_COUNTER (flex_counter_NUM_CNT_BITS4_0)
                                        4.89e-02    1.079    7.253    1.128   6.1
-  CRC (USB_crc_tx)                     5.37e-02    3.361   12.101    3.415  18.6
-  TIMER (USB_timer_tx)                    0.852    5.160   28.432    6.012  32.7
+  CRC (USB_crc_tx)                     5.37e-02    3.361   12.101    3.415  18.4
+  TIMER (USB_timer_tx)                    0.852    5.160   28.432    6.012  32.3
     FLEX_COUNTER2 (flex_counter_NUM_CNT_BITS5_1)
-                                       6.97e-02    1.309    9.183    1.378   7.5
+                                       6.97e-02    1.309    9.183    1.378   7.4
     FLEX_COUNTER (flex_counter_NUM_CNT_BITS5_2)
-                                          0.101    1.329    9.183    1.431   7.8
+                                          0.101    1.329    9.183    1.431   7.7
     TX_SHIFT (flex_counter_NUM_CNT_BITS4_1)
-                                          0.583    1.976    7.253    2.559  13.9
+                                          0.583    1.976    7.253    2.559  13.8
 1

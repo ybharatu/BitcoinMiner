@@ -24,7 +24,7 @@ module USB_encoder
 	reg hold_eop;
 	reg restart;
 
-	typedef enum bit [1:0] {IDLE, WAIT, ORIG_VAL}
+	typedef enum bit [2:0] {IDLE, EOP_HOLD, ORIG_VAL, EOP_WAIT1, EOP_WAIT2, EOP_WAIT3, EOP_WAIT4, EOP_WAIT5}
 	stateType;
 	stateType current_state, next_state;
 
@@ -152,10 +152,25 @@ module USB_encoder
 				end
 				end
 				
-				if(create_eop) next_state = WAIT;
+				if(create_eop) next_state = EOP_WAIT1;
 			end
-			WAIT: begin
-				next_state = WAIT;
+			EOP_WAIT1:begin
+				next_state = EOP_WAIT2;
+			end
+			EOP_WAIT2:begin
+				next_state = EOP_WAIT3;
+			end
+			EOP_WAIT3:begin
+				next_state = EOP_WAIT4;
+			end
+			EOP_WAIT4:begin
+				next_state = EOP_WAIT5;
+			end
+			EOP_WAIT5:begin
+				next_state = EOP_HOLD;
+			end
+			EOP_HOLD: begin
+				next_state = EOP_HOLD;
 				d_plus_out = 0;
 				hold_eop = 1;
 				d_minus_out = 0;

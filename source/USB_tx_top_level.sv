@@ -44,7 +44,7 @@ module USB_tx_top_level
 
 	USB_tx_controller CTRL (.clk(clk), .n_rst(n_rst), .transmit_empty(transmit_empty), .read_enable(read_enable), .tx_enable(tx_enable),
 				.load_enable(load_enable), .crc_enable(crc_enable), .crc_load(crc_load), .transmitting(transmitting), .data_sent(data_sent),
-				.byte_sent(byte_sent), .create_eop(create_eop), .transmit_start(transmit_start), .crc_clear(crc_clear));
+				.byte_sent(byte_sent), .create_eop(create_eop), .transmit_start(transmit_start), .crc_clear(crc_clear), .tx_shift(tx_shift));
 
 	USB_tx_sr TX_SR (.clk(clk), .n_rst(n_rst), .load_enable(load_enable), .tx_enable(tx_enable), .tx_shift(tx_shift), .tx_data(tx_data), .tx_out_bit(tx_out_bit), .crc_16(crc_16), .crc_load(crc_load), 
 				.tx_hold(tx_hold));

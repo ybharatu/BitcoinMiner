@@ -12,6 +12,7 @@ module USB_rx_sr
 	input wire n_rst,
 	input wire shift_enable,
 	input wire d_orig,
+	input wire rx_hold,
 	output wire [7:0] rx_data
 );
 
@@ -19,7 +20,7 @@ module USB_rx_sr
 	(
 		.clk(clk),
 		.n_rst(n_rst),
-		.shift_enable(shift_enable),
+		.shift_enable(shift_enable && !rx_hold),
 		.serial_in(d_orig),
 		.parallel_out(rx_data)
 	);

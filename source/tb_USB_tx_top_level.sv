@@ -118,6 +118,84 @@ module tb_USB_tx_top_level ();
 	end
 	endtask
 
+	task send_hash_chunk;
+		input [255:0] hash;
+	begin
+		@(posedge tb_read_enable);
+		cb.tx_data <= hash[255:240];
+		@(posedge tb_read_enable);
+		cb.tx_data <= hash[239:224];
+		@(posedge tb_read_enable);
+		cb.tx_data <= hash[223:208];
+		@(posedge tb_read_enable);
+		cb.tx_data <= hash[207:192];
+		@(posedge tb_read_enable);
+		cb.tx_data <= hash[191:176];
+		@(posedge tb_read_enable);
+		cb.tx_data <= hash[175:160];
+		@(posedge tb_read_enable);
+		cb.tx_data <= hash[159:144];
+		@(posedge tb_read_enable);
+		cb.tx_data <= hash[143:128];
+		@(posedge tb_read_enable);
+		cb.tx_data <= hash[127:112];
+		@(posedge tb_read_enable);
+		cb.tx_data <= hash[111:96];
+		@(posedge tb_read_enable);
+		cb.tx_data <= hash[95:80];
+		@(posedge tb_read_enable);
+		cb.tx_data <= hash[79:64];
+		@(posedge tb_read_enable);
+		cb.tx_data <= hash[63:48];
+		@(posedge tb_read_enable);
+		cb.tx_data <= hash[47:32];
+		@(posedge tb_read_enable);
+		cb.tx_data <= hash[31:16];
+		@(posedge tb_read_enable);
+		cb.tx_data <= hash[15:0];
+		
+	end
+	endtask
+	
+	task send_header;
+		input [639:0] header;
+	begin
+		integer i;
+		/*
+		cb.transmit_start <= 'b1;
+		cb.tx_data <= 16'b1000000011010010;
+		@cb;
+		@cb;
+		cb.transmit_start <= 'b0;
+		@cb;
+		@cb;
+		send_hash_chunk(header[639:384]);
+		cb.transmit_start <= 'b1;
+		@(negedge eop);
+				cb.tx_data <= 16'b1000000011010010;
+		@cb;
+		@cb;
+		cb.transmit_start <= 'b0;
+		@cb;
+		@cb;
+		send_hash_chunk(header[383:128]);
+		@(negedge eop);
+		cb.transmit_start <= 'b1;
+		cb.tx_data <= 16'b1000000011010010;
+		@cb;
+		@cb;
+		cb.transmit_start <= 'b0;
+		@cb;
+		@cb;
+		send_hash_chunk(header[127:0]);
+*/
+		send_hash(header[639:384]);
+		send_hash(header[383:128]);
+		send_hash(header[127:0]);
+		
+	end
+	endtask
+
 	task check_hash;
 		input [255:0] data;
 	begin
@@ -182,6 +260,9 @@ module tb_USB_tx_top_level ();
 		send_hash(256'h000000000003ba27aa200b1cecaad478d2b00432346c3f1f3986da1afd33e506); //74B5 HASH 100000
 
 		send_hash(256'h000000000002d01c1fccc21636b607dfd930d31d01c3a62104612a1719011250); //A7AA HASH 99999
+		
+		// transfer #1
+		send_header(640'h0100000050120119172a610421a6c3011dd330d9df07b63616c2cc1f1cd00200000000006657a9252aacd5c0b2940996ecff952228c3067cc38d4885efb5a4ac4247e9f337221b4d4c86041b0f2b5710);
 	end
 
 
