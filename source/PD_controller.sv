@@ -12,7 +12,7 @@
 `define DATA1   8'b01001011
 `define INTERRUPT   8'b00000000
 `define HASH   8'b00000000
-`define CORRECT_ADDRESS 8'b00000000
+`define CORRECT_ADDRESS 7'b1100001
 
 module PD_controller
 (
@@ -39,7 +39,7 @@ module PD_controller
 );
 
 typedef enum bit [4:0] {IDLE, READ_PID, IN_PID, WAIT_ADDRESS_IN, READ_ADDRESS_IN, EOP_WAIT, SEND_TRANSFER_PACKET, OUT_PID, WAIT_ADDRESS_OUT, READ_ADDRESS_OUT, VALID_ADDRESS_OUT,
-			OUT_EOP_WAIT, WAIT_DATA_TYPE, CHECK_DATA_TYPE, INTERRUPT, PACKET_1_WAIT, WRITE_PACKET_1, PACKET_2_WAIT, WRITE_PACKET_2, NEW_BLOCK, ERROR} stateType;
+			OUT_EOP_WAIT, WAIT_DATA_TYPE, CHECK_DATA_TYPE, INTERRUPT, PACKET_1_WAIT, WRITE_PACKET_1, PACKET_2_WAIT, WRITE_PACKET_2, NEW_BLOCK, ERROR, QUIT1, QUIT2} stateType;
 stateType current_state, next_state;
 
 logic valid_address;
@@ -100,9 +100,10 @@ begin
 				else if(rx_data == `OUT_PID) //ADD more cases
 					next_state = OUT_PID;
 				else if(rx_data == `DATA0 && valid_address)
-					next_state = WAIT_DATA_TYPE;
+					next_state = QUIT1; //WAIT_DATA_TYPE;
 				else if(rx_data == `DATA1 && valid_address)
-					next_state = PACKET_2_WAIT;
+					next_state = QUIT2; //PACKET_2_WAIT;
+				
 			end
 			else
 			begin
@@ -120,7 +121,7 @@ begin
 				next_state = WAIT_ADDRESS_IN;
 		end
 		READ_ADDRESS_IN: begin
-			if(rx_data == `CORRECT_ADDRESS)
+			if(rx_data[7:1] == `CORRECT_ADDRESS)
 				next_state = EOP_WAIT;
 			else
 				next_state = IDLE; 
@@ -148,7 +149,7 @@ begin
 				next_state = WAIT_ADDRESS_OUT;
 		end
 		READ_ADDRESS_OUT: begin
-			if(rx_data == `CORRECT_ADDRESS)
+			if(rx_data[7:1] == `CORRECT_ADDRESS)
 				next_state = VALID_ADDRESS_OUT;
 			else
 				next_state = IDLE; 
@@ -163,6 +164,10 @@ begin
 				next_state = IDLE;
 			else
 				next_state = OUT_EOP_WAIT;
+		end
+		QUIT1: begin
+			next_state = WAIT_DATA_TYPE;
+			quit_hash = 1;
 		end
 		WAIT_DATA_TYPE: begin
 			if(write_enable)
@@ -196,6 +201,10 @@ begin
 				next_state = IDLE;
 			else
 				next_state = PACKET_1_WAIT;
+		end
+		QUIT2: begin
+			next_state = PACKET_2_WAIT;
+			quit_hash = 1;
 		end
 		PACKET_2_WAIT: begin
 			if(write_enable)

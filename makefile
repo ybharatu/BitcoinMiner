@@ -19,7 +19,7 @@ include /home/ecegrid/a/ece337/Course_Prod/course_make_vars
 USB_RX_FILES := USB_timer_rx.sv USB_crc_16.sv USB_crc_5.sv USB_crc_rx.sv USB_decoder.sv USB_edge_detect.sv USB_eop_detect.sv USB_rx_controller.sv USB_rx_sr.sv USB_sync_high.sv USB_sync_low.sv
 USB_TX_FILES := USB_encoder.sv USB_timer_tx.sv USB_crc_tx.sv USB_tx_controller.sv USB_tx_sr.sv 
 HM_FILES := HM_timer.sv HM_check_hash.sv HM_controller.sv HM_hash_selection.sv HM_SHA_256.sv HM_bus_select.sv
-PD_FILES := PD_block_storage.sv PD_hash_separation.sv #PD_controller.sv
+PD_FILES := PD_block_storage.sv PD_hash_separation.sv PD_controller.sv
 EXTRA_FILES := flex_counter.sv flex_pts_sr.sv flex_stp_sr.sv flex_counter_fix.sv
 
 COMPONENT_FILES	:= $(USB_TX_FILES) $(USB_RX_FILES) $(HM_FILES) $(PD_FILES) $(EXTRA_FILES)
