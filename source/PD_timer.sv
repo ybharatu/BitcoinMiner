@@ -11,12 +11,12 @@ module PD_timer(
 	input wire n_rst,
 	input wire cnt_up,
 	input wire clr_cnt,
-	output logic packet_done
+	output logic packet_done,
+	output logic [6:0] byte_count
 );
-	logic byte_count;
 
 	flex_counter #(7) TIMER_PD (.clk(clk), .n_rst(n_rst), .clear(clr_cnt), .count_enable(cnt_up), .rollover_val(7'd79), .count_out(byte_count), .rollover_flag());
 
-	assign packet_done = (byte_count == 7'd64 || byte_count == 7'd80) ? 1 : 0;
+	assign packet_done = (byte_count == 7'd63 || byte_count == 7'd79) ? 1 : 0;
 
 endmodule

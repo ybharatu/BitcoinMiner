@@ -11,7 +11,7 @@
 `define DATA0   8'b11000011
 `define DATA1   8'b01001011
 `define INTERRUPT   8'b00000000
-`define HASH   8'b00000000
+`define HASH   8'b11111111
 `define CORRECT_ADDRESS 7'b1100001
 
 module PD_controller
@@ -20,13 +20,13 @@ module PD_controller
 	input n_rst,
 	input write_enable,
 	input [7:0] rx_data,
-	input [7:0] byte_cnt,
 	input valid_hash,
 	input hash_done,
 	input packet_done,
 	input eop,
+	input [6:0] byte_count,
 	output logic i_data_en,
-	output logic i_data_sel,
+	output logic [6:0] i_data_sel,
 	output logic [7:0] i_data,
 	output logic p_error,
 	output logic stop_calc,
@@ -34,7 +34,9 @@ module PD_controller
 	output logic host_ready,
 	output logic begin_hash,
 	output logic quit_hash,
-	output logic cnt_up
+	output logic cnt_up,
+	output logic clr_cnt,
+	output logic transmit_ack
 	
 );
 
@@ -87,6 +89,11 @@ begin
 	i_data_sel = 0;
 	valid_address_next = 0;
 	valid_address_enable = 0;
+	clr_cnt = 0;
+	host_ready = 0;
+	quit_hash = 0;
+	begin_hash = 0;
+	transmit_ack = 0;
 	case(current_state)
 		IDLE: begin
 			if(write_enable)
@@ -112,27 +119,32 @@ begin
 		end
 		IN_PID: begin
 			next_state = WAIT_ADDRESS_IN;
+			transmit_ack = 1;
 		end
 
 		WAIT_ADDRESS_IN: begin
+			transmit_ack = 1;
 			if(write_enable)
 				next_state = READ_ADDRESS_IN;
 			else
 				next_state = WAIT_ADDRESS_IN;
 		end
 		READ_ADDRESS_IN: begin
+			transmit_ack = 1;
 			if(rx_data[7:1] == `CORRECT_ADDRESS)
 				next_state = EOP_WAIT;
 			else
 				next_state = IDLE; 
 		end
 		EOP_WAIT: begin
+			transmit_ack = 1;
 			if(eop)
 				next_state = SEND_TRANSFER_PACKET;
 			else
 				next_state = EOP_WAIT;
 		end
 		SEND_TRANSFER_PACKET: begin
+			transmit_ack = 1;
 			host_ready = 1;
 			next_state = IDLE;
 		end
@@ -186,6 +198,8 @@ begin
 		INTERRUPT: begin
 			quit_hash = 1;
 			next_state = IDLE;
+			valid_address_next = 0;
+			valid_address_enable = 1;
 		end
 		PACKET_1_WAIT: begin
 			if(write_enable)
@@ -196,7 +210,7 @@ begin
 		WRITE_PACKET_1: begin
 			i_data_en = 1;
 			cnt_up = 1;
-			i_data_sel = byte_cnt;
+			i_data_sel = byte_count;
 			if(packet_done)
 				next_state = IDLE;
 			else
@@ -215,7 +229,7 @@ begin
 		WRITE_PACKET_2: begin
 			i_data_en = 1;
 			cnt_up = 1;
-			i_data_sel = byte_cnt + 63; //TODO CHECK THAT NUM
+			i_data_sel = byte_count + 63; //TODO CHECK THAT NUM
 			if(packet_done)
 				next_state = NEW_BLOCK;
 			else
@@ -223,6 +237,7 @@ begin
 		end
 		NEW_BLOCK: begin
 			new_block = 1;
+			clr_cnt = 1;
 			next_state = IDLE;			
 		end
 		ERROR: begin
