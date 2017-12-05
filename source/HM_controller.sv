@@ -128,7 +128,7 @@ begin
 			halt = 1;
 			if(quit_hash)
 				nextState = IDLE;
-			if(begin_hash)
+			else if(begin_hash)
 				nextState = INIT_LOAD1;
 		end
 		INCREMENT: begin
