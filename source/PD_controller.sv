@@ -12,6 +12,7 @@
 `define DATA1   8'b01001011
 `define INTERRUPT   8'b00000000
 `define HASH   8'b00000000
+`define CORRECT_ADDRESS 8'b00000000
 
 module PD_controller
 (
@@ -37,7 +38,7 @@ module PD_controller
 	
 );
 
-typedef enum bit [4:0] {IDLE, READ_PID, IN_PID, , WAIT_ADDRESS_IN, READ_ADDRESS_IN, EOP_WAIT, SEND_TRANSFER_PACKET, OUT_PID, WAIT_ADDRESS_OUT, READ_ADDRESS_OUT, VALID_ADDRESS_OUT
+typedef enum bit [4:0] {IDLE, READ_PID, IN_PID, WAIT_ADDRESS_IN, READ_ADDRESS_IN, EOP_WAIT, SEND_TRANSFER_PACKET, OUT_PID, WAIT_ADDRESS_OUT, READ_ADDRESS_OUT, VALID_ADDRESS_OUT,
 			OUT_EOP_WAIT, WAIT_DATA_TYPE, CHECK_DATA_TYPE, INTERRUPT, PACKET_1_WAIT, WRITE_PACKET_1, PACKET_2_WAIT, WRITE_PACKET_2, NEW_BLOCK, ERROR} stateType;
 stateType current_state, next_state;
 
@@ -79,8 +80,6 @@ always_comb
 begin
 	next_state = current_state;
 	p_error = 0;
-	transmit_empty = 0;
-	transmit_start = 0;
 	cnt_up = 0;
 	stop_calc = 0;
 	new_block = 0;
@@ -103,7 +102,7 @@ begin
 				else if(rx_data == `DATA0 && valid_address)
 					next_state = WAIT_DATA_TYPE;
 				else if(rx_data == `DATA1 && valid_address)
-					next_state = WAIT_PACKET_2;
+					next_state = PACKET_2_WAIT;
 			end
 			else
 			begin
@@ -215,10 +214,11 @@ begin
 		end
 		NEW_BLOCK: begin
 			new_block = 1;
-			
+			next_state = IDLE;			
 		end
 		ERROR: begin
 			p_error = 1;
+			next_state = IDLE;
 		end
 		
 			
@@ -226,3 +226,4 @@ begin
 end
 		
 endmodule
+
