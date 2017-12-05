@@ -31,13 +31,17 @@ module tb_PD_block_storage ();
 
 	integer tb_test_num = 0;
 	reg tb_i_data_en;
+
 	reg [7:0] tb_i_data;
 	reg [6:0] tb_i_data_sel;
 	reg [63:0][7:0] tb_chunk_1;
 	reg [15:0][7:0] tb_chunk_2;
 	reg [31:0][7:0] tb_difficulty;
 	reg [111:0][7:0] prev_storage;
-	reg [111:0][7:0] curr_storage;
+	reg [111:0][7:0] curr_storage;	
+	
+	reg tb_increment; // after increment
+
 
 	assign curr_storage = {tb_difficulty,tb_chunk_2,tb_chunk_1};
 	integer i;
@@ -48,13 +52,14 @@ module tb_PD_block_storage ();
 		// output #800ps n_rst = tb_n_rst; // FIXME: Removal time (01CLK -> 01R) is 281.25ps, but this needs to be 800 to prevent metastable value warnings
 		output  data = tb_i_data,
 			sel = tb_i_data_sel,
+			increment = tb_increment, // after increment
 			en = tb_i_data_en;
 		input	chunk_1 = tb_chunk_1,
 			chunk_2 = tb_chunk_2,
 			difficulty = tb_difficulty;
 	endclocking
 
-	PD_block_storage DUT (.i_data_en(tb_i_data_en), .i_data(tb_i_data), .i_data_sel(tb_i_data_sel),
+	PD_block_storage DUT (.i_data_en(tb_i_data_en), .i_data(tb_i_data), .i_data_sel(tb_i_data_sel), .increment(tb_increment),
 			   .chunk_1(tb_chunk_1), .chunk_2(tb_chunk_2), .difficulty(tb_difficulty), .clk(tb_clk));
 
 	initial
@@ -63,6 +68,7 @@ module tb_PD_block_storage ();
 	tb_i_data_en 	= 1'b0;
 	tb_i_data 	= 8'b0;
 	tb_i_data_sel	= 7'b0;
+	tb_increment	= 1'b0; // after increment
 	@cb;
 	@cb; //give some time to do nothing
 	//Test 1 - 112 write 112 bytes of memory to storage
@@ -78,8 +84,79 @@ module tb_PD_block_storage ();
 		else
 			$error("Test Case %d Failed, %d is supposed to be %d", tb_test_num, curr_storage[i], i);
 	end
-		
+
+	tb_i_data_sel <= 8'd64;
+	tb_i_data <= 8'hf0;
+	@cb;
+	#CHECK_DELAY;
+
+
+
+	tb_increment	= 1'b1;
+	@cb;
+	tb_increment	= 1'b0;
+	@cb;
+	@cb;
+	@cb;
+	@cb;
+	tb_increment	= 1'b1;
+	@cb;
+	tb_increment	= 1'b0;
+	@cb;
+	@cb;
+	@cb;
+	@cb;
+	tb_increment	= 1'b1;
+	@cb;
+	tb_increment	= 1'b0;
+	@cb;
+	@cb;
+	@cb;
+	@cb;
+	tb_increment	= 1'b1;
+	@cb;
+	tb_increment	= 1'b0;
+	@cb;
+	@cb;
+	@cb;
+	@cb;
+	tb_increment	= 1'b1;
+	@cb;
+	tb_increment	= 1'b0;
+
+	tb_i_data_en = 1'b0;
+
+	// New Test Case To Check Increment Works
+/*
+	@cb;
+	@cb;
+	@cb;
+	@cb;
+	tb_test_num	= '0;
+	tb_i_data_en 	= 1'b0;
+	tb_i_data 	= 8'b0;
+	tb_i_data_sel	= 7'b0;
+	tb_increment	= 1'b1; // after increment
+
+	@cb;
+	@cb;
+
+	tb_i_data_en = 1'b1;
+
+	for(i = 0; i < 112; i = i + 1) begin
+		tb_test_num = tb_test_num + 1;
+		tb_i_data_sel <= i;
+		tb_i_data <= i + 1;
+		@cb;
+		#CHECK_DELAY;
+		assert(curr_storage[i] == i + 1)
+			$info("Test Case %d Passed,",tb_test_num);
+		else
+			$error("Test Case %d Failed, %d is supposed to be %d", tb_test_num, curr_storage[i], i);
 	end
 
+	tb_i_data_en = 1'b0;*/
+
+	end
 
 endmodule
