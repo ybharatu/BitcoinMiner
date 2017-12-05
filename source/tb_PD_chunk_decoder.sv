@@ -30,15 +30,12 @@ module tb_PD_chunk_decoder();
 
 
 	integer tb_test_num = 0;
-	reg tb_i_data_en;
 
 	reg [1:0] tb_hash_select;
 	reg [511:0] tb_chunk1;
 	reg [127:0] tb_chunk2;
 	// input new_block, idk if we need this
 	reg [511:0] tb_data_to_hash;
-
-	integer i;
 
 	
 	clocking cb @(posedge tb_clk);
@@ -51,7 +48,7 @@ module tb_PD_chunk_decoder();
 		input	data_to_hash = tb_data_to_hash;
 	endclocking
 
-	PD_chunk_decoder DUT (.hash_select(tb_hash_select), .tb_chunk1(chunk1), .chunk2(tb_chunk2), .data_to_hash(tb_data_to_hash));
+	PD_chunk_decoder DUT (.hash_select(tb_hash_select), .chunk1(tb_chunk1), .chunk2(tb_chunk2), .data_to_hash(tb_data_to_hash));
 
 initial 
 begin

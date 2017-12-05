@@ -14,15 +14,18 @@ module PD_chunk_decoder
 	output logic [511:0] data_to_hash
 );
 
+logic [511:0]data;
+
 always_comb
 begin
 	if(hash_select == 0) begin
-		data_to_hash = chunk1;
+		data = chunk1;
 	end
 	else begin
-		data_to_hash = {chunk2, 1'b1, 319'b0, 64'd640}; // Message W + 1 + 319 0's + 640
+		data = {chunk2, 1'b1, 319'b0, 64'd640}; // Message W + 1 + 319 0's + 640
 	end
-
 end
+
+flip_endian #(.LENGTH(512), .FLIP_LENGTH(32)) FE1 (.data(data), .flipped(data_to_hash));
 
 endmodule
