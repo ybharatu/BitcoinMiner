@@ -24,7 +24,7 @@ module USB_encoder
 	reg hold_eop;
 	reg restart;
 
-	typedef enum bit [3:0] {EOP_HOLD, ORIG_VAL, EOP_WAIT1, EOP_WAIT2, EOP_WAIT3, EOP_WAIT4, EOP_WAIT5, STATE_J, STATE_K}
+	typedef enum bit [3:0] {EOP_HOLD, ORIG_VAL, EOP_WAIT1_K, EOP_WAIT2_K, EOP_WAIT3_K, EOP_WAIT4_K, EOP_WAIT5_K,EOP_WAIT1_J,EOP_WAIT2_J, EOP_WAIT3_J, EOP_WAIT4_J, EOP_WAIT5_J, STATE_J, STATE_K}
 	stateType;
 	stateType current_state, next_state;
 
@@ -83,7 +83,7 @@ module USB_encoder
 					next_state = STATE_K; 
 				else if(tx_shift && !d)
 					next_state = STATE_J; 
-				else if(create_eop) next_state = EOP_WAIT1;
+				else if(create_eop) next_state = EOP_WAIT1_K;
 				else
 					next_state = STATE_K;
 			end
@@ -94,23 +94,58 @@ module USB_encoder
 					next_state = STATE_J; 
 				else if(tx_shift && !d)
 					next_state = STATE_K; 
-				else if(create_eop) next_state = EOP_WAIT1;
+				else if(create_eop) next_state = EOP_WAIT1_J;
 				else
 					next_state = STATE_J;
 			end
-			EOP_WAIT1:begin
-				next_state = EOP_WAIT2;
+			EOP_WAIT1_J:begin
+				d_plus_out = 'b0;
+				d_minus_out = 'b1;
+				next_state = EOP_WAIT2_J;
 			end
-			EOP_WAIT2:begin
-				next_state = EOP_WAIT3;
+			EOP_WAIT2_J:begin
+				d_plus_out = 'b0;
+				d_minus_out = 'b1;
+				next_state = EOP_WAIT3_J;
 			end
-			EOP_WAIT3:begin
-				next_state = EOP_WAIT4;
+			EOP_WAIT3_J:begin
+				d_plus_out = 'b0;
+				d_minus_out = 'b1;
+				next_state = EOP_WAIT4_J;
 			end
-			EOP_WAIT4:begin
-				next_state = EOP_WAIT5;
+			EOP_WAIT4_J:begin
+				d_plus_out = 'b0;
+				d_minus_out = 'b1;
+				next_state = EOP_WAIT5_J;
 			end
-			EOP_WAIT5:begin
+			EOP_WAIT5_J:begin
+				d_plus_out = 'b0;
+				d_minus_out = 'b1;
+				next_state = EOP_HOLD;
+			end
+			EOP_WAIT1_K:begin
+				d_plus_out = 'b1;
+				d_minus_out = 'b0;
+				next_state = EOP_WAIT2_J;
+			end
+			EOP_WAIT2_K:begin
+				d_plus_out = 'b1;
+				d_minus_out = 'b0;
+				next_state = EOP_WAIT3_J;
+			end
+			EOP_WAIT3_K:begin
+				d_plus_out = 'b1;
+				d_minus_out = 'b0;
+				next_state = EOP_WAIT4_J;
+			end
+			EOP_WAIT4_K:begin
+				d_plus_out = 'b1;
+				d_minus_out = 'b0;
+				next_state = EOP_WAIT5_J;
+			end
+			EOP_WAIT5_K: begin
+				d_plus_out = 'b1;
+				d_minus_out = 'b0;
 				next_state = EOP_HOLD;
 			end
 			EOP_HOLD: begin
@@ -136,7 +171,7 @@ module USB_encoder
 		if(d_plus == 0)
 		begin
 			d_plus_out = 0;
-			d_minus_out = 1;
+			d_minuss_out = 1;
 		end
 		else
 		begin
@@ -239,7 +274,7 @@ module USB_encoder
 			ORIG_VAL: begin
 				next_state = IDLE;
 				d_plus_out = 1;
-				d_minus_out = 0;
+				d_minusss_out = 0;
 				restart = 1;
 			end
 		endcase
