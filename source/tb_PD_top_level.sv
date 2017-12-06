@@ -78,10 +78,10 @@ module tb_PD_top_level ();
 					.valid_hash(tb_valid_hash), .hash_done(tb_hash_done), .transmit_ack(tb_transmit_ack));
 	
 	task send_write_enables;
-		input [63:0][7:0] header;
+		input [62:0][7:0] header;
 	begin
 		integer i;
-		for(i = 63; i >= 0; i = i - 1)
+		for(i = 62; i >= 0; i = i - 1)
 		begin
 			cb.write_enable <= 'b1;
 			cb.rx_data <= header[i];			
@@ -115,7 +115,7 @@ module tb_PD_top_level ();
 		cb.write_enable <= 'b0;
 		cb.eop <= 'b0;
 		cb.hash_select <= 'b0;
-		cb.increment <= 'b1;
+		cb.increment <= 'b0;
 		cb.valid_hash <= 'b0;
 		cb.hash_done <= 'b0;
 		//RESET
@@ -287,12 +287,6 @@ module tb_PD_top_level ();
 		// SENDING DATA 1 Packet with HASH meta data
 		cb.write_enable <= 'b1;
 		cb.rx_data <= `DATA1;
-		@(posedge tb_clk);
-		@(posedge tb_clk);
-		cb.write_enable <= 'b0;
-		#(BYTE_PERIOD);
-		cb.write_enable <= 'b1;
-		cb.rx_data <= `HASH;
 		@(posedge tb_clk);
 		@(posedge tb_clk);
 		cb.write_enable <= 'b0;

@@ -80,6 +80,7 @@ begin
 end
 
 assign i_data = rx_data;
+assign i_data_sel = byte_count;
 
 always_comb
 begin
@@ -89,7 +90,6 @@ begin
 	stop_calc = 0;
 	new_block = 0;
 	i_data_en = 0;
-	i_data_sel = 0;
 	valid_address_next = 0;
 	valid_address_enable = 0;
 	clr_cnt = 0;
@@ -226,7 +226,6 @@ begin
 		WRITE_PACKET_1: begin
 			i_data_en = 1;
 			cnt_up = 1;
-			i_data_sel = byte_count;
 			if(packet_done)
 				next_state = WAIT_EOP_PACKET;
 			else
@@ -251,7 +250,6 @@ begin
 		WRITE_PACKET_2: begin
 			i_data_en = 1;
 			cnt_up = 1;
-			i_data_sel = byte_count;
 			if(packet_done)
 				next_state = WAIT_EOP_BLOCK;
 			else

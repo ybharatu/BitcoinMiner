@@ -17,6 +17,6 @@ module PD_timer(
 
 	flex_counter #(7) TIMER_PD (.clk(clk), .n_rst(n_rst), .clear(clr_cnt), .count_enable(cnt_up), .rollover_val(7'd111), .count_out(byte_count), .rollover_flag());
 
-	assign packet_done = (byte_count == 7'd63 || byte_count == 7'd111) ? 1 : 0;
+	assign packet_done = (byte_count == 7'd62 || byte_count == 7'd111) ? 1 : 0;
 
 endmodule

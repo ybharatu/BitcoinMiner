@@ -42,7 +42,7 @@ PD_controller CONTROLLER (.clk(clk), .n_rst(n_rst), .write_enable(write_enable),
 				.i_data_sel(i_data_sel), .i_data(i_data), .p_error(p_error), .stop_calc(stop_calc), .new_block(new_block), .host_ready(host_ready), .begin_hash(begin_hash), 
 				.quit_hash(quit_hash), .cnt_up(cnt_up), .valid_hash(valid_hash), .hash_done(hash_done), .clr_cnt(clr_cnt), .transmit_ack(transmit_ack), .byte_count(byte_count));
 
-PD_block_storage BLOCK_STORAGE (.clk(clk), .i_data_en(i_data_en), .i_data_sel(i_data_sel), .i_data(i_data), .difficulty(difficulty), .chunk_1(chunk_1), .chunk_2(chunk_2), .increment(increment));
+PD_block_storage BLOCK_STORAGE (.clk(clk), .n_rst(n_rst), .i_data_en(i_data_en), .i_data_sel(i_data_sel), .i_data(i_data), .difficulty(difficulty), .chunk_1(chunk_1), .chunk_2(chunk_2), .increment(increment));
 
 PD_chunk_decoder CHUNK_DECODER (.hash_select(hash_select), .chunk_1(chunk_1), .chunk_2(chunk_2), .data_to_hash(data_to_hash));
 
