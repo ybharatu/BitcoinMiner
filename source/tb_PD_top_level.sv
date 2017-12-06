@@ -18,7 +18,10 @@ module tb_PD_top_level ();
 	
 	localparam	CLK_PERIOD = 10;
 	localparam	BUS_PERIOD = 80;
+	localparam	BYTE_PERIOD = 640;
 	localparam	CHECK_DELAY = 1; // Check 1ns after the rising edge to allow for propagation delay
+	localparam	header_1 = 504'h0100000050120119172a610421a6c3011dd330d9df07b63616c2cc1f1cd00200000000006657a9252aacd5c0b2940996ecff952228c3067cc38d4885efb5a4;
+	localparam	header_2 = 392'hac4247e9f337221b4d4c86041b0f2b5710000000000004864c000000000000000000000000000000000000000000000000;
 	
 	// Shared Test Variables
 	reg tb_clk;
@@ -75,18 +78,36 @@ module tb_PD_top_level ();
 					.valid_hash(tb_valid_hash), .hash_done(tb_hash_done), .transmit_ack(tb_transmit_ack));
 	
 	task send_write_enables;
+		input [63:0][7:0] header;
 	begin
 		integer i;
-		for(i = 0; i < 63; i = i + 1)
+		for(i = 63; i >= 0; i = i - 1)
 		begin
 			cb.write_enable <= 'b1;
-			@cb;
+			cb.rx_data <= header[i];			
+			@(posedge tb_clk);
+			@(posedge tb_clk);
 			cb.write_enable <= 'b0;
-			@cb;
+			#(BYTE_PERIOD);
 		end
 	end
 	endtask
 
+	task send_chunk_2;
+		input [48:0][7:0] header;
+	begin
+		integer i;
+		for(i = 48; i >= 0; i = i - 1)
+		begin
+			cb.write_enable <= 'b1;
+			cb.rx_data <= header[i];			
+			@(posedge tb_clk);
+			@(posedge tb_clk);
+			cb.write_enable <= 'b0;
+			#(BYTE_PERIOD);
+		end
+	end
+	endtask
 
 	initial
 	begin	
@@ -102,208 +123,196 @@ module tb_PD_top_level ();
 		@cb;
 		@cb;
 		cb.n_rst <= 'b1;
-		@cb;
+		@(posedge tb_clk);
+		@(posedge tb_clk);
 		
 		//READING IN_PID
 		cb.write_enable <= 'b1;
 		cb.rx_data <= `IN_PID;
-		@cb;
+		@(posedge tb_clk);
+		@(posedge tb_clk);
 		cb.write_enable <= 'b0;
-		@cb;
-		@cb;
+		#(BYTE_PERIOD);
 		cb.write_enable <= 'b1;
 		cb.rx_data [7:1] <= `CORRECT_ADDRESS;
-		@cb;
+		@(posedge tb_clk);
+		@(posedge tb_clk);
 		cb.write_enable <= 'b0;
-		@cb;
+		#(BYTE_PERIOD);
+		cb.write_enable <= 'b1;
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		cb.write_enable <= 'b0;
+		#(BYTE_PERIOD);
 		cb.eop <= 'b1;
-		@cb;
+		#(BUS_PERIOD);
 		cb.eop <= 'b0;
-		@cb;
+		#(BYTE_PERIOD);
+
+
 		//READING OUT_PID
 		cb.write_enable <= 'b1;
 		cb.rx_data <= `OUT_PID;
-		@cb;
+		@(posedge tb_clk);
+		@(posedge tb_clk);
 		cb.write_enable <= 'b0;
-		@cb;
-		cb.write_enable <= 'b1;
-		@cb;
-		cb.write_enable <= 'b0;
-		@cb;
+		#(BYTE_PERIOD);
 		cb.write_enable <= 'b1;
 		cb.rx_data[7:1] <= `CORRECT_ADDRESS;
-		@cb;
+		@(posedge tb_clk);
+		@(posedge tb_clk);
 		cb.write_enable <= 'b0;
-		@cb;
-		@cb;
+		#(BYTE_PERIOD);
+		cb.write_enable <= 'b1;
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		cb.write_enable <= 'b0;
+		#(BYTE_PERIOD);
 		cb.eop <= 'b1;
-		@cb;
+		#(BUS_PERIOD);
 		cb.eop <= 'b0;
-		@cb;
+		#(BUS_PERIOD);
+
+
 		// SENDING DATA 0 Packet with interrupt meta data
 		cb.write_enable <= 'b1;
 		cb.rx_data <= `DATA0;
-		@cb;
+		@(posedge tb_clk);
+		@(posedge tb_clk);
 		cb.write_enable <= 'b0;
-		@cb;
-		@cb;
+		#(BYTE_PERIOD);
 		cb.write_enable <= 'b1;
 		cb.rx_data <= `INTERRUPT;
-		@cb;
+		@(posedge tb_clk);
+		@(posedge tb_clk);
 		cb.write_enable <= 'b0;
-		@cb;
-		@cb;
+		#(BYTE_PERIOD);
+		cb.write_enable <= 'b1;
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		cb.write_enable <= 'b0;
+		#(BYTE_PERIOD);
+		cb.write_enable <= 'b1;
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		cb.write_enable <= 'b0;
+		#(BYTE_PERIOD);
+		cb.eop <= 'b1;
+		#(BUS_PERIOD);
+		cb.eop <= 'b0;
+		#(BUS_PERIOD);
+
+
 		//READING OUT_PID
 		cb.write_enable <= 'b1;
 		cb.rx_data <= `OUT_PID;
-		@cb;
+		@(posedge tb_clk);
+		@(posedge tb_clk);
 		cb.write_enable <= 'b0;
-		@cb;
-		cb.write_enable <= 'b1;
-		@cb;
-		cb.write_enable <= 'b0;
-		@cb;
+		#(BYTE_PERIOD);
 		cb.write_enable <= 'b1;
 		cb.rx_data[7:1] <= `CORRECT_ADDRESS;
-		@cb;
+		@(posedge tb_clk);
+		@(posedge tb_clk);
 		cb.write_enable <= 'b0;
-		@cb;
-		@cb;
+		#(BYTE_PERIOD);
+		cb.write_enable <= 'b1;
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		cb.write_enable <= 'b0;
+		#(BYTE_PERIOD);
 		cb.eop <= 'b1;
-		@cb;
+		#(BUS_PERIOD);
 		cb.eop <= 'b0;
-		@cb;
+		#(BUS_PERIOD);
+
+
 		// SENDING DATA 0 Packet with HASH meta data
 		cb.write_enable <= 'b1;
 		cb.rx_data <= `DATA0;
-		@cb;
+		@(posedge tb_clk);
+		@(posedge tb_clk);
 		cb.write_enable <= 'b0;
-		@cb;
-		@cb;
+		#(BYTE_PERIOD);
 		cb.write_enable <= 'b1;
 		cb.rx_data <= `HASH;
-		@cb;
+		@(posedge tb_clk);
+		@(posedge tb_clk);
 		cb.write_enable <= 'b0;
-		@cb;
+		#(BYTE_PERIOD);
+
+		send_write_enables(header_1);
+
+		cb.write_enable <= 'b1;
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		cb.write_enable <= 'b0;
+		#(BYTE_PERIOD);
 		cb.write_enable <= 'b1;
 		@cb;
 		cb.write_enable <= 'b0;
-		@cb;
-		send_write_enables();
+		#(BYTE_PERIOD);
+		cb.eop <= 'b1;
+		#(BUS_PERIOD);
+		cb.eop <= 'b0;
+		#(BUS_PERIOD);
+
+
+
+
 		//READING OUT_PID
 		cb.write_enable <= 'b1;
 		cb.rx_data <= `OUT_PID;
-		@cb;
+		@(posedge tb_clk);
+		@(posedge tb_clk);
 		cb.write_enable <= 'b0;
-		@cb;
-		cb.write_enable <= 'b1;
-		@cb;
-		cb.write_enable <= 'b0;
-		@cb;
+		#(BYTE_PERIOD);
 		cb.write_enable <= 'b1;
 		cb.rx_data[7:1] <= `CORRECT_ADDRESS;
-		@cb;
+		@(posedge tb_clk);
+		@(posedge tb_clk);
 		cb.write_enable <= 'b0;
-		@cb;
-		@cb;
+		#(BYTE_PERIOD);
+		cb.write_enable <= 'b1;
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		cb.write_enable <= 'b0;
+		#(BYTE_PERIOD);
 		cb.eop <= 'b1;
-		@cb;
+		#(BUS_PERIOD);
 		cb.eop <= 'b0;
-		@cb;
-		// SENDING DATA 1 Packet
+		#(BUS_PERIOD);
+
+
+		// SENDING DATA 1 Packet with HASH meta data
 		cb.write_enable <= 'b1;
 		cb.rx_data <= `DATA1;
-		@cb;
+		@(posedge tb_clk);
+		@(posedge tb_clk);
 		cb.write_enable <= 'b0;
-		@cb;
-		@cb;
+		#(BYTE_PERIOD);
 		cb.write_enable <= 'b1;
-		@cb;
-		cb.write_enable <= 'b0;
-		@cb;
-		for(i = 0; i < 16; i = i + 1)
-		begin
-			cb.write_enable <= 'b1;
-			@cb;
-			cb.write_enable <= 'b0;
-			@cb;
-		end
-		@cb;
-
-
-/*
-		//READING DATA0 w/ INTERRUPT
-		cb.write_enable <= 'b1;
-		@cb;
-		cb.rx_data <= `DATA0;
-		@cb;	
-		@cb;
-		cb.write_enable <= 'b1;
-		@cb;
-		cb.rx_data <= `INTERRUPT;
-		@cb;
-
-		//READING DATA0 w/o INTERRUPT
-		cb.write_enable <= 'b1;
-		@cb;
-		cb.rx_data <= `DATA0;
-		@cb;	
-		@cb;
-		cb.write_enable <= 'b1;
-		@cb;
 		cb.rx_data <= `HASH;
-		@cb;
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		cb.write_enable <= 'b0;
+		#(BYTE_PERIOD);
+
+		send_chunk_2(header_2);
+
+		cb.write_enable <= 'b1;
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		cb.write_enable <= 'b0;
+		#(BYTE_PERIOD);
 		cb.write_enable <= 'b1;
 		@cb;
-		for(int i = 0; i < 63; i=i+1)
-		begin
-			cb.rx_data <= i;
-			@cb;
-			@cb;
-			@cb;
-			cb.write_enable <= 1;
-			@cb;
-			
-		end
-		//@(posedge packet_done);
-		@cb;
-		@cb;
-		@cb;
-		for(int i = 0; i < 63; i=i+1)
-		begin
-			if(cb.data_to_hash[i] != i)
-			begin
-				$error("DATA0 is invalid. Expected: %d Acutal: %d", i, cb.data_to_hash[i]);
-			end
-		end
-		
-		//READING DATA1
-		cb.write_enable <= 'b1;
-		@cb;
-		cb.rx_data <= `DATA1;
-		@cb;	
-		@cb;
-		cb.write_enable <= 'b1;
-		@cb;
-		for(int i = 0; i < 63; i=i+1)
-		begin
-			cb.rx_data <= i;
-			@cb;
-			@cb;
-			@cb;
-			cb.write_enable <= 1;
-			@cb;
-			
-		end
-		@(posedge cb.new_block);
-		for(int i = 0; i < 63; i=i+1)
-		begin
-			if(cb.data_to_hash[i] != i)
-			begin
-				$error("DATA0 is invalid. Expected: %d Acutal: %d", i, cb.data_to_hash[i]);
-			end
-		end
-		*/
+		cb.write_enable <= 'b0;
+		#(BYTE_PERIOD);
+		cb.eop <= 'b1;
+		#(BUS_PERIOD);
+		cb.eop <= 'b0;
+		#(BUS_PERIOD);
 	end
 
 endmodule

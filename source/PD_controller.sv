@@ -24,6 +24,7 @@ module PD_controller
 	input hash_done,
 	input packet_done,
 	input eop,
+	input rcv_error,
 	input [6:0] byte_count,
 	output logic i_data_en,
 	output logic [6:0] i_data_sel,
@@ -36,12 +37,14 @@ module PD_controller
 	output logic quit_hash,
 	output logic cnt_up,
 	output logic clr_cnt,
-	output logic transmit_ack
+	output logic transmit_ack,
+	output logic transmit_nack
 	
 );
 
 typedef enum bit [4:0] {IDLE, READ_PID, IN_PID, WAIT_ADDRESS_IN, READ_ADDRESS_IN, EOP_WAIT, SEND_TRANSFER_PACKET, OUT_PID, WAIT_ADDRESS_OUT, READ_ADDRESS_OUT, VALID_ADDRESS_OUT,
-			OUT_EOP_WAIT, WAIT_DATA_TYPE, CHECK_DATA_TYPE, INTERRUPT, PACKET_1_WAIT, WRITE_PACKET_1, PACKET_2_WAIT, WRITE_PACKET_2, NEW_BLOCK, ERROR, QUIT1, QUIT2} stateType;
+			OUT_EOP_WAIT, WAIT_DATA_TYPE, CHECK_DATA_TYPE, INTERRUPT, PACKET_1_WAIT, WRITE_PACKET_1, PACKET_2_WAIT, WRITE_PACKET_2, NEW_BLOCK, ERROR, QUIT1, QUIT2, VALID_ADDRESS_IN,
+			INTERRUPT_WAIT_EOP, WAIT_EOP_END, TRANSMIT_ACK, TRANSMIT_NACK, WAIT_EOP_PACKET, WAIT_EOP_BLOCK, ERROR_EOP_WAIT, ERROR_EOP_END} stateType;
 stateType current_state, next_state;
 
 logic valid_address;
@@ -94,6 +97,7 @@ begin
 	quit_hash = 0;
 	begin_hash = 0;
 	transmit_ack = 0;
+	transmit_nack = 0;
 	case(current_state)
 		IDLE: begin
 			if(write_enable)
@@ -119,40 +123,38 @@ begin
 		end
 		IN_PID: begin
 			next_state = WAIT_ADDRESS_IN;
-			transmit_ack = 1;
 		end
 
 		WAIT_ADDRESS_IN: begin
-			transmit_ack = 1;
 			if(write_enable)
 				next_state = READ_ADDRESS_IN;
 			else
 				next_state = WAIT_ADDRESS_IN;
 		end
 		READ_ADDRESS_IN: begin
-			transmit_ack = 1;
 			if(rx_data[7:1] == `CORRECT_ADDRESS)
-				next_state = EOP_WAIT;
+				next_state = VALID_ADDRESS_IN;
 			else
-				next_state = IDLE; 
+				next_state = OUT_EOP_WAIT; 
 		end
-		EOP_WAIT: begin
-			transmit_ack = 1;
+		VALID_ADDRESS_IN: begin
 			if(eop)
 				next_state = SEND_TRANSFER_PACKET;
+			else
+				next_state = VALID_ADDRESS_IN;
+		end
+		EOP_WAIT: begin
+			if(eop)
+				next_state = IDLE;
 			else
 				next_state = EOP_WAIT;
 		end
 		SEND_TRANSFER_PACKET: begin
-			transmit_ack = 1;
 			host_ready = 1;
 			next_state = IDLE;
 		end
 		OUT_PID: begin
-			if(write_enable)
-				next_state = WAIT_ADDRESS_OUT;
-			else
-				next_state = OUT_PID;
+			next_state = WAIT_ADDRESS_OUT;
 		end
 		WAIT_ADDRESS_OUT: begin
 			if(write_enable)
@@ -164,7 +166,7 @@ begin
 			if(rx_data[7:1] == `CORRECT_ADDRESS)
 				next_state = VALID_ADDRESS_OUT;
 			else
-				next_state = IDLE; 
+				next_state = OUT_EOP_WAIT; 
 		end
 		VALID_ADDRESS_OUT: begin
 			valid_address_next = 1;
@@ -197,9 +199,23 @@ begin
 		end
 		INTERRUPT: begin
 			quit_hash = 1;
+			next_state = INTERRUPT_WAIT_EOP;
+		end
+		INTERRUPT_WAIT_EOP: begin
+			if(eop)
+				next_state = WAIT_EOP_END;
+			else
+				next_state = INTERRUPT_WAIT_EOP;
+		end
+		WAIT_EOP_END: begin
+			if(!eop)
+				next_state = TRANSMIT_ACK;
+			else
+				next_state = WAIT_EOP_END;
+		end
+		TRANSMIT_ACK: begin
+			transmit_ack = 1;
 			next_state = IDLE;
-			valid_address_next = 0;
-			valid_address_enable = 1;
 		end
 		PACKET_1_WAIT: begin
 			if(write_enable)
@@ -212,9 +228,15 @@ begin
 			cnt_up = 1;
 			i_data_sel = byte_count;
 			if(packet_done)
-				next_state = IDLE;
+				next_state = WAIT_EOP_PACKET;
 			else
 				next_state = PACKET_1_WAIT;
+		end
+		WAIT_EOP_PACKET: begin
+			if(eop)
+				next_state = WAIT_EOP_END;
+			else
+				next_state = WAIT_EOP_PACKET;
 		end
 		QUIT2: begin
 			next_state = PACKET_2_WAIT;
@@ -231,19 +253,43 @@ begin
 			cnt_up = 1;
 			i_data_sel = byte_count + 63; //TODO CHECK THAT NUM
 			if(packet_done)
-				next_state = NEW_BLOCK;
+				next_state = WAIT_EOP_BLOCK;
 			else
 				next_state = PACKET_2_WAIT;
+		end
+		WAIT_EOP_BLOCK: begin
+			if(eop)
+				next_state = NEW_BLOCK;
+			else
+				next_state = WAIT_EOP_BLOCK; 
 		end
 		NEW_BLOCK: begin
 			new_block = 1;
 			clr_cnt = 1;
-			next_state = IDLE;			
+			next_state = WAIT_EOP_END;			
 		end
 		ERROR: begin
 			p_error = 1;
+			transmit_nack = 1;
+			next_state = ERROR_EOP_WAIT;
+		end
+		ERROR_EOP_WAIT: begin
+			if(eop)
+				next_state = ERROR_EOP_END;
+			else
+				next_state = ERROR_EOP_WAIT;
+		end
+		ERROR_EOP_END: begin
+			if(!eop)
+				next_state = TRANSMIT_NACK;
+			else
+				next_state = ERROR_EOP_END;
+		end
+		TRANSMIT_NACK: begin
+			transmit_nack = 1;
 			next_state = IDLE;
 		end
+		
 		
 			
 	endcase
