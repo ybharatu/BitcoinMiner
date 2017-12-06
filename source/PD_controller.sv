@@ -251,7 +251,7 @@ begin
 		WRITE_PACKET_2: begin
 			i_data_en = 1;
 			cnt_up = 1;
-			i_data_sel = byte_count + 63; //TODO CHECK THAT NUM
+			i_data_sel = byte_count;
 			if(packet_done)
 				next_state = WAIT_EOP_BLOCK;
 			else

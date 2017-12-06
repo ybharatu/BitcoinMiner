@@ -118,7 +118,7 @@ module USB_encoder
 				d_plus_out = 0;
 				hold_eop = 1;
 				d_minus_out = 0;
-				if(eop_wait) next_state = ORIG_VAL;
+				if(eop_wait) next_state = STATE_K;
 			end
 			ORIG_VAL: begin
 				next_state = STATE_K;
