@@ -12,6 +12,7 @@ module HM_SHA_256
 	input wire [6:0] count,
 	input wire init,
 	input wire out_load,
+	input wire [1:0] hash_select,
 	output reg [7:0][31:0] out_hash,
 	output reg [31:0] nonce
 
@@ -62,9 +63,6 @@ logic [7:0][31:0] selected_hash;
 logic [7:0][31:0] out_reg; // Basically out_hash next
 logic [31:0] nonce_next;
 
-
-
-
 localparam [0:63][31:0] k = {  32'h428a2f98, 32'h71374491, 32'hb5c0fbcf, 32'he9b5dba5, 32'h3956c25b, 32'h59f111f1, 32'h923f82a4, 32'hab1c5ed5,
    			32'hd807aa98, 32'h12835b01, 32'h243185be, 32'h550c7dc3, 32'h72be5d74, 32'h80deb1fe, 32'h9bdc06a7, 32'hc19bf174,
    			32'he49b69c1, 32'hefbe4786, 32'h0fc19dc6, 32'h240ca1cc, 32'h2de92c6f, 32'h4a7484aa, 32'h5cb0a9dc, 32'h76f988da,
@@ -84,6 +82,17 @@ assign out_reg = ((out_load == 0)? out_hash : curr_hash);
 assign w[15:0] = data;
 assign w_count = count + 16;
 
+/*
+flip_endian #(.LENGTH(32), .FLIP_LENGTH(8)) FLIP_NONCE (nonce_logic, nonce);
+flip_endian #(.LENGTH(32), .FLIP_LENGTH(8)) FLIP_HASH_0 (out_hash_logic[0], out_hash[0]);
+flip_endian #(.LENGTH(32), .FLIP_LENGTH(8)) FLIP_HASH_1 (out_hash_logic[1], out_hash[1]);
+flip_endian #(.LENGTH(32), .FLIP_LENGTH(8)) FLIP_HASH_2 (out_hash_logic[2], out_hash[2]);
+flip_endian #(.LENGTH(32), .FLIP_LENGTH(8)) FLIP_HASH_3 (out_hash_logic[3], out_hash[3]);
+flip_endian #(.LENGTH(32), .FLIP_LENGTH(8)) FLIP_HASH_4 (out_hash_logic[4], out_hash[4]);
+flip_endian #(.LENGTH(32), .FLIP_LENGTH(8)) FLIP_HASH_5 (out_hash_logic[5], out_hash[5]);
+flip_endian #(.LENGTH(32), .FLIP_LENGTH(8)) FLIP_HASH_6 (out_hash_logic[6], out_hash[6]);
+flip_endian #(.LENGTH(32), .FLIP_LENGTH(8)) FLIP_HASH_7 (out_hash_logic[7], out_hash[7]);
+*/
 
 always_ff @ ( posedge clk, negedge n_rst) begin //abc registers
 	if(n_rst == 0) begin
@@ -115,7 +124,7 @@ always_ff @(posedge clk, negedge n_rst) begin //Nonce Reg
 end
 
 always_comb begin
-	if(out_load)
+	if(out_load && hash_select == 2'b01)
 		nonce_next = w[3];
 	else
 		nonce_next = nonce;

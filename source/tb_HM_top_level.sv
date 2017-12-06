@@ -64,7 +64,7 @@ module tb_HM_top_level ();
 	reg tb_n_rst;
 	reg tb_hash_done;
 	reg tb_valid_hash_flag;
-	reg [255:0] tb_valid_hash;
+	reg [287:0] tb_valid_hash;
 	reg [1:0] tb_hash_select;
 	reg [19:0][31:0] real_data;
 	reg [31:0][31:0] converted_data;
@@ -118,8 +118,8 @@ module tb_HM_top_level ();
 	tb_n_rst 	= 1'b0;
 	tb_begin_hash 	= 0;
 	tb_quit_hash	= 0;
-	tb_difficulty 	= ~(256'b0);
-
+//	tb_difficulty 	= ~(256'b0);
+	tb_difficulty 	= 256'h000000000004864c000000000000000000000000000000000000000000000000;
 
 	@(posedge tb_clk);
 	tb_n_rst = 1'b1;
