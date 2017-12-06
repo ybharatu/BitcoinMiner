@@ -24,10 +24,12 @@ module USB_tx_controller
 	output reg crc_clear, //Find use for this
 	output reg create_eop
 );
-	typedef enum bit [3:0] {IDLE, LOAD_INIT, TRANSMIT_INIT, READ_INIT ,CREATE_EOP, LOAD, START_TX, READ, CHK_CRC, HOLD_CRC, LOAD_CRC, TX_CRC, EOP_WAIT}
+	typedef enum bit [3:0] {IDLE, LOAD_INIT, TRANSMIT_INIT, READ_INIT ,CREATE_EOP, LOAD, START_TX, READ, CHK_CRC, HOLD_CRC, LOAD_CRC, TX_CRC, EOP_WAIT,LOAD_CRC_WAIT, LOAD_WAIT}
 	
 	stateType;
 	stateType current_state, next_state;
+
+	logic read_enable_delay;
 
 	always_ff @ (posedge clk, negedge n_rst)
 	begin
@@ -41,10 +43,22 @@ module USB_tx_controller
 		end
 	end
 
+	always_ff @ (posedge clk, negedge n_rst)
+	begin
+		if(n_rst == 1'b0)
+		begin
+			read_enable <= 1'b0;
+		end	
+		else
+		begin
+			read_enable <= read_enable_delay;
+		end
+	end
+
 	always_comb
 	begin
 		next_state = current_state;
-		read_enable = 0;
+		read_enable_delay = 0;
 		load_enable = 0;
 		tx_enable = 0;
 		crc_enable = 0;
@@ -57,7 +71,7 @@ module USB_tx_controller
 		case(current_state)
 			IDLE: begin
 				next_state = IDLE;
-				read_enable = 0;
+				read_enable_delay = 0;
 				load_enable = 0;
 				tx_enable = 0;
 				crc_enable = 0;
@@ -67,7 +81,6 @@ module USB_tx_controller
 				if(transmit_start || transmit_empty)
 					next_state = LOAD_INIT;
 			end
-
 			LOAD_INIT: begin
 				crc_enable = 0;
 				load_enable = 1;
@@ -87,17 +100,21 @@ module USB_tx_controller
 			end
 			
 			READ_INIT: begin
-				read_enable = 1;
+				read_enable_delay = 1;
 				tx_enable = 0;
+				transmitting = 1;
+				next_state = LOAD_WAIT;
+			end
+			LOAD_WAIT: begin
+				crc_enable = 1;
 				transmitting = 1;
 				next_state = LOAD;
 			end
-
 			LOAD: begin
 				next_state = START_TX;
 				load_enable = 1;
 				transmitting = 1;
-				
+				crc_enable = 1;
 			end
 			START_TX: begin
 				next_state = START_TX;
@@ -111,18 +128,24 @@ module USB_tx_controller
 					next_state = READ;
 			end
 			READ: begin
-				read_enable = 1;
+				read_enable_delay = 1;
 				tx_enable = 0;
 				transmitting = 1;
+				crc_enable = 1;
 				if(!data_sent)
-					next_state = LOAD;
+					next_state = LOAD_WAIT;
 				else
-					next_state = LOAD_CRC;
+					next_state = LOAD_CRC_WAIT;
+			end
+			LOAD_CRC_WAIT: begin
+				crc_enable = 1;
+				transmitting = 1;
+				next_state = LOAD_CRC;
 			end
 			LOAD_CRC: begin
 				crc_enable = 1;
 				crc_load = 1;
-				read_enable = 0;
+				read_enable_delay = 0;
 				transmitting = 1;
 				load_enable = 1;
 				next_state = TX_CRC;

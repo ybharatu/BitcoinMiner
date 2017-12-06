@@ -48,7 +48,10 @@ module tb_USB_tx_top_level ();
 	logic tb_write_enable;
 	logic tb_rcv_error;
 
-	assign eop = !tb_d_plus_out && !tb_d_minus_out;
+
+	always_ff @ (posedge tb_clk) begin
+		eop <= !tb_d_plus_out && !tb_d_minus_out;
+	end
 
 	clocking cb @(posedge tb_clk);
 		 		// 1step means 1 time precision unit, 10ps for this module. We assume the hold time is less than 200ps.
@@ -70,6 +73,15 @@ module tb_USB_tx_top_level ();
 	USB_rx_top_level RX_TOP_LEVEL (.clk(tb_clk), .d_plus_in(tb_d_plus_out), .d_minus_in(tb_d_minus_out), .n_rst(tb_n_rst), .packet_type(tb_packet_type), .rx_data(tb_rx_data), 
 		.write_enable(tb_write_enable), .rcv_error(tb_rcv_error));
 
+	task wait_read;
+	begin
+		@(posedge tb_read_enable);
+		#(1);
+		if(tb_read_enable != 1)
+			wait_read();
+	end
+	endtask
+
 	task send_hash;
 		input [255:0] hash;
 	begin
@@ -81,37 +93,37 @@ module tb_USB_tx_top_level ();
 		cb.transmit_start <= 'b0;
 		@cb;
 		@cb;
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[255:240];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[239:224];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[223:208];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[207:192];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[191:176];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[175:160];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[159:144];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[143:128];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[127:112];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[111:96];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[95:80];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[79:64];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[63:48];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[47:32];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[31:16];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[15:0];
 		@(negedge eop);
 		
@@ -121,37 +133,37 @@ module tb_USB_tx_top_level ();
 	task send_hash_chunk;
 		input [255:0] hash;
 	begin
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[255:240];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[239:224];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[223:208];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[207:192];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[191:176];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[175:160];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[159:144];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[143:128];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[127:112];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[111:96];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[95:80];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[79:64];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[63:48];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[47:32];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[31:16];
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= hash[15:0];
 		
 	end
@@ -199,9 +211,9 @@ module tb_USB_tx_top_level ();
 		cb.tx_data <= 16'b1000000011010010;
 		@cb;
 		cb.transmit_empty <= 'b0;
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= 16'h0001;
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= 16'h0203;
 		@(negedge eop);
 		#(BUS_PERIOD);
@@ -211,9 +223,9 @@ module tb_USB_tx_top_level ();
 		@cb;
 		@cb;
 		cb.transmit_empty <= 'b0;
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= 16'h2345;
-		@(posedge tb_read_enable);
+		wait_read();
 		cb.tx_data <= 16'h6789;
 		@(negedge eop);
 		#(BUS_PERIOD);
