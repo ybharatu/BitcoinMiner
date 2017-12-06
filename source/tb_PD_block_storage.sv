@@ -87,9 +87,13 @@ module tb_PD_block_storage ();
 
 	tb_i_data_sel <= 8'd64;
 	tb_i_data <= 8'hf0;
+
 	@cb;
 	#CHECK_DELAY;
 
+	tb_i_data_en 	= 1'b1;
+	tb_i_data_sel	= 7'b0;
+	tb_i_data 	= 8'b0;
 
 
 	tb_increment	= 1'b1;
