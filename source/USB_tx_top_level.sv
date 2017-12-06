@@ -14,8 +14,8 @@ module USB_tx_top_level
 	input transmit_start,
 	output d_plus_out,
 	output d_minus_out,
-	output read_enable,
-	output tx_error
+	output read_enable
+// deleted: you cannot have an error while transmitting	output tx_error
 );
 
 
