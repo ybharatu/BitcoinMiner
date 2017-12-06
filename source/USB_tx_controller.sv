@@ -107,7 +107,7 @@ module USB_tx_controller
 				crc_enable = 1;
 				if(!byte_sent)
 					next_state = START_TX;
-				if(byte_sent)
+				else
 					next_state = READ;
 			end
 			READ: begin

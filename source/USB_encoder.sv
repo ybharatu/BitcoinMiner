@@ -24,7 +24,7 @@ module USB_encoder
 	reg hold_eop;
 	reg restart;
 
-	typedef enum bit [2:0] {IDLE, EOP_HOLD, ORIG_VAL, EOP_WAIT1, EOP_WAIT2, EOP_WAIT3, EOP_WAIT4, EOP_WAIT5}
+	typedef enum bit [3:0] {EOP_HOLD, ORIG_VAL, EOP_WAIT1, EOP_WAIT2, EOP_WAIT3, EOP_WAIT4, EOP_WAIT5, STATE_J, STATE_K}
 	stateType;
 	stateType current_state, next_state;
 
@@ -57,7 +57,7 @@ module USB_encoder
 	begin
 		if(n_rst == 1'b0)
 		begin
-			current_state <= IDLE;
+			current_state <= STATE_K;
 			d_out <= 1;
 			d_plus <= 1;
 		end	
@@ -68,7 +68,67 @@ module USB_encoder
 			d_plus <= d_plus_out;
 		end
 	end
-	
+	always_comb 
+	begin
+		next_state = current_state;
+		d = stuff_bit ? 0 : tx_out_bit;
+		hold_eop = 0;
+		restart = 0;
+
+		case(current_state)
+			STATE_K: begin
+				d_plus_out = 'b1;
+				d_minus_out = 'b0;
+				if(tx_shift && d)
+					next_state = STATE_K; 
+				else if(tx_shift && !d)
+					next_state = STATE_J; 
+				else if(create_eop) next_state = EOP_WAIT1;
+				else
+					next_state = STATE_K;
+			end
+			STATE_J: begin
+				d_plus_out = 'b0;
+				d_minus_out = 'b1;
+				if(tx_shift && d)
+					next_state = STATE_J; 
+				else if(tx_shift && !d)
+					next_state = STATE_K; 
+				else if(create_eop) next_state = EOP_WAIT1;
+				else
+					next_state = STATE_J;
+			end
+			EOP_WAIT1:begin
+				next_state = EOP_WAIT2;
+			end
+			EOP_WAIT2:begin
+				next_state = EOP_WAIT3;
+			end
+			EOP_WAIT3:begin
+				next_state = EOP_WAIT4;
+			end
+			EOP_WAIT4:begin
+				next_state = EOP_WAIT5;
+			end
+			EOP_WAIT5:begin
+				next_state = EOP_HOLD;
+			end
+			EOP_HOLD: begin
+				next_state = EOP_HOLD;
+				d_plus_out = 0;
+				hold_eop = 1;
+				d_minus_out = 0;
+				if(eop_wait) next_state = ORIG_VAL;
+			end
+			ORIG_VAL: begin
+				next_state = STATE_K;
+				d_plus_out = 1;
+				d_minus_out = 0;
+				restart = 1;
+			end
+		endcase
+	end
+	/*
 	always_comb 
 	begin
 		next_state = current_state;
@@ -184,7 +244,7 @@ module USB_encoder
 			end
 		endcase
 	end
-
+*/
 	assign tx_hold = stuff_bit;
 
 endmodule

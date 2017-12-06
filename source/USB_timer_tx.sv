@@ -69,7 +69,7 @@ always_comb
 				end
 				
 				HOLD_START: begin
-					value = 5'd17;
+					value = 5'd17; // Increase this
 					if(data_sent)
 						next_state = IDLE;
 					else
