@@ -11,28 +11,24 @@ module PD_chunk_decoder
 	input [511:0] chunk_1,
 	input [127:0] chunk_2,
 	// input new_block, idk if we need this
-	output logic [511:0] data_to_hash
+	output wire [511:0] data_to_hash
 );
 
 logic [511:0]data;
+logic [511:0]flipped_data;
+
+assign data_to_hash = flipped_data;
 
 always_comb
 begin
 	if(hash_select == 0) begin
-<<<<<<< Updated upstream
-		data = chunk1;
+		data = chunk_1;
 	end
 	else begin
-		data = {chunk2, 1'b1, 319'b0, 64'd640}; // Message W + 1 + 319 0's + 640
-=======
-		data_to_hash = chunk_1;
-	end
-	else begin
-		data_to_hash = {chunk_2, 1'b1, 319'b0, 64'd640}; // Message W + 1 + 319 0's + 640
->>>>>>> Stashed changes
+		data = {chunk_2, 1'b1, 319'b0, 64'd640}; // Message W + 1 + 319 0's + 640
 	end
 end
 
-flip_endian #(.LENGTH(512), .FLIP_LENGTH(32)) FE1 (.data(data), .flipped(data_to_hash));
+flip_endian #(.LENGTH(512), .FLIP_LENGTH(32)) FE1 (.data(data), .flipped(flipped_data));
 
 endmodule
