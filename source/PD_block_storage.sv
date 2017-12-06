@@ -30,11 +30,12 @@ always_ff @ (posedge clk) begin
 		else
 			storage[j][7:0] <= storage[j][7:0];
 
-		if(write_en[j] == 1 && increment)
-		begin
-			storage[67:64] <= storage[67:64] + 8; 
-		end  
+		
 	end
+	if(increment)
+	begin
+		storage[67:64] <= storage[67:64] + 8;
+	end  
 end
 
 

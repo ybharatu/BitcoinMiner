@@ -17,6 +17,7 @@ module USB_rx_controller
 	input wire eop,
 	input wire crc_check,
 	input wire d_edge,
+	input wire transmit_ack,
 	output logic crc_clear,
 	output reg receiving,
 	output reg write_enable,
