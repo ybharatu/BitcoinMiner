@@ -12,6 +12,7 @@
 `define EMPTY_HASH 8'b0000000000000000
 module main_controller
 (
+	input clk, n_rst,
 	input host_ready,
 	input rcv_error,
 	input p_error,
