@@ -25,13 +25,14 @@ flip_endian #(.LENGTH(32), .FLIP_LENGTH(8)) FLIP_HASH_6 (valid_hash_logic[223:19
 flip_endian #(.LENGTH(32), .FLIP_LENGTH(8)) FLIP_HASH_7 (valid_hash_logic[255:224], valid_hash[255:224]);
 flip_endian #(.LENGTH(32), .FLIP_LENGTH(8)) FLIP_HASH_8 (valid_hash_logic[287:256], valid_hash[287:256]);
 
+assign valid_hash_logic = {out_hash, nonce};
 
-always_comb begin
+/*always_comb begin
 	if(valid_hash_flag)
 		valid_hash_logic = {out_hash, nonce};
 	else
 		valid_hash_logic = 287'bz;
-end
+end*/
 
 
 

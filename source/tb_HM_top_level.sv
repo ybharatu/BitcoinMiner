@@ -44,6 +44,25 @@ module tb_HM_top_level ();
 	end
 	endtask
 
+	task flip_endian_8;
+	parameter length = 32;
+	parameter flip_length = 8;
+		input [length - 1:0] data;
+		output [length - 1:0] flipped;
+	
+	begin
+		integer j;
+		integer k;
+		for (j = 0; j < length; j = j + flip_length) begin
+			for (k = 0; k < flip_length; k = k + 1) begin
+				flipped[j+k] = data[length-flip_length-j+k];
+				flipped[length-flip_length-j+k] = data[k+j];
+			end
+		end
+	end
+	endtask
+
+
 	task get_formatted_data;
 		input [639:0] data;
 		output [1023:0] converted;
@@ -58,6 +77,8 @@ module tb_HM_top_level ();
 	end
 	endtask
 
+	integer test_number = 0;
+
 	reg tb_begin_hash, tb_quit_hash;
 	reg [255:0] tb_difficulty;
 	reg [511:0] tb_data_to_hash;
@@ -70,6 +91,55 @@ module tb_HM_top_level ();
 	reg [31:0][31:0] converted_data;
 	reg [15:0][31:0] real_data_1;
 	reg [15:0][31:0] real_data_2;
+	reg [31:0] test_nonce;
+	reg [31:0] display_nonce;
+
+	task wait_hash_done;
+	begin
+		@(posedge tb_hash_done);
+		#(1);
+		if(tb_hash_done != 1)
+			wait_hash_done();
+	end
+	endtask
+
+	task check_nonce;
+		input [31:0] nonce_task;
+	begin
+		@(posedge tb_clk);
+		tb_begin_hash <= 1'b1;
+		@(posedge tb_clk);
+	//	#CHECK_DELAY;
+		tb_begin_hash <= 1'b0;
+		
+		flip_endian_8(nonce_task, test_nonce);
+//		test_nonce = test_nonce - 1;
+		real_data = {608'h0100000050120119172a610421a6c3011dd330d9df07b63616c2cc1f1cd00200000000006657a9252aacd5c0b2940996ecff952228c3067cc38d4885efb5a4ac4247e9f337221b4d4c86041b, test_nonce};
+	
+		get_formatted_data(real_data, converted_data);
+	//	output of second hash should be    00844eeb8713eb62bc33df34ca0cfa7af2ee152a6b16788fd3f2fea69861f3c8
+	//	OUTPUT TOTAL should be 		   06e533fd1ada86391f3f6c343204b0d278d4aaec1c0b20aa27ba030000000000
+	
+		real_data_1 = converted_data[31:16];
+		real_data_2 = converted_data[15:0];
+	
+		wait_hash_done();
+	
+		#CHECK_DELAY;
+		//flip_endian_8 (nonce_task, display_nonce);
+		if (tb_valid_hash_flag == 1'b1 && tb_valid_hash[287:32] < tb_difficulty)
+			$info("PASSED: CORRECT NONCE %d", nonce_task);
+		else
+			$error("FAILED: INCORRECT NONCE %d", nonce_task);
+		test_number = test_number + 1;
+
+		@(posedge tb_clk);
+		tb_quit_hash <= 1'b1;
+		@(posedge tb_clk);
+		tb_quit_hash <= 1'b0;
+		@(posedge tb_clk);
+	end 
+	endtask
 
 	localparam tb_chunk1 = {32'h00000000,32'h80000000,32'h6E6F7071,32'h6D6E6F70,
 				32'h6C6D6E6F,32'h6B6C6D6E,32'h6A6B6C6D,32'h696A6B6C,
@@ -104,7 +174,71 @@ module tb_HM_top_level ();
 	initial
 	begin
 
-	real_data = {640'h0100000050120119172a610421a6c3011dd330d9df07b63616c2cc1f1cd00200000000006657a9252aacd5c0b2940996ecff952228c3067cc38d4885efb5a4ac4247e9f337221b4d4c86041b0f2b5710};
+//	correct nonce			   32'h0f2b5710
+//	output of second hash should be    00844eeb8713eb62bc33df34ca0cfa7af2ee152a6b16788fd3f2fea69861f3c8
+//	OUTPUT TOTAL should be 		   06e533fd1ada86391f3f6c343204b0d278d4aaec1c0b20aa27ba030000000000
+//	real_data = {640'h0100000050120119172a610421a6c3011dd330d9df07b63616c2cc1f1cd00200000000006657a9252aacd5c0b2940996ecff952228c3067cc38d4885efb5a4ac4247e9f337221b4d4c86041b0f2b5710};
+
+	test_nonce = 32'h102b5710;
+
+	real_data = {608'h0100000050120119172a610421a6c3011dd330d9df07b63616c2cc1f1cd00200000000006657a9252aacd5c0b2940996ecff952228c3067cc38d4885efb5a4ac4247e9f337221b4d4c86041b, test_nonce};
+
+	get_formatted_data(real_data, converted_data);
+
+	real_data_1 = converted_data[31:16];
+	real_data_2 = converted_data[15:0];
+
+
+	tb_n_rst 	= 1'b0;
+	tb_begin_hash 	= 0;
+	tb_quit_hash	= 0;
+	tb_difficulty 	= 256'h000000000004864c000000000000000000000000000000000000000000000000;
+
+	@(posedge tb_clk);
+	tb_n_rst = 1'b1;
+
+	#CHECK_DELAY;
+	flip_endian_8 (test_nonce, display_nonce);
+
+	check_nonce(display_nonce - 10);
+
+	check_nonce(display_nonce - 9);
+
+	check_nonce(display_nonce - 8);
+
+	check_nonce(display_nonce - 7);
+
+	check_nonce(display_nonce - 6);
+
+	check_nonce(display_nonce - 5);
+
+	check_nonce(display_nonce - 4);
+
+	check_nonce(display_nonce - 3);
+
+	check_nonce(display_nonce - 2);
+
+	check_nonce(display_nonce - 1);
+
+	check_nonce(display_nonce);
+
+//	check_nonce(test_nonce + 2);
+//	check_nonce(test_nonce + 3);
+
+	end
+endmodule
+
+/*
+	if (tb_valid_hash_flag == 1'b1 && tb_valid_hash[287:32] < tb_difficulty)
+		$info("PASSED: CORRECT NONCE %d", display_nonce);
+	else
+		$error("FAILED: INCORRECT NONCE %d", display_nonce);
+	test_number = test_number + 1;
+
+	display_nonce = display_nonce - 1;
+	flip_endian_8 (display_nonce, test_nonce);
+	real_data = {608'h0100000050120119172a610421a6c3011dd330d9df07b63616c2cc1f1cd00200000000006657a9252aacd5c0b2940996ecff952228c3067cc38d4885efb5a4ac4247e9f337221b4d4c86041b, test_nonce};
+
 	get_formatted_data(real_data, converted_data);
 //	output of second hash should be    00844eeb8713eb62bc33df34ca0cfa7af2ee152a6b16788fd3f2fea69861f3c8
 //	OUTPUT TOTAL should be 		   06e533fd1ada86391f3f6c343204b0d278d4aaec1c0b20aa27ba030000000000
@@ -112,28 +246,52 @@ module tb_HM_top_level ();
 	real_data_1 = converted_data[31:16];
 	real_data_2 = converted_data[15:0];
 
+//	@(posedge tb_hash_done);
+	wait_hash_done();
+
+	#CHECK_DELAY;
+
+	flip_endian_8 (test_nonce, display_nonce);
+	if (tb_valid_hash_flag == 1'b1 && tb_valid_hash[287:32] < tb_difficulty)
+		$info("PASSED: CORRECT NONCE %d", display_nonce);
+	else
+		$error("FAILED: INCORRECT NONCE %d", display_nonce);
+	test_number = test_number + 1;
+
+	@(posedge tb_clk);
+	@(posedge tb_clk);
+	tb_quit_hash <= 1'b1;
+	@(posedge tb_clk);
+	tb_quit_hash <= 1'b0;
+	@(posedge tb_clk);
+	@(posedge tb_clk);
+
+	tb_begin_hash <= 1'b1;
+	@(posedge tb_clk);
+	tb_begin_hash <= 1'b0;
+
+	//check_nonce(display_nonce - 1);
+
+	//check_nonce(display_nonce - 2);
+
+	//check_nonce(display_nonce);
+*/
+//	@(posedge tb_clk);
+//	@(posedge tb_clk);
+//	tb_quit_hash <= 1'b1;
+//	@(posedge tb_clk);
+//	tb_quit_hash <= 1'b0;
+//	@(posedge tb_clk);
+//	@(posedge tb_clk);
+
+//	tb_begin_hash <= 1'b1;
+//	@(posedge tb_clk);
+//	#CHECK_DELAY;
+//	tb_begin_hash <= 1'b0;
+
+
 	//flip_endian_32( converted_data[31:16], real_data_1);
 	//flip_endian_32(converted_data[15:0], real_data_2);
 
-	tb_n_rst 	= 1'b0;
-	tb_begin_hash 	= 0;
-	tb_quit_hash	= 0;
+
 //	tb_difficulty 	= ~(256'b0);
-	tb_difficulty 	= 256'h000000000004864c000000000000000000000000000000000000000000000000;
-
-	@(posedge tb_clk);
-	tb_n_rst = 1'b1;
-	tb_begin_hash = 1;
-	@(posedge tb_clk);
-	#CHECK_DELAY;
-	tb_begin_hash = 0;
-	
-	@(posedge tb_valid_hash_flag);
-
-	//if (tb_valid_hash == tb_expected)
-		//$info("IT WORKS");
-	//else
-	//	$error("IT DOESN'T WORK");
-
-	end
-endmodule
