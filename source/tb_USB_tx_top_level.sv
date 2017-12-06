@@ -161,19 +161,106 @@ module tb_USB_tx_top_level ();
 
 	task check_hash;
 		input [255:0] data;
+		input test_case;
 	begin
-		
 		tb_packet_type = 1;
 		@(posedge tb_write_enable);
-		if(tb_rx_data == data[255:240])
+		if(tb_rx_data != data[255:240])
 		begin	
 			failed = failed + 1;
-			$info("PASSED byte %d: ", failed);
-		end		
-		else
-		begin
-			$error("ERROR:");
+			$error("Failed Byte %d: ", failed);
 		end
+		@(posedge tb_write_enable);
+		if(tb_rx_data != data[239:224])
+		begin	
+			failed = failed + 1;
+			$error("Failed Byte %d: ", failed);
+		end
+		@(posedge tb_write_enable);
+		if(tb_rx_data != data[223:208])
+		begin	
+			failed = failed + 1;
+			$error("Failed Byte %d: ", failed);
+		end
+		@(posedge tb_write_enable);
+		if(tb_rx_data != data[207:192])
+		begin	
+			failed = failed + 1;
+			$error("Failed Byte %d: ", failed);
+		end
+		@(posedge tb_write_enable);
+		if(tb_rx_data != data[191:176])
+		begin	
+			failed = failed + 1;
+			$error("Failed Byte %d: ", failed);
+		end
+		@(posedge tb_write_enable);
+		if(tb_rx_data != data[175:160])
+		begin	
+			failed = failed + 1;
+			$error("Failed Byte %d: ", failed);
+		end
+		@(posedge tb_write_enable);
+		if(tb_rx_data != data[159:144])
+		begin	
+			failed = failed + 1;
+			$error("Failed Byte %d: ", failed);
+		end
+		@(posedge tb_write_enable);
+		if(tb_rx_data != data[143:128])
+		begin	
+			failed = failed + 1;
+			$error("Failed Byte %d: ", failed);
+		end
+		@(posedge tb_write_enable);
+		if(tb_rx_data != data[127:112])
+		begin	
+			failed = failed + 1;
+			$error("Failed Byte %d: ", failed);
+		end
+		@(posedge tb_write_enable);
+		if(tb_rx_data != data[111:96])
+		begin	
+			failed = failed + 1;
+			$error("Failed Byte %d: ", failed);
+		end
+		@(posedge tb_write_enable);
+		if(tb_rx_data != data[95:80])
+		begin	
+			failed = failed + 1;
+			$error("Failed Byte %d: ", failed);
+		end
+		@(posedge tb_write_enable);
+		if(tb_rx_data != data[79:64])
+		begin	
+			failed = failed + 1;
+			$error("Failed Byte %d: ", failed);
+		end
+		@(posedge tb_write_enable);
+		if(tb_rx_data != data[63:48])
+		begin	
+			failed = failed + 1;
+			$error("Failed Byte %d: ", failed);
+		end
+		@(posedge tb_write_enable);
+		if(tb_rx_data != data[47:32])
+		begin	
+			failed = failed + 1;
+			$error("Failed Byte %d: ", failed);
+		end
+		@(posedge tb_write_enable);
+		if(tb_rx_data != data[31:16])
+		begin	
+			failed = failed + 1;
+			$error("Failed Byte %d: ", failed);
+		end
+		@(posedge tb_write_enable);
+		if(tb_rx_data != data[15:0])
+		begin	
+			failed = failed + 1;
+			$error("Failed Byte %d: ", failed);
+		end
+		$info("End of test case %d", test_case);
 	end
 	endtask
 
@@ -212,17 +299,21 @@ module tb_USB_tx_top_level ();
 		@(negedge eop);
 		#(BUS_PERIOD);
 
-
-
+		//TEST CASE 1
 		fork
 			send_hash(256'h00000000000080b66c911bd5ba14a74260057311eaeb1982802f7010f1a9f090); //BE4E HASH 100001
-			check_hash(256'h00000000000080b66c911bd5ba14a74260057311eaeb1982802f7010f1a9f090);
+			check_hash(256'h00000000000080b66c911bd5ba14a74260057311eaeb1982802f7010f1a9f090, 1);
 		join
-
-
-		send_hash(256'h000000000003ba27aa200b1cecaad478d2b00432346c3f1f3986da1afd33e506); //74B5 HASH 100000
-
-		send_hash(256'h000000000002d01c1fccc21636b607dfd930d31d01c3a62104612a1719011250); //A7AA HASH 99999
+		//TEST CASE 2
+		fork
+			send_hash(256'h000000000003ba27aa200b1cecaad478d2b00432346c3f1f3986da1afd33e506); //74B5 HASH 100000
+			check_hash(256'h000000000003ba27aa200b1cecaad478d2b00432346c3f1f3986da1afd33e506, 2);
+		join
+		//TEST CASE 3
+		fork
+			send_hash(256'h000000000002d01c1fccc21636b607dfd930d31d01c3a62104612a1719011250); //A7AA HASH 99999
+			check_hash(256'h000000000002d01c1fccc21636b607dfd930d31d01c3a62104612a1719011250, 3);
+		join
 		
 		// transfer #1
 	end
