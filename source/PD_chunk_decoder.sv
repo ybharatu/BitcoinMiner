@@ -15,9 +15,9 @@ module PD_chunk_decoder
 );
 
 logic [511:0]data;
-logic [511:0]flipped_data;
+//logic [511:0]flipped_data;
 
-assign data_to_hash = flipped_data;
+assign data_to_hash = data;
 
 always_comb
 begin
@@ -28,7 +28,5 @@ begin
 		data = {chunk_2, 1'b1, 319'b0, 64'd640}; // Message W + 1 + 319 0's + 640
 	end
 end
-
-flip_endian #(.LENGTH(512), .FLIP_LENGTH(32)) FE1 (.data(data), .flipped(flipped_data));
 
 endmodule

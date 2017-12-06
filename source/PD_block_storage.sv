@@ -11,6 +11,7 @@ module PD_block_storage
 	input [7:0] i_data,
 	input [6:0] i_data_sel, //address of data being stored
 	input clk,
+	input n_rst,
 	input increment,
 	output wire [63:0][7:0] chunk_1,
 	output wire [15:0][7:0] chunk_2,
@@ -19,22 +20,27 @@ module PD_block_storage
 );
 
 reg [111:0][7:0] storage;
+reg [111:0][7:0] storage_next;
 reg [111:0] write_en;
 
 always_ff @ (posedge clk) begin
+	/*if(n_rst == 0)
+		storage <= 'b0;
+	else
+	*/	storage <= storage_next;
+end
+
+always_comb begin
 	integer j;
 	for(j = 0; j < 112; j = j + 1)begin
-		
 		if(write_en[j] == 1)
-			storage[j][7:0] <= i_data[7:0];
+			storage_next[j][7:0] = i_data[7:0];
 		else
-			storage[j][7:0] <= storage[j][7:0];
-
-		
+			storage_next[j][7:0] = storage[j][7:0];
 	end
 	if(increment)
 	begin
-		storage[67:64] <= storage[67:64] + 8;
+		storage_next[67:64] = storage[67:64] + 8;
 	end  
 end
 
@@ -44,8 +50,6 @@ always_comb begin
 	if(i_data_en) begin
 		for(i = 0; i < 112; i = i + 1) begin
 			if(i_data_sel == i) begin
-				//assert(i_data_sel == i)
-				//	$info("Block storage Decoder detects row %d", i);
 				write_en[i] = 1'b1;
 			end
 			else begin
@@ -53,16 +57,27 @@ always_comb begin
 			end
 		end
 	end
+	else begin
+		write_en = 'b0;
+	end
 end
 
 //Be aware of byte order and double check this with how the data is sent via USB
-assign chunk_1[63:0] = storage [63:0];
+genvar i;
+generate
+	for(i = 0; i < 63; i = i + 4) begin	
+		flip_endian #(.LENGTH(32), .FLIP_LENGTH(8)) FLIP_CHUNK_1 (storage[i +: 4], chunk_1[i +: 4]); // Chunk_1 32 bit endian flipped
+	end
+endgenerate
 
-//previously before increment: 
-assign chunk_2[15:0] = storage [79:64];
-//assign chunk_2[15:4] = storage [79:68]; // after adding increment
-//assign chunk_2[3:0] = (increment) ? storage [67:64] + 1 : storage[67:64] ; // after adding increment
+generate
+	for(i = 0; i < 16; i = i + 4) begin	
+		flip_endian #(.LENGTH(32), .FLIP_LENGTH(8)) FLIP_CHUNK_2 (storage[(i + 64) +: 4], chunk_2[i +: 4]); // Chunk_1 32 bit endian flipped
+	end
+endgenerate
 
-assign difficulty[31:0] = storage [111:80];
+		flip_endian #(.LENGTH(256), .FLIP_LENGTH(8)) FLIP_DIFF (storage[111:80], difficulty[31:0]); // Chunk_1 32 bit endian flipped
+
+
 
 endmodule
