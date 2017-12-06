@@ -69,7 +69,7 @@ module tb_USB_tx_top_level ();
 	endclocking
 	
 	USB_tx_top_level TX_TOP_LEVEL (.clk(tb_clk), .n_rst(tb_n_rst), .tx_data(tb_tx_data), .transmit_empty(tb_transmit_empty), .transmit_start(tb_transmit_start), .d_plus_out(tb_d_plus_out), 
-		.d_minus_out(tb_d_minus_out), .read_enable(tb_read_enable), .tx_error(tb_tx_error));
+		.d_minus_out(tb_d_minus_out), .read_enable(tb_read_enable));
 	USB_rx_top_level RX_TOP_LEVEL (.clk(tb_clk), .d_plus_in(tb_d_plus_out), .d_minus_in(tb_d_minus_out), .n_rst(tb_n_rst), .packet_type(tb_packet_type), .rx_data(tb_rx_data), 
 		.write_enable(tb_write_enable), .rcv_error(tb_rcv_error));
 
