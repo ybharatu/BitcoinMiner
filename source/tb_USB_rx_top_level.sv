@@ -9,6 +9,7 @@
 `timescale 1ns / 10ps
 `define DATA0 8'b00000000
 `define SYNC_BYTE 8'b10000000
+`define DATA1 8'b00000000
 
 
 module tb_USB_rx_top_level ();
@@ -119,20 +120,21 @@ module tb_USB_rx_top_level ();
 				end
 				#(BUS_PERIOD);
 			end
-		end;
-		send_crc_16(crc_1);
+		end
+		send_byte(crc_1[7:0]);
+		send_byte(crc_1[15:8]);
 		send_eop();
 		#(BUS_PERIOD);
 		send_sync();
-		send_pid(`DATA0);
+		send_pid(`DATA1);
 		
-		for(i = 48; i >= 64; i = i - 1)
+		for(i = 47; i >= 0; i = i - 1)
 		begin
 			for(j = 0; j < 8; j = j + 1)
 			begin
 				if(one_cnt == 6)
 				begin
-					i = i - 1; //STUFF BIT
+					j = j - 1; //STUFF BIT
 					one_cnt = 0;
 					if(tb_d_plus_in == 1)
 					begin
@@ -176,7 +178,8 @@ module tb_USB_rx_top_level ();
 				#(BUS_PERIOD);
 			end
 		end
-		send_crc_16(crc_1);
+		send_byte(crc_2[7:0]);
+		send_byte(crc_2[15:8]);
 		send_eop();
 
 	end
@@ -188,6 +191,43 @@ module tb_USB_rx_top_level ();
 	begin
 		integer i;
 		for(i = 0; i < 8; i = i + 1)
+		begin
+			if(data[i] == 0)
+			begin
+				if(tb_d_plus_in == 1)
+				begin
+					cb.d_plus_in <= 0;
+					cb.d_minus_in <= 1;
+				end
+				else
+				begin
+					cb.d_plus_in <= 1;
+					cb.d_minus_in <= 0;
+				end
+			end
+			else
+			begin
+				if(tb_d_plus_in == 1)
+				begin
+					cb.d_plus_in <= 1;
+					cb.d_minus_in <= 0;
+				end
+				else
+				begin
+					cb.d_plus_in <= 0;
+					cb.d_minus_in <= 1;
+				end
+			end
+			#(BUS_PERIOD);
+		end
+	end
+	endtask
+
+	task send_raw_byte;
+		input [7:0] data;
+	begin
+		integer i;
+		for(i = 7; i >= 0; i = i - 1)
 		begin
 			if(data[i] == 0)
 			begin
@@ -278,41 +318,39 @@ module tb_USB_rx_top_level ();
 		//Test 1:
 		send_sync();
 		send_byte(8'b10110100);
-		send_byte(8'b10101000);
-		send_byte(8'b11110111);
-		//send_byte(8'b11110000);
-		//send_byte(8'b11111101);
+		send_byte(8'b00010101);///10101000);
+		send_byte(8'b11101111);
 		send_eop;
 		#(BUS_PERIOD);
 
 		send_sync();
 		send_byte(8'b10000111);
-		send_byte(8'b01011100);
-		send_byte(8'b10111100);
+		send_byte(8'b00111010);
+		send_byte(8'b00111101);
 		send_eop;
 
 		#(BUS_PERIOD);
 		tb_packet_type = 'b1;
 		send_sync();
-		send_byte(8'b11000011);
-		send_byte(8'b00000000);
-		send_byte(8'b10000000);
-		send_byte(8'b01000000);
-		send_byte(8'b11000000);
-		send_byte(8'b11110111);
-		send_byte(8'b01011110);
+		send_raw_byte(8'b11000011);
+		send_raw_byte(8'b00000000);
+		send_raw_byte(8'b10000000);
+		send_raw_byte(8'b01000000);
+		send_raw_byte(8'b11000000);
+		send_raw_byte(8'b11110111);
+		send_raw_byte(8'b01011110);
 		send_eop;
 
 		#(BUS_PERIOD);
 		tb_packet_type = 'b1;
 		send_sync();
-		send_byte(8'b11010010);
-		send_byte(8'b11000100);
-		send_byte(8'b10100010);
-		send_byte(8'b11100110);
-		send_byte(8'b10010001);
-		send_byte(8'b01110000);
-		send_byte(8'b00111000);
+		send_raw_byte(8'b11010010);
+		send_raw_byte(8'b11000100);
+		send_raw_byte(8'b10100010);
+		send_raw_byte(8'b11100110);
+		send_raw_byte(8'b10010001);
+		send_raw_byte(8'b01110000);
+		send_raw_byte(8'b00111000);
 		send_eop;
 		#(BUS_PERIOD); 
 		
@@ -326,6 +364,7 @@ module tb_USB_rx_top_level ();
 				256'h000000000004864c000000000000000000000000000000000000000000000000,
 				16'h669D,
 				16'h0693);
+		
 	end
 
 endmodule
