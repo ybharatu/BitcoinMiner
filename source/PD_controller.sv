@@ -11,8 +11,8 @@
 `define DATA0   8'b11000011
 `define DATA1   8'b01001011
 `define INTERRUPT   8'b00000000
-`define HASH   8'b11111111
-`define CORRECT_ADDRESS 7'b1100001
+`define HASH   8'b00000001
+`define CORRECT_ADDRESS 7'b0010101
 
 module PD_controller
 (
@@ -42,9 +42,9 @@ module PD_controller
 	
 );
 
-typedef enum bit [4:0] {IDLE, READ_PID, IN_PID, WAIT_ADDRESS_IN, READ_ADDRESS_IN, EOP_WAIT, SEND_TRANSFER_PACKET, OUT_PID, WAIT_ADDRESS_OUT, READ_ADDRESS_OUT, VALID_ADDRESS_OUT,
+typedef enum bit [5:0] {IDLE, READ_PID, IN_PID, WAIT_ADDRESS_IN, READ_ADDRESS_IN, EOP_WAIT, SEND_TRANSFER_PACKET, OUT_PID, WAIT_ADDRESS_OUT, READ_ADDRESS_OUT, VALID_ADDRESS_OUT,
 			OUT_EOP_WAIT, WAIT_DATA_TYPE, CHECK_DATA_TYPE, INTERRUPT, PACKET_1_WAIT, WRITE_PACKET_1, PACKET_2_WAIT, WRITE_PACKET_2, NEW_BLOCK, ERROR, QUIT1, QUIT2, VALID_ADDRESS_IN,
-			INTERRUPT_WAIT_EOP, WAIT_EOP_END, TRANSMIT_ACK, TRANSMIT_NACK, WAIT_EOP_PACKET, WAIT_EOP_BLOCK, ERROR_EOP_WAIT, ERROR_EOP_END} stateType;
+			INTERRUPT_WAIT_EOP, WAIT_EOP_END, TRANSMIT_ACK, TRANSMIT_NACK, WAIT_EOP_PACKET, WAIT_EOP_BLOCK, ERROR_EOP_WAIT, ERROR_EOP_END, HOST_READY_WAIT, HOST_READY} stateType;
 stateType current_state, next_state;
 
 logic valid_address;
@@ -134,7 +134,7 @@ begin
 				next_state = WAIT_ADDRESS_IN;
 		end
 		READ_ADDRESS_IN: begin
-			if(rx_data[7:1] == `CORRECT_ADDRESS)
+			if(rx_data[6:0] == `CORRECT_ADDRESS)
 				next_state = VALID_ADDRESS_IN;
 			else
 				next_state = OUT_EOP_WAIT; 
@@ -152,6 +152,15 @@ begin
 				next_state = EOP_WAIT;
 		end
 		SEND_TRANSFER_PACKET: begin
+			next_state = HOST_READY_WAIT;
+		end
+		HOST_READY_WAIT: begin
+			if(!eop)
+				next_state = HOST_READY;
+			else
+				next_state = HOST_READY_WAIT;
+		end
+		HOST_READY: begin
 			host_ready = 1;
 			next_state = IDLE;
 		end
@@ -165,7 +174,7 @@ begin
 				next_state = WAIT_ADDRESS_OUT;
 		end
 		READ_ADDRESS_OUT: begin
-			if(rx_data[7:1] == `CORRECT_ADDRESS)
+			if(rx_data[6:0] == `CORRECT_ADDRESS)
 				next_state = VALID_ADDRESS_OUT;
 			else
 				next_state = OUT_EOP_WAIT; 
@@ -242,6 +251,7 @@ begin
 				next_state = PACKET_1_WAIT;
 		end
 		WAIT_EOP_PACKET: begin
+			packet_type = 1;
 			if(eop)
 				next_state = WAIT_EOP_END;
 			else
@@ -282,7 +292,6 @@ begin
 		end
 		ERROR: begin
 			p_error = 1;
-			transmit_nack = 1;
 			next_state = ERROR_EOP_WAIT;
 		end
 		ERROR_EOP_WAIT: begin

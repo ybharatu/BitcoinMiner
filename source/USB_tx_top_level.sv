@@ -16,7 +16,8 @@ module USB_tx_top_level
 	output d_plus_out,
 	output d_minus_out,
 	output read_enable,
-	output transmitting
+	output transmitting,
+	output transmit_eop
 // deleted: you cannot have an error while transmitting	output tx_error
 );
 
@@ -41,7 +42,7 @@ module USB_tx_top_level
 	USB_crc_tx CRC (.clk(clk), .tx_hold(tx_hold), .crc_clear(crc_clear), .n_rst(n_rst), .tx_out_bit(tx_out_bit), .crc_enable(crc_enable), .tx_shift(tx_shift), .crc_16(crc_16));
 
 	USB_encoder ENCODER (.clk(clk), .n_rst(n_rst),.tx_hold(tx_hold), .create_eop(create_eop), .tx_shift(tx_shift),
-				.tx_out_bit(tx_out_bit), .d_plus_out(d_plus_out), .d_minus_out(d_minus_out));
+				.tx_out_bit(tx_out_bit), .d_plus_out(d_plus_out), .d_minus_out(d_minus_out), .transmit_eop(transmit_eop));
 
 	USB_tx_controller CTRL (.clk(clk), .n_rst(n_rst), .transmit_empty(transmit_empty), .read_enable(read_enable), .tx_enable(tx_enable),
 				.load_enable(load_enable), .crc_enable(crc_enable), .crc_load(crc_load), .transmitting(transmitting), .data_sent(data_sent),

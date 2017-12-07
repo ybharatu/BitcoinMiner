@@ -104,7 +104,10 @@ module USB_tx_controller
 				read_enable_delay = 1;
 				tx_enable = 0;
 				transmitting = 1;
-				next_state = LOAD_WAIT;
+				if(data_sent)
+					next_state = CREATE_EOP;
+				else
+					next_state = LOAD_WAIT;
 			end
 			LOAD_WAIT: begin
 				crc_enable = 1;

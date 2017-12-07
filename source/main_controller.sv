@@ -26,15 +26,16 @@ module main_controller
 	output logic begin_hash,
 	output logic transmit_empty,
 	output logic transmit_start,
-	output logic [7:0] pid_byte,
+	output logic [7:0] PID,
 	output logic [15:0] data_bytes,
 	output logic increment,
-	output logic load_pid,
-	output logic transmit_response
+	output logic PID_en,
+	output logic transmit_response,
+	output logic transmit_empty_en
 );
 
 
-typedef enum bit [3:0] {IDLE, BLOCK_READY, HASH_DONE, TRANSMIT_START, TRANSMIT_EMPTY, TRANSMIT_ACK, TRANSMIT_NACK, BEGIN_HASH} states;
+typedef enum bit [3:0] {IDLE, BLOCK_READY, HASH_DONE, TRANSMIT_START, TRANSMIT_EMPTY, TRANSMIT_ACK, TRANSMIT_NACK, BEGIN_HASH, VALID_HASH_WAIT} states;
 
 states curr_state, next_state;
 
@@ -60,23 +61,29 @@ begin
 	transmit_start = 0;
 	transmit_response = 0;
 	next_state = curr_state;
+	increment = 0;
+	PID = 0;
+	data_bytes = 0;
+	PID_en = 0;
+	transmit_empty_en = 0;
 
 	case(curr_state)
 		IDLE: begin
 			if(new_block)
 				next_state = BEGIN_HASH;
-			if(host_ready) begin
-				if(valid_hash_flag)
-					next_state = TRANSMIT_START;
-				else
-					next_state = TRANSMIT_EMPTY;
-			end
-			if(transmit_ack)//Transmit_ack
+			else if(host_ready)
+				next_state = TRANSMIT_EMPTY;
+			else if(transmit_ack)//Transmit_ack
 				next_state = TRANSMIT_ACK;
-			if(transmit_nack)
+			else if(transmit_nack)
 				next_state = TRANSMIT_NACK;
-			if(hash_done)
+			else if(hash_done && !valid_hash_flag)
 				next_state = HASH_DONE;
+			else if(hash_done && valid_hash_flag)
+				next_state = VALID_HASH_WAIT;
+			else
+				next_state = IDLE;
+			
 		end
 		BEGIN_HASH: begin
 			begin_hash = 1;
@@ -88,28 +95,35 @@ begin
 		end
 		TRANSMIT_START: begin
 			transmit_start = 1;
-			pid_byte = `DATA0;
-			load_pid = 1;
+			PID = `DATA0;
+			PID_en = 1;
 			next_state = IDLE; //might need a load state
 		end
 		TRANSMIT_EMPTY: begin
 			transmit_empty = 1;
-			pid_byte = `DATA0;
+			transmit_empty_en = 1;
+			PID = `DATA0;
 			data_bytes = `EMPTY_HASH;
-			load_pid = 1;
-			next_state = IDLE; //LOAD??
+			PID_en = 1;
+			next_state = IDLE; 
 		end
 		TRANSMIT_ACK: begin
 			transmit_response = 1;
-			pid_byte = `ACK;
-			load_pid = 1;
+			PID = `ACK;
+			PID_en = 1;
 			next_state = IDLE;
 		end
 		TRANSMIT_NACK: begin
 			transmit_response = 1;
-			pid_byte = `NACK;
-			load_pid = 1;
+			PID = `NACK;
+			PID_en = 1;
 			next_state = IDLE;
+		end
+		VALID_HASH_WAIT: begin
+			if(host_ready)
+				next_state = TRANSMIT_START;
+			else
+				next_state = VALID_HASH_WAIT;
 		end
 	endcase
 end

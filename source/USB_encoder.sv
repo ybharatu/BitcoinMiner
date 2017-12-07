@@ -13,6 +13,7 @@ module USB_encoder
 	input wire tx_out_bit,
 	input wire create_eop,
 	input wire tx_shift,
+	output reg transmit_eop,
 	output wire tx_hold,
 	output reg d_plus_out,
 	output reg d_minus_out
@@ -74,9 +75,10 @@ module USB_encoder
 		d = stuff_bit ? 0 : tx_out_bit;
 		hold_eop = 0;
 		restart = 0;
-
+		transmit_eop = 1;
 		case(current_state)
 			STATE_K: begin
+				transmit_eop = 0;
 				d_plus_out = 'b1;
 				d_minus_out = 'b0;
 				if(tx_shift && d)
@@ -88,6 +90,7 @@ module USB_encoder
 					next_state = STATE_K;
 			end
 			STATE_J: begin
+				transmit_eop = 0;
 				d_plus_out = 'b0;
 				d_minus_out = 'b1;
 				if(tx_shift && d)

@@ -119,7 +119,7 @@ begin
 			hash_done = 1;
 			halt = 1;
 			if(valid_hash_flag)
-				nextState = HOLD_HASH;
+				nextState = IDLE;
 			else
 				nextState = INCREMENT;
 		end

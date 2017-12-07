@@ -13,7 +13,7 @@
 `define IN  8'b01101001
 `define OUT 8'b11100001
 `define INTERRUPT   8'b00000000
-`define HASH   8'b11111111
+`define HASH   8'b00000001
 `define CORRECT_ADDRESS 7'b0010101
 `define END_P 8'b11101111
 
@@ -32,6 +32,7 @@ module tb_bitcoin_miner ();
 	logic tb_d_minus_reg;
 	logic tb_d_plus_reg;
 	logic tb_transmitting;
+	reg eop;
 
 	always
 	begin
@@ -41,6 +42,10 @@ module tb_bitcoin_miner ();
 		#(CLK_PERIOD/2.0);
 	end
 
+
+	always_ff @ (posedge tb_clk) begin
+		eop <= !tb_d_minus && !tb_d_plus;
+	end
 
 	bitcoin_miner MINER (.clk(tb_clk), .n_rst(tb_n_rst), .d_plus(tb_d_plus), .d_minus(tb_d_minus));
 
@@ -65,8 +70,9 @@ module tb_bitcoin_miner ();
 		data = {header, difficulty};
 		send_sync();
 		send_pid(`DATA0);
+		send_byte(`HASH);
 
-		for(i = 111; i >= 48; i = i - 1)
+		for(i = 111; i > 48; i = i - 1)
 		begin
 			for(j = 0; j < 8; j = j + 1)
 			begin
@@ -120,12 +126,17 @@ module tb_bitcoin_miner ();
 		send_byte(crc_1[15:8]);
 		send_eop();
 
+		tb_transmitting = 0;
+		@(posedge eop);
+		#(BUS_PERIOD * 2);
+
+		tb_transmitting = 1;
 		send_token(`OUT);
 
 		send_sync();
-		send_pid(`DATA0);
+		send_pid(`DATA1);
 		
-		for(i = 47; i >= 0; i = i - 1)
+		for(i = 48; i >= 0; i = i - 1)
 		begin
 			for(j = 0; j < 8; j = j + 1)
 			begin
@@ -320,6 +331,7 @@ module tb_bitcoin_miner ();
 	task send_token;
 		input [7:0] pid;
 	begin
+		#(BUS_PERIOD);
 		send_sync();
 		send_pid(pid);
 		send_address();
@@ -348,8 +360,20 @@ module tb_bitcoin_miner ();
 
 		send_header(640'h0100000050120119172a610421a6c3011dd330d9df07b63616c2cc1f1cd00200000000006657a9252aacd5c0b2940996ecff952228c3067cc38d4885efb5a4ac4247e9f337221b4d4c86041b0f2b5710,
 		256'h000000000004864c000000000000000000000000000000000000000000000000,
-		16'h669D,
-		16'h0693);
+		16'h8364,
+		16'hE83C);
+
+		tb_transmitting = 0;
+		@(posedge eop);
+		#(BUS_PERIOD * 2);
+
+		tb_transmitting = 1;
+
+		send_token(`IN);
+		
+		tb_transmitting = 0;
+		@(posedge eop);
+		#(BUS_PERIOD * 2);
 
 		tb_transmitting = 0;
 

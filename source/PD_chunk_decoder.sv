@@ -24,8 +24,8 @@ begin
 	if(hash_select == 0) begin
 		data = chunk_1;
 	end
-	else begin
-		data = {chunk_2, 1'b1, 319'b0, 64'd640}; // Message W + 1 + 319 0's + 640
+	else begin //319 zeros 
+		data = {32'd640,320'b0,32'h80000000,chunk_2}; // Message W + 1 + 319 0's + 640
 	end
 end
 
