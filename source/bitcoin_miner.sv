@@ -59,11 +59,11 @@ USB_rx_top_level USB_RX (.clk(clk), .n_rst(n_rst), .d_plus_in(d_plus_in), .d_min
 			.rx_data(rx_data), .write_enable(write_enable), .rcv_error(rcv_error), .eop(eop)); // OUTPUTS
 
 USB_tx_top_level USB_TX (.clk(clk), .n_rst(n_rst), .tx_data(tx_data), .transmit_empty(transmit_empty), .transmit_start(transmit_start), // INPUTS
-			.d_plus_out(d_plus_out), .d_minus_out(d_minus_out), .read_enable(read_enable), .transmitting(transmitting), .transmit_response(transmit_response), .transmit_eop(transmit_eop) ); // OUTPUTS
+			.d_plus_out(d_plus_out), .d_minus_out(d_minus_out), .read_enable(read_enable), .transmitting(transmitting), .transmit_response(transmit_response), .transmit_eop(transmit_eop), .data_sent(data_sent)); // OUTPUTS
 
 USB_transceiver_selector TX_RX (.d_minus_out(d_minus_out), .d_plus_out(d_plus_out), .transmitting(transmitting), .d_minus_in(d_minus_in), .d_plus_in(d_plus_in), .d_minus(d_minus), .d_plus(d_plus), .transmit_eop(transmit_eop));
 
-PD_hash_separation HASH_SEPARATION (.clk(clk), .n_rst(n_rst),.transmit_empty(transmit_empty), .transmit_empty_en(transmit_empty_en), .PID(PID), .PID_en(PID_en), .read_enable(read_enable), .valid_hash(valid_hash), // INPUTS
+PD_hash_separation HASH_SEPARATION (.clk(clk), .n_rst(n_rst),.transmit_empty(transmit_empty), .transmit_empty_en(transmit_empty_en), .PID(PID), .PID_en(PID_en), .read_enable(read_enable), .valid_hash(valid_hash), .data_sent(data_sent), // INPUTS
 				    .tx_data(tx_data)); // OUTPUTS
 
 main_controller MAIN_CONTROLLER (.clk(clk), .n_rst(n_rst), .host_ready(host_ready), .rcv_error(rcv_error), .p_error(p_error), .hash_done(hash_done), .new_block(new_block), .valid_hash_flag(valid_hash_flag) , .transmit_nack(transmit_nack), .transmit_response(transmit_response), // INPUTS

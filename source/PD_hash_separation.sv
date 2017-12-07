@@ -13,12 +13,13 @@ module PD_hash_separation
 	input wire transmit_empty,
 	input wire transmit_empty_en,
 	input wire [7:0] PID,
+	input data_sent,
 	input wire PID_en,
 	input wire read_enable, // changed from write_fifio
 	output wire [15:0] tx_data // changed from write_enable
 );
 
-localparam [7:0] sync_byte = 8'b01010100;
+localparam [7:0] sync_byte = 8'b10000000;
 // localparam [7:0] PID = 8'b00000000; // Need to change
 
 logic [15:0] check_write_data;
@@ -53,7 +54,7 @@ always_ff @(posedge clk, negedge n_rst) begin
 	end
 end
 
-flex_counter_fix #(5) FLEX_COUNTER_FIX (.clear(), .count_enable(read_enable), .clk(clk), .n_rst(n_rst), .rollover_val(5'd19), .rollover_flag(), .count_out(count_out));
+flex_counter_fix #(5) FLEX_COUNTER_FIX (.clear(data_sent), .count_enable(read_enable), .clk(clk), .n_rst(n_rst), .rollover_val(5'd19), .rollover_flag(), .count_out(count_out));
 
 always_comb begin
 	integer j;

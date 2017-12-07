@@ -25,7 +25,7 @@ module USB_tx_controller
 	output reg crc_clear, //Find use for this
 	output reg create_eop
 );
-	typedef enum bit [3:0] {IDLE, LOAD_INIT, TRANSMIT_INIT, READ_INIT ,CREATE_EOP, LOAD, START_TX, READ, CHK_CRC, HOLD_CRC, LOAD_CRC, TX_CRC, EOP_WAIT,LOAD_CRC_WAIT, LOAD_WAIT}
+	typedef enum bit [4:0] {IDLE, LOAD_INIT, TRANSMIT_INIT, READ_INIT ,CREATE_EOP, LOAD, START_TX, READ, CHK_CRC, HOLD_CRC, LOAD_CRC, TX_CRC, EOP_WAIT,LOAD_CRC_WAIT, LOAD_WAIT, ACK_LOAD_INIT, ACK_READ_INIT, ACK_TRANSMIT_INIT}
 	
 	stateType;
 	stateType current_state, next_state;
@@ -79,9 +79,36 @@ module USB_tx_controller
 				transmitting = 0;
 				create_eop = 0;
 				crc_clear = 1;
-				if(transmit_start || transmit_empty || transmit_response)
+				if(transmit_start || transmit_empty)
 					next_state = LOAD_INIT;
+				else if(transmit_response)
+					next_state = ACK_LOAD_INIT;
 			end
+			ACK_LOAD_INIT: begin
+				crc_enable = 0;
+				load_enable = 1;
+				transmitting = 1;
+				next_state = ACK_TRANSMIT_INIT;
+			end
+			
+			ACK_TRANSMIT_INIT: begin
+				load_enable = 0;
+				transmitting = 1;
+				tx_enable = 1;
+				crc_enable = 0;
+				if(byte_sent)
+					next_state = ACK_READ_INIT;
+				else
+					next_state = ACK_TRANSMIT_INIT;
+			end
+			
+			ACK_READ_INIT: begin
+				read_enable_delay = 0;
+				tx_enable = 0;
+				transmitting = 1;
+				next_state = CREATE_EOP;
+			end
+			
 			LOAD_INIT: begin
 				crc_enable = 0;
 				load_enable = 1;

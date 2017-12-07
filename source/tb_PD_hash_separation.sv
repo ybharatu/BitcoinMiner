@@ -55,7 +55,7 @@ module tb_PD_hash_separation ();
 		input	tx_data = tb_tx_data;
 	endclocking
 
-	PD_hash_separation DUT (.clk(tb_clk), .n_rst(tb_n_rst), .hash(tb_hash), .transmit_empty(tb_transmit_empty), .transmit_empty_en(tb_transmit_empty_en),
+	PD_hash_separation DUT (.clk(tb_clk), .n_rst(tb_n_rst), .valid_hash(tb_hash), .transmit_empty(tb_transmit_empty), .transmit_empty_en(tb_transmit_empty_en),
 				.PID(tb_PID), .PID_en(tb_PID_en), .read_enable(tb_read_enable),	.tx_data(tb_tx_data));
 
 	initial
@@ -96,7 +96,7 @@ module tb_PD_hash_separation ();
 			tb_test_num = tb_test_num + 1;
 			#CHECK_DELAY;	 
 			if (i == 0) begin
-				if ({8'b01010100, tb_PID} == tb_tx_data)
+				if ({8'b10000000, tb_PID} == tb_tx_data)
 					$info("Test Case %d Passed SYNC",tb_test_num);
 				else
 					$error("Test Case %d Failed SYNC",tb_test_num);	

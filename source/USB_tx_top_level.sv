@@ -17,14 +17,14 @@ module USB_tx_top_level
 	output d_minus_out,
 	output read_enable,
 	output transmitting,
-	output transmit_eop
+	output transmit_eop,
+	output data_sent
 // deleted: you cannot have an error while transmitting	output tx_error
 );
 
 
 	logic load_enable;
 	logic crc_enable;
-	logic data_sent;
 	logic create_eop;
 	logic tx_shift;
 	logic byte_sent;
