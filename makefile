@@ -19,17 +19,19 @@ include /home/ecegrid/a/ece337/Course_Prod/course_make_vars
 USB_RX_FILES := USB_timer_rx.sv USB_crc_16.sv USB_crc_5.sv USB_crc_rx.sv USB_decoder.sv USB_edge_detect.sv USB_eop_detect.sv USB_rx_controller.sv USB_rx_sr.sv USB_sync_high.sv USB_sync_low.sv
 USB_TX_FILES := USB_encoder.sv USB_timer_tx.sv USB_crc_tx.sv USB_tx_controller.sv USB_tx_sr.sv 
 HM_FILES := HM_timer.sv HM_check_hash.sv HM_controller.sv HM_hash_selection.sv HM_SHA_256.sv HM_bus_select.sv
-PD_FILES := PD_block_storage.sv PD_hash_separation.sv PD_chunk_decoder.sv
+PD_FILES := PD_block_storage.sv PD_hash_separation.sv PD_chunk_decoder.sv PD_timer.sv PD_controller.sv
 # PD_controller.sv
 EXTRA_FILES := flip_endian.sv flex_counter.sv flex_pts_sr.sv flex_stp_sr.sv flex_counter_fix.sv
 
-COMPONENT_FILES	:= $(USB_TX_FILES) $(USB_RX_FILES) $(HM_FILES) $(PD_FILES) $(EXTRA_FILES)
+TOP_LEVELS := USB_rx_top_level.sv USB_tx_top_level.sv USB_transceiver_selector.sv PD_hash_separation.sv main_controller.sv HM_top_level.sv PD_top_level.sv
+
+COMPONENT_FILES	:= $(USB_TX_FILES) $(USB_RX_FILES) $(HM_FILES) $(PD_FILES) $(EXTRA_FILES) $(TOP_LEVELS)
 
 
 # Specify the name of the top level file (do not include the source folder in the name)
 # NOTE: YOU WILL NEED TO SET THIS VARIABLE'S VALUE WHEN WORKING WITH HEIRARCHICAL DESIGNS
 # AND THE AUTOMATED GRADING SYSTEM
-TOP_LEVEL_FILE	:= USB_rx_top_level.sv
+TOP_LEVEL_FILE	:= bitcoin_miner.sv
 
 # Specify the filepath of the test bench you want to use (ie. tb_top_level.sv)
 # (do not include the source folder in the name)

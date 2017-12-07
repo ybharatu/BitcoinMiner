@@ -14,15 +14,17 @@ module PD_top_level
 	input wire eop,
 	input wire [1:0] hash_select,
 	input wire increment,
-	input wire valid_hash,
 	input wire hash_done,
+	input wire rcv_error,
 	output logic [511:0] data_to_hash,
 	output logic p_error,
 	output logic host_ready,
 	output logic [255:0] difficulty,
 	output logic new_block,
 	output logic r_enable,
-	output logic transmit_ack
+	output logic transmit_ack,
+	output logic transmit_nack,
+	output logic packet_type
 );
 
 logic packet_done;
@@ -38,9 +40,9 @@ logic [127:0] chunk_2;
 logic clr_cnt;
 logic [6:0] byte_count;
 
-PD_controller CONTROLLER (.clk(clk), .n_rst(n_rst), .write_enable(write_enable), .rx_data(rx_data), .packet_done(packet_done), .eop(eop), .i_data_en(i_data_en),
+PD_controller CONTROLLER (.clk(clk), .n_rst(n_rst), .write_enable(write_enable), .rx_data(rx_data), .packet_done(packet_done), .eop(eop), .i_data_en(i_data_en), .packet_type(packet_type),
 				.i_data_sel(i_data_sel), .i_data(i_data), .p_error(p_error), .stop_calc(stop_calc), .new_block(new_block), .host_ready(host_ready), .begin_hash(begin_hash), 
-				.quit_hash(quit_hash), .cnt_up(cnt_up), .valid_hash(valid_hash), .hash_done(hash_done), .clr_cnt(clr_cnt), .transmit_ack(transmit_ack), .byte_count(byte_count));
+				.quit_hash(quit_hash), .cnt_up(cnt_up), .hash_done(hash_done), .clr_cnt(clr_cnt), .transmit_ack(transmit_ack), .byte_count(byte_count), .transmit_nack(transmit_nack), .rcv_error(rcv_error));
 
 PD_block_storage BLOCK_STORAGE (.clk(clk), .n_rst(n_rst), .i_data_en(i_data_en), .i_data_sel(i_data_sel), .i_data(i_data), .difficulty(difficulty), .chunk_1(chunk_1), .chunk_2(chunk_2), .increment(increment));
 

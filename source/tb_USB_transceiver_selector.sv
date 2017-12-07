@@ -31,7 +31,7 @@ module tb_USB_transceiver_selector ();
 	integer tb_test_num = 0;
 	logic tb_d_minus_out;
 	logic tb_d_plus_out;
-	logic tb_receiving;
+	logic tb_transmitting;
 	logic tb_d_minus_in;
 	logic tb_d_plus_in;
 	logic output_val_plus;
@@ -46,16 +46,16 @@ module tb_USB_transceiver_selector ();
 		// output #800ps n_rst = tb_n_rst; // FIXME: Removal time (01CLK -> 01R) is 281.25ps, but this needs to be 800 to prevent metastable value warnings
 		output  d_minus_out = tb_d_minus_out,
 			d_plus_out = tb_d_plus_out,
-			receiving = tb_receiving;
+			transmitting = tb_transmitting;
 		input	minus_in = tb_d_minus_in,
 			plus_in = tb_d_plus_in;
 	endclocking
 
-	USB_transceiver_selector DUT(.d_minus_out(tb_d_minus_out), .d_plus_out(tb_d_plus_out), .receiving(tb_receiving), 
+	USB_transceiver_selector DUT(.d_minus_out(tb_d_minus_out), .d_plus_out(tb_d_plus_out), .transmitting(tb_transmitting), 
 		.d_minus_in(tb_d_minus_in), .d_plus_in(tb_d_plus_in), .d_minus(tb_d_minus), .d_plus(tb_d_plus));
 	
-	assign tb_d_plus = (tb_receiving == 'b1) ? output_val_plus : 'bz;
-	assign tb_d_minus = (tb_receiving == 'b1) ? output_val_minus : 'bz;
+	assign tb_d_plus = (tb_transmitting == 'b0) ? output_val_plus : 'bz;
+	assign tb_d_minus = (tb_transmitting == 'b0) ? output_val_minus : 'bz;
 
 	initial
 	begin
@@ -63,7 +63,7 @@ module tb_USB_transceiver_selector ();
 		@cb;
 		tb_test_num = tb_test_num + 1;
 		// Test Case 1 Writing to data bus
-		cb.receiving <= 'b0;
+		cb.transmitting <= 'b1;
 		cb.d_minus_out <= 'b0;
 		cb.d_plus_out <= 'b1;
 		@cb;
@@ -76,7 +76,7 @@ module tb_USB_transceiver_selector ();
 		cb.d_minus_out <= 'b0;
 		cb.d_plus_out <= 'b1;
 		@cb;
-		cb.receiving <= 'b1;
+		cb.transmitting <= 'b0;
 		// Test Case 2 Reading from bus
 		tb_test_num = tb_test_num + 1;
 		output_val_plus <= 'b1;
@@ -95,7 +95,7 @@ module tb_USB_transceiver_selector ();
 		@cb;
 		// Test Case 3 Writing after reading
 		tb_test_num = tb_test_num + 1;
-		cb.receiving <= 'b0;
+		cb.transmitting <= 'b1;
 		cb.d_minus_out <= 'b0;
 		cb.d_plus_out <= 'b1;
 		@cb;

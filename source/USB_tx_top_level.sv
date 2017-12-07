@@ -15,7 +15,8 @@ module USB_tx_top_level
 	input transmit_response,
 	output d_plus_out,
 	output d_minus_out,
-	output read_enable
+	output read_enable,
+	output transmitting
 // deleted: you cannot have an error while transmitting	output tx_error
 );
 
@@ -25,7 +26,6 @@ module USB_tx_top_level
 	logic data_sent;
 	logic create_eop;
 	logic tx_shift;
-	logic transmitting;
 	logic byte_sent;
 	logic tx_hold;
 	logic tx_enable;

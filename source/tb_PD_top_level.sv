@@ -52,6 +52,7 @@ module tb_PD_top_level ();
 	logic tb_hash_done;
 	logic tb_transmit_ack;
 	logic [6:0] byte_count;
+	logic tb_rcv_error;
 
 	clocking cb @(posedge tb_clk);
 		 		// 1step means 1 time precision unit, 10ps for this module. We assume the hold time is less than 200ps.
@@ -75,7 +76,7 @@ module tb_PD_top_level ();
 	
 	PD_top_level PD_TOP_LEVEL (.clk(tb_clk), .n_rst(tb_n_rst), .write_enable(tb_write_enable), .rx_data(tb_rx_data), .eop(tb_eop), .hash_select(tb_hash_select), .increment(tb_increment), 
 					.data_to_hash(tb_data_to_hash), .p_error(tb_p_error), .host_ready(tb_host_ready), .difficulty(tb_difficulty), .new_block(tb_new_block), .r_enable(tb_r_enable),
-					.valid_hash(tb_valid_hash), .hash_done(tb_hash_done), .transmit_ack(tb_transmit_ack));
+					.valid_hash(tb_valid_hash), .hash_done(tb_hash_done), .transmit_ack(tb_transmit_ack), .rcv_error(tb_rcv_error));
 	
 	task send_write_enables;
 		input [62:0][7:0] header;

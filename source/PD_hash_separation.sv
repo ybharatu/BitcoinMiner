@@ -9,7 +9,7 @@
 module PD_hash_separation
 (
 	input wire clk, n_rst,
-	input wire [17:0][15:0] hash, // SYNC+PID, METADATA, HASH+NONCE
+	input wire [17:0][15:0] valid_hash, // SYNC+PID, METADATA, HASH+NONCE
 	input wire transmit_empty,
 	input wire transmit_empty_en,
 	input wire [7:0] PID,
@@ -72,7 +72,7 @@ always_comb begin
 			end
 		end
 		else if (j == count_out) begin
-			check_write_data = hash[17-(j-2)];
+			check_write_data = valid_hash[17-(j-2)];
 		end
 		
 	end

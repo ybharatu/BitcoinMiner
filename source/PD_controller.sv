@@ -20,7 +20,6 @@ module PD_controller
 	input n_rst,
 	input write_enable,
 	input [7:0] rx_data,
-	input valid_hash,
 	input hash_done,
 	input packet_done,
 	input eop,
@@ -38,7 +37,8 @@ module PD_controller
 	output logic cnt_up,
 	output logic clr_cnt,
 	output logic transmit_ack,
-	output logic transmit_nack
+	output logic transmit_nack,
+	output logic packet_type
 	
 );
 
@@ -98,6 +98,8 @@ begin
 	begin_hash = 0;
 	transmit_ack = 0;
 	transmit_nack = 0;
+	packet_type = 0;
+
 	case(current_state)
 		IDLE: begin
 			if(write_enable)
@@ -180,16 +182,19 @@ begin
 				next_state = OUT_EOP_WAIT;
 		end
 		QUIT1: begin
+			packet_type = 1;
 			next_state = WAIT_DATA_TYPE;
 			quit_hash = 1;
 		end
 		WAIT_DATA_TYPE: begin
+			packet_type = 1;
 			if(write_enable)
 				next_state = CHECK_DATA_TYPE;
 			else
 				next_state = WAIT_DATA_TYPE;
 		end
 		CHECK_DATA_TYPE: begin
+			packet_type = 1;
 			if(rx_data == `INTERRUPT)
 				next_state = INTERRUPT;
 			else if(rx_data == `HASH)
@@ -198,16 +203,19 @@ begin
 				next_state = ERROR;
 		end
 		INTERRUPT: begin
+			packet_type = 1;
 			quit_hash = 1;
 			next_state = INTERRUPT_WAIT_EOP;
 		end
 		INTERRUPT_WAIT_EOP: begin
+			packet_type = 1;
 			if(eop)
 				next_state = WAIT_EOP_END;
 			else
 				next_state = INTERRUPT_WAIT_EOP;
 		end
 		WAIT_EOP_END: begin
+			packet_type = 1;
 			if(!eop)
 				next_state = TRANSMIT_ACK;
 			else
@@ -218,12 +226,14 @@ begin
 			next_state = IDLE;
 		end
 		PACKET_1_WAIT: begin
+			packet_type = 1;
 			if(write_enable)
 				next_state = WRITE_PACKET_1;
 			else
 				next_state = PACKET_1_WAIT;
 		end
 		WRITE_PACKET_1: begin
+			packet_type = 1;
 			i_data_en = 1;
 			cnt_up = 1;
 			if(packet_done)
@@ -238,10 +248,12 @@ begin
 				next_state = WAIT_EOP_PACKET;
 		end
 		QUIT2: begin
+			packet_type = 1;
 			next_state = PACKET_2_WAIT;
 			quit_hash = 1;
 		end
 		PACKET_2_WAIT: begin
+			packet_type = 1;
 			if(write_enable)
 				next_state = WRITE_PACKET_2;
 			else
@@ -256,12 +268,14 @@ begin
 				next_state = PACKET_2_WAIT;
 		end
 		WAIT_EOP_BLOCK: begin
+			packet_type = 1;
 			if(eop)
 				next_state = NEW_BLOCK;
 			else
 				next_state = WAIT_EOP_BLOCK; 
 		end
 		NEW_BLOCK: begin
+			packet_type = 1;
 			new_block = 1;
 			clr_cnt = 1;
 			next_state = WAIT_EOP_END;			
