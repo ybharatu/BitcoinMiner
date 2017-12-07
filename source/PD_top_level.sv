@@ -16,6 +16,7 @@ module PD_top_level
 	input wire increment,
 	input wire hash_done,
 	input wire rcv_error,
+	output logic interrupt,
 	output logic [511:0] data_to_hash,
 	output logic p_error,
 	output logic host_ready,
@@ -33,7 +34,6 @@ logic [6:0] i_data_sel;
 logic [7:0] i_data;
 logic stop_calc;
 logic begin_hash;
-logic quit_hash;
 logic cnt_up;
 logic [511:0] chunk_1;
 logic [127:0] chunk_2;
@@ -42,7 +42,7 @@ logic [6:0] byte_count;
 
 PD_controller CONTROLLER (.clk(clk), .n_rst(n_rst), .write_enable(write_enable), .rx_data(rx_data), .packet_done(packet_done), .eop(eop), .i_data_en(i_data_en), .packet_type(packet_type),
 				.i_data_sel(i_data_sel), .i_data(i_data), .p_error(p_error), .stop_calc(stop_calc), .new_block(new_block), .host_ready(host_ready), .begin_hash(begin_hash), 
-				.quit_hash(quit_hash), .cnt_up(cnt_up), .hash_done(hash_done), .clr_cnt(clr_cnt), .transmit_ack(transmit_ack), .byte_count(byte_count), .transmit_nack(transmit_nack), .rcv_error(rcv_error));
+				.cnt_up(cnt_up), .hash_done(hash_done), .clr_cnt(clr_cnt), .transmit_ack(transmit_ack), .byte_count(byte_count), .transmit_nack(transmit_nack), .rcv_error(rcv_error), .interrupt(interrupt));
 
 PD_block_storage BLOCK_STORAGE (.clk(clk), .n_rst(n_rst), .i_data_en(i_data_en), .i_data_sel(i_data_sel), .i_data(i_data), .difficulty(difficulty), .chunk_1(chunk_1), .chunk_2(chunk_2), .increment(increment));
 

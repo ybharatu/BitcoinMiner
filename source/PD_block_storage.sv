@@ -22,6 +22,9 @@ module PD_block_storage
 reg [111:0][7:0] storage;
 reg [111:0][7:0] storage_next;
 reg [111:0] write_en;
+reg [3:0][7:0] flipped;
+reg [3:0][7:0] flipped_increment;
+reg [3:0][7:0] unflipped;
 
 always_ff @ (posedge clk) begin
 	/*if(n_rst == 0)
@@ -40,10 +43,15 @@ always_comb begin
 	end
 	if(increment)
 	begin
-		storage_next[67:64] = storage[67:64] + 8;
+		storage_next[79:76] = storage[79:76] + 1;
 	end  
 end
 
+//flip_endian #(.LENGTH(32), .FLIP_LENGTH(8)) FLIP (storage[79:76], flipped[3:0]);
+
+//assign flipped_increment = flipped + 1;
+
+//flip_endian #(.LENGTH(32), .FLIP_LENGTH(8)) UNFLIP (flipped_increment[3:0], unflipped[3:0]);
 
 always_comb begin
 	integer i;

@@ -16,11 +16,14 @@
 `define HASH   8'b00000001
 `define CORRECT_ADDRESS 7'b0010101
 `define END_P 8'b11101111
+`define NACK	8'b01011010
+`define ACK	8'b11010010
 
 module tb_bitcoin_miner ();
 
 	localparam	CLK_PERIOD = 10; //??
 	localparam	BUS_PERIOD = 80;
+	localparam	BYTE_PERIOD = 640;
 	localparam	CHECK_DELAY = 1; // Check 1ns after the rising edge to allow for propagation delay
 
 
@@ -33,6 +36,12 @@ module tb_bitcoin_miner ();
 	logic tb_d_plus_reg;
 	logic tb_transmitting;
 	reg eop;
+	reg rcv_minus;
+	reg rcv_plus;
+	reg tb_packet_type;
+	reg [7:0] tb_rx_data;
+	reg tb_write_enable;
+	reg tb_rcv_error;
 
 	always
 	begin
@@ -47,7 +56,21 @@ module tb_bitcoin_miner ();
 		eop <= !tb_d_minus && !tb_d_plus;
 	end
 
+	always_comb begin
+		if(!tb_transmitting) begin
+			rcv_minus = tb_d_minus;
+			rcv_plus = tb_d_plus;
+		end
+		else begin
+			rcv_minus = 1'b0;
+			rcv_plus = 1'b1;
+		end
+	end
+
 	bitcoin_miner MINER (.clk(tb_clk), .n_rst(tb_n_rst), .d_plus(tb_d_plus), .d_minus(tb_d_minus));
+
+	USB_rx_top_level RX_TOP_LEVEL (.clk(tb_clk), .d_plus_in(rcv_plus), .d_minus_in(rcv_minus), .n_rst(tb_n_rst), .packet_type(tb_packet_type), .rx_data(tb_rx_data), 
+		.write_enable(tb_write_enable), .rcv_error(tb_rcv_error));
 
 
 	
@@ -339,11 +362,97 @@ module tb_bitcoin_miner ();
 		
 	end
 	endtask
+	
+	task check_ack;
+	begin
+		@(posedge tb_write_enable);
+		#(CHECK_DELAY);
+		if(tb_rx_data == `ACK)
+			$info("received ACK");
+		else
+			$error("FAILED: Received NOT ACK");
+		#(BUS_PERIOD *2);
+	end
+	endtask
+
+
+	task check_hash;
+		input [271:0] data;
+		input [31:0] nonce;
+	begin
+		integer count;
+		integer i;
+		tb_packet_type = 1;
+		count = 0;
+		@(posedge tb_write_enable);
+			count = count + 1;
+			@(posedge tb_write_enable);
+			#(CHECK_DELAY);
+			if(tb_rx_data != 8'h00)
+			begin	
+	
+				$error("Failed Byte %d: Expected: %d, Actual: %d", count,data[i -: 8], tb_rx_data);
+			end
+			else
+				$info("Byte %d Passed", count);
+
+			count = count + 1;
+			@(posedge tb_write_enable);
+			#(CHECK_DELAY);
+			if(tb_rx_data != 8'h00)
+			begin	
+	
+				$error("Failed Byte %d: Expected: %d, Actual: %d", count,data[i -: 8], tb_rx_data);
+			end
+			else
+				$info("Byte %d Passed", count);
+		for(i = 255; i > 0; i = i - 8)
+		begin
+			count = count + 1;
+			@(posedge tb_write_enable);
+			#(CHECK_DELAY);
+			if(tb_rx_data != data[i -: 8])
+			begin	
+	
+				$error("Failed Byte %d: Expected: %d, Actual: %d", count,data[i -: 8], tb_rx_data);
+			end
+			else
+				$info("Byte %d Passed", count);
+		end
+
+			count = count + 1;
+			@(posedge tb_write_enable);
+			#(CHECK_DELAY);
+			if(tb_rx_data != nonce[i -: 8])
+			begin	
+	
+				$error("Failed Byte %d: Expected: %d, Actual: %d", count,data[i -: 8], tb_rx_data);
+			end
+			else
+				$info("Byte %d Passed", count);
+
+			count = count + 1;
+			@(posedge tb_write_enable);
+			#(CHECK_DELAY);
+			if(tb_rx_data != nonce[i -: 8])
+			begin	
+	
+				$error("Failed Byte %d: Expected: %d, Actual: %d", count,data[i -: 8], tb_rx_data);
+			end
+			else
+				$info("Byte %d Passed", count);
+		
+		$info("******End of test case******\n");
+	end
+	endtask
 
 	// ENDTASKS
 
 	initial
 	begin
+
+		tb_packet_type = 0;
+		tb_rx_data = 0;
 
 		tb_n_rst = 1'b0;
 		tb_transmitting = 1;
@@ -352,7 +461,7 @@ module tb_bitcoin_miner ();
 		@(posedge tb_clk);
 		@(posedge tb_clk);
 		tb_n_rst = 1'b1;
-		#(2);
+		#(1);
 
 
 
@@ -364,18 +473,95 @@ module tb_bitcoin_miner ();
 		16'hE83C);
 
 		tb_transmitting = 0;
-		@(posedge eop);
-		#(BUS_PERIOD * 2);
+
+		check_ack();
 
 		tb_transmitting = 1;
 
 		send_token(`IN);
 		
 		tb_transmitting = 0;
+
+		check_hash(272'h000000000000003ba27aa200b1cecaad478d2b00432346c3f1f3986da1afd33e506, 32'h10572b0f);
+
 		@(posedge eop);
 		#(BUS_PERIOD * 2);
 
+		tb_transmitting = 1;
+		tb_d_plus_reg = 1;
+		tb_d_minus_reg = 0;
+
+		#(BYTE_PERIOD);
+		
+		tb_n_rst = 0;
+		#(30);
+		tb_n_rst = 1;
+
+		send_token(`OUT);
+
+		send_header(640'h0100000050120119172a610421a6c3011dd330d9df07b63616c2cc1f1cd00200000000006657a9252aacd5c0b2940996ecff952228c3067cc38d4885efb5a4ac4247e9f337221b4d4c86041b002b5710,
+		256'h000000000004864c000000000000000000000000000000000000000000000000,
+		16'h8364,
+		16'h577C);
+
 		tb_transmitting = 0;
+
+		check_ack();
+
+		tb_transmitting = 1;
+
+		#(100*BYTE_PERIOD);
+
+		tb_transmitting = 1;
+
+		send_token(`IN);
+		
+		tb_transmitting = 0;
+
+		check_hash(272'h000000000000003ba27aa200b1cecaad478d2b00432346c3f1f3986da1afd33e506, 32'h10572b0f);
+
+		@(posedge eop);
+		#(BUS_PERIOD * 2);
+
+		tb_transmitting = 1;
+		tb_d_plus_reg = 1;
+		tb_d_minus_reg = 0;
+
+		#(BYTE_PERIOD);
+
+		tb_n_rst = 0;
+		#(30);
+		tb_n_rst = 1;
+
+
+		send_token(`OUT);
+
+		send_header(640'h0100000050120119172a610421a6c3011dd330d9df07b63616c2cc1f1cd00200000000006657a9252aacd5c0b2940996ecff952228c3067cc38d4885efb5a4ac4247e9f337221b4d4c86041b0f2b5700,
+		256'h000000000004864c000000000000000000000000000000000000000000000000,
+		16'h8364,
+		16'h91BD);
+
+		tb_transmitting = 0;
+
+		check_ack();
+
+		tb_transmitting = 1;
+
+		#(BYTE_PERIOD);
+		
+		send_token(`OUT);
+
+		send_sync();
+		send_pid(`DATA0);
+		send_byte(`INTERRUPT);
+		send_byte(8'h40); //BF40
+		send_byte(8'hBF);
+		send_eop();
+
+		
+
+		
+		
 
 	end
 

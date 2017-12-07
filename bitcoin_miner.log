@@ -1,0 +1,2 @@
+Synthesizing design: bitcoin_miner.sv
+dc_shell-t -x "source -echo do_mapping.tcl"

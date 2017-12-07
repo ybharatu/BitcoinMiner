@@ -33,7 +33,7 @@ module PD_controller
 	output logic new_block,
 	output logic host_ready,
 	output logic begin_hash,
-	output logic quit_hash,
+	output logic interrupt,
 	output logic cnt_up,
 	output logic clr_cnt,
 	output logic transmit_ack,
@@ -94,7 +94,7 @@ begin
 	valid_address_enable = 0;
 	clr_cnt = 0;
 	host_ready = 0;
-	quit_hash = 0;
+	interrupt = 0;
 	begin_hash = 0;
 	transmit_ack = 0;
 	transmit_nack = 0;
@@ -193,7 +193,7 @@ begin
 		QUIT1: begin
 			packet_type = 1;
 			next_state = WAIT_DATA_TYPE;
-			quit_hash = 1;
+			interrupt = 1;
 		end
 		WAIT_DATA_TYPE: begin
 			packet_type = 1;
@@ -213,7 +213,7 @@ begin
 		end
 		INTERRUPT: begin
 			packet_type = 1;
-			quit_hash = 1;
+			interrupt = 1;
 			next_state = INTERRUPT_WAIT_EOP;
 		end
 		INTERRUPT_WAIT_EOP: begin
@@ -260,7 +260,7 @@ begin
 		QUIT2: begin
 			packet_type = 1;
 			next_state = PACKET_2_WAIT;
-			quit_hash = 1;
+			interrupt = 1;
 		end
 		PACKET_2_WAIT: begin
 			packet_type = 1;

@@ -21,7 +21,7 @@ module USB_transceiver_selector
 assign d_minus = (transmitting == 1 || transmit_eop == 1) ? d_minus_out : 'bz;
 assign d_plus = (transmitting == 1 || transmit_eop == 1) ? d_plus_out : 'bz;
 
-assign d_minus_in = (transmitting == 0 && transmit_eop == 0) ? d_minus : 'bz;
-assign d_plus_in = (transmitting == 0 && transmit_eop == 0) ? d_plus : 'bz;
+assign d_minus_in = (transmitting == 0 && transmit_eop == 0) ? d_minus : 'b0;
+assign d_plus_in = (transmitting == 0 && transmit_eop == 0) ? d_plus : 'b1;
 
 endmodule

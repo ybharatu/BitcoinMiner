@@ -22,6 +22,7 @@ module main_controller
 	input valid_hash_flag,
 	input transmit_ack,
 	input transmit_nack,
+	input interrupt,
 	output logic quit_hash,
 	output logic begin_hash,
 	output logic transmit_empty,
@@ -35,7 +36,7 @@ module main_controller
 );
 
 
-typedef enum bit [3:0] {IDLE, BLOCK_READY, HASH_DONE, TRANSMIT_START, TRANSMIT_EMPTY, TRANSMIT_ACK, TRANSMIT_NACK, BEGIN_HASH, VALID_HASH_WAIT} states;
+typedef enum bit [3:0] {IDLE, BLOCK_READY, HASH_DONE, TRANSMIT_START, TRANSMIT_EMPTY, TRANSMIT_ACK, TRANSMIT_NACK, BEGIN_HASH, VALID_HASH_WAIT, INTERRUPT} states;
 
 states curr_state, next_state;
 
@@ -62,7 +63,7 @@ begin
 	transmit_response = 0;
 	next_state = curr_state;
 	increment = 0;
-	PID = 0;
+	PID = 8'b0;
 	data_bytes = 0;
 	PID_en = 0;
 	transmit_empty_en = 0;
@@ -81,9 +82,15 @@ begin
 				next_state = HASH_DONE;
 			else if(hash_done && valid_hash_flag)
 				next_state = VALID_HASH_WAIT;
+			else if(interrupt)
+				next_state = INTERRUPT;
 			else
 				next_state = IDLE;
 			
+		end
+		INTERRUPT: begin
+			quit_hash = 1;
+			next_state = IDLE;
 		end
 		BEGIN_HASH: begin
 			begin_hash = 1;
