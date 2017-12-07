@@ -29,6 +29,22 @@ module USB_rx_controller
 	stateType;
 	stateType current_state, next_state;
 
+	logic write_enable_delay;
+
+	always_ff @ (posedge clk, negedge n_rst)
+	begin
+		if(n_rst == 1'b0)
+		begin
+			write_enable <= 1'b0;
+		end	
+		else
+		begin
+			write_enable <= write_enable_delay;
+		end
+	end
+
+
+
 	always_ff @ (posedge clk, negedge n_rst)
 	begin
 		if(n_rst == 1'b0)
@@ -45,7 +61,7 @@ module USB_rx_controller
 	begin
 		next_state = current_state;
 		receiving = 0;
-		write_enable = 0;
+		write_enable_delay = 0;
 		rcv_error = 0;
 		crc_enable = 0;
 		crc_clear = 0;
@@ -53,7 +69,7 @@ module USB_rx_controller
 		case(current_state)
 			IDLE: begin
 				receiving = 0;
-				write_enable = 0;
+				write_enable_delay = 0;
 				rcv_error = 0;
 				crc_clear = 1;
 				if(d_edge)
@@ -86,7 +102,7 @@ module USB_rx_controller
 			end
 			PID_DONE: begin;
 				receiving = 1;
-				write_enable = 1;
+				write_enable_delay = 1;
 				next_state = RCVING;
 			end	
 			ERROR: begin
@@ -99,7 +115,7 @@ module USB_rx_controller
 			end
 			RCVING: begin
 				receiving = 1;
-				write_enable = 0;
+				write_enable_delay = 0;
 				crc_enable = 1;
 				if(eop)
 					next_state = ERROR;
@@ -110,13 +126,13 @@ module USB_rx_controller
 			end
 			RCV_PULSE: begin
 				receiving = 1;
-				write_enable = 1;
+				write_enable_delay = 1;
 				crc_enable = 1;
 				next_state = RCV_DONE;
 			end
 			RCV_DONE: begin
 				receiving = 1;
-				write_enable = 0;
+				write_enable_delay = 0;
 				crc_enable = 1;
 				if(!eop && shift_enable)
 					next_state = RCVING;
@@ -127,7 +143,7 @@ module USB_rx_controller
 			end
 			CRC_CHK: begin
 				receiving = 1;
-				write_enable = 0;
+				write_enable_delay = 0;
 				crc_enable = 0;
 				if(crc_check)
 					next_state = EOP_WAIT;
@@ -136,7 +152,7 @@ module USB_rx_controller
 			end
 			EOP_WAIT: begin
 				receiving = 0;
-				write_enable = 0;
+				write_enable_delay = 0;
 				crc_enable = 0;
 				if(d_edge)
 					next_state = IDLE;

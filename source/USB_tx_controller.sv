@@ -15,6 +15,7 @@ module USB_tx_controller
 	input wire byte_sent,
 	input wire transmit_start,
 	input wire tx_shift,
+	input wire transmit_response,
 	output reg crc_load,
 	output reg read_enable,
 	output reg load_enable,
@@ -78,7 +79,7 @@ module USB_tx_controller
 				transmitting = 0;
 				create_eop = 0;
 				crc_clear = 1;
-				if(transmit_start || transmit_empty)
+				if(transmit_start || transmit_empty || transmit_response)
 					next_state = LOAD_INIT;
 			end
 			LOAD_INIT: begin

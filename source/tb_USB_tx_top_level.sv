@@ -34,6 +34,7 @@ module tb_USB_tx_top_level ();
 	logic [15:0] tb_tx_data;
 	logic tb_transmit_empty;
 	logic tb_transmit_start;
+	logic tb_transmit_response;
 	logic tb_d_plus_out;
 	logic tb_d_minus_out;
 	logic tb_read_enable;
@@ -60,7 +61,8 @@ module tb_USB_tx_top_level ();
 		output  
 			tx_data = tb_tx_data,
 			transmit_empty = tb_transmit_empty,
-			transmit_start = tb_transmit_start;
+			transmit_start = tb_transmit_start,
+			transmit_response = tb_transmit_response;
 		input	d_plus_out = tb_d_plus_out,
 			d_minus_out = tb_d_minus_out,
 			read_enable = tb_read_enable,
@@ -69,7 +71,7 @@ module tb_USB_tx_top_level ();
 	endclocking
 	
 	USB_tx_top_level TX_TOP_LEVEL (.clk(tb_clk), .n_rst(tb_n_rst), .tx_data(tb_tx_data), .transmit_empty(tb_transmit_empty), .transmit_start(tb_transmit_start), .d_plus_out(tb_d_plus_out), 
-		.d_minus_out(tb_d_minus_out), .read_enable(tb_read_enable));
+		.d_minus_out(tb_d_minus_out), .read_enable(tb_read_enable), .transmit_response(tb_transmit_response));
 	USB_rx_top_level RX_TOP_LEVEL (.clk(tb_clk), .d_plus_in(tb_d_plus_out), .d_minus_in(tb_d_minus_out), .n_rst(tb_n_rst), .packet_type(tb_packet_type), .rx_data(tb_rx_data), 
 		.write_enable(tb_write_enable), .rcv_error(tb_rcv_error));
 
@@ -78,12 +80,13 @@ module tb_USB_tx_top_level ();
 		@(posedge tb_read_enable);
 		#(1);
 		if(tb_read_enable != 1)
-			wait_read();
+			@(posedge tb_read_enable);
 	end
 	endtask
 
 	task send_hash;
 		input [255:0] hash;
+		input [31:0] nonce;
 	begin
 		integer i;
 		cb.transmit_start <= 'b1;
@@ -93,11 +96,17 @@ module tb_USB_tx_top_level ();
 		cb.transmit_start <= 'b0;
 		@cb;
 		@cb;
+		for(i = 255; i >= 15; i = i-16) begin
+			wait_read();
+			cb.tx_data <= hash[i -: 16];
+		end
 		wait_read();
-		cb.tx_data <= hash[255:240];
+		cb.tx_data <= nonce[31:16];
 		wait_read();
-		cb.tx_data <= hash[239:224];
-		wait_read();
+		cb.tx_data <= nonce[15:0];
+		@(negedge eop);
+
+	/*	wait_read();
 		cb.tx_data <= hash[223:208];
 		wait_read();
 		cb.tx_data <= hash[207:192];
@@ -126,6 +135,7 @@ module tb_USB_tx_top_level ();
 		wait_read();
 		cb.tx_data <= hash[15:0];
 		@(negedge eop);
+*/
 		
 	end
 	endtask
@@ -133,9 +143,12 @@ module tb_USB_tx_top_level ();
 	task send_hash_chunk;
 		input [255:0] hash;
 	begin
-		wait_read();
-		cb.tx_data <= hash[255:240];
-		wait_read();
+		integer i;
+		for(i = 255; i >= 15; i = i-16) begin
+			wait_read();
+			cb.tx_data <= hash[i -: 16];
+		end
+		/*wait_read();
 		cb.tx_data <= hash[239:224];
 		wait_read();
 		cb.tx_data <= hash[223:208];
@@ -165,6 +178,7 @@ module tb_USB_tx_top_level ();
 		cb.tx_data <= hash[31:16];
 		wait_read();
 		cb.tx_data <= hash[15:0];
+*/
 		
 	end
 	endtask
@@ -173,15 +187,17 @@ module tb_USB_tx_top_level ();
 
 	task check_hash;
 		input [255:0] data;
+		input [31:0] nonce;
 	begin
 		integer i;
 		tb_packet_type = 1;
 		count = 0;
 		@(posedge tb_write_enable);
-		for(i = 255; i >= 0; i = i - 8)
+		for(i = 255; i > 0; i = i - 8)
 		begin
 			count = count + 1;
 			@(posedge tb_write_enable);
+			#(CHECK_DELAY);
 			if(tb_rx_data != data[i -: 8])
 			begin	
 	
@@ -190,14 +206,37 @@ module tb_USB_tx_top_level ();
 			else
 				$info("Byte %d Passed", count);
 		end
+
+			count = count + 1;
+			@(posedge tb_write_enable);
+			#(CHECK_DELAY);
+			if(tb_rx_data != nonce[i -: 8])
+			begin	
+	
+				$error("Failed Byte %d: Expected: %d, Actual: %d", count,data[i -: 8], tb_rx_data);
+			end
+			else
+				$info("Byte %d Passed", count);
+
+			count = count + 1;
+			@(posedge tb_write_enable);
+			#(CHECK_DELAY);
+			if(tb_rx_data != nonce[i -: 8])
+			begin	
+	
+				$error("Failed Byte %d: Expected: %d, Actual: %d", count,data[i -: 8], tb_rx_data);
+			end
+			else
+				$info("Byte %d Passed", count);
 		
-		$info("End of test case\n");
+		$info("******End of test case******\n");
 	end
 	endtask
 
 	initial
 	begin
 		tb_packet_type = 1;
+		tb_transmit_response = 1'b0;
 		// Initial Reset
 		tb_n_rst = 'b0;
 		cb.tx_data <= 'b0;
@@ -232,21 +271,21 @@ module tb_USB_tx_top_level ();
 
 		//TEST CASE 1
 		fork
-			send_hash(256'h00000000000080b66c911bd5ba14a74260057311eaeb1982802f7010f1a9f090); //BE4E HASH 100001
-			check_hash(256'h00000000000080b66c911bd5ba14a74260057311eaeb1982802f7010f1a9f090);
+			send_hash(256'h00000000000080b66c911bd5ba14a74260057311eaeb1982802f7010f1a9f090, 32'h9bcc8940); //BE4E HASH 100001
+			check_hash(256'h00000000000080b66c911bd5ba14a74260057311eaeb1982802f7010f1a9f090, 32'h9bcc8940);
 		join
 		//TEST CASE 2
 		fork
-			send_hash(256'h000000000003ba27aa200b1cecaad478d2b00432346c3f1f3986da1afd33e506); //74B5 HASH 100000
-			check_hash(256'h000000000003ba27aa200b1cecaad478d2b00432346c3f1f3986da1afd33e506);
+			send_hash(256'h000000000003ba27aa200b1cecaad478d2b00432346c3f1f3986da1afd33e506, 32'h10572b0f); //74B5 HASH 100000
+			check_hash(256'h000000000003ba27aa200b1cecaad478d2b00432346c3f1f3986da1afd33e506, 32'h10572b0f);
 		join
 		//TEST CASE 3
 		fork
-			send_hash(256'h000000000002d01c1fccc21636b607dfd930d31d01c3a62104612a1719011250); //A7AA HASH 99999
-			check_hash(256'h000000000002d01c1fccc21636b607dfd930d31d01c3a62104612a1719011250);
+			send_hash(256'h000000000002d01c1fccc21636b607dfd930d31d01c3a62104612a1719011250, 32'h380388B2); //A7AA HASH 99999
+			check_hash(256'h000000000002d01c1fccc21636b607dfd930d31d01c3a62104612a1719011250, 32'h380388B2);
 		join
 		
-		// transfer #1
+		// Transfer
 	end
 
 

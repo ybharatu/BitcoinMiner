@@ -13,6 +13,7 @@ module USB_timer_tx
 	input wire transmitting,
 	input wire transmit_empty,
 	input wire transmit_start,
+	input wire transmit_response,
 	input wire tx_hold,
 	output logic byte_sent,
 	output logic data_sent,
@@ -28,7 +29,7 @@ flex_counter #(5) FLEX_COUNTER (.clk(clk), .n_rst(n_rst), .clear(!transmitting |
 flex_counter #(5) FLEX_COUNTER2 (.clk(clk), .n_rst(n_rst), .clear(!transmitting || data_sent), .count_enable(byte_sent), .rollover_val(value), .count_out(), .rollover_flag(data_sent));
 
 
-typedef enum bit [1:0] {IDLE, HOLD_EMPTY, HOLD_START}
+typedef enum bit [1:0] {IDLE, HOLD_EMPTY, HOLD_START, HOLD_ACK}
 		stateType;
 		stateType current_state, next_state;
 
@@ -56,6 +57,8 @@ always_comb
 						next_state = HOLD_EMPTY;
 					else if(transmit_start)
 						next_state = HOLD_START;
+					else if(transmit_response)
+						next_state = HOLD_ACK;
 					else
 						next_state = IDLE; 
 				end
@@ -69,11 +72,18 @@ always_comb
 				end
 				
 				HOLD_START: begin
-					value = 5'd17; // Increase this
+					value = 5'd19; // Increase this
 					if(data_sent)
 						next_state = IDLE;
 					else
 						next_state = HOLD_START;
+				end
+				HOLD_ACK: begin
+					value = 5'd01;
+					if(data_sent)
+						next_state = IDLE;
+					else
+						next_state = HOLD_ACK;
 				end
 		endcase
 	end
