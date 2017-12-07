@@ -76,6 +76,8 @@ module USB_encoder
 		hold_eop = 0;
 		restart = 0;
 		transmit_eop = 1;
+		d_plus_out = 'b1;
+		d_minus_out = 'b0;
 		case(current_state)
 			STATE_K: begin
 				transmit_eop = 0;

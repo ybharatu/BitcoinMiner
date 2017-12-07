@@ -14,7 +14,7 @@ module HM_controller
 	input clk, n_rst,	
 	input valid_hash_flag,
 	output logic cnt_up, hash_done, clear, halt, init, out_load,
-	output logic increment,
+
 	output logic [1:0] hash_select
 );
 
@@ -132,7 +132,6 @@ begin
 				nextState = INIT_LOAD1;
 		end
 		INCREMENT: begin
-			increment = 1;
 			nextState = INIT_LOAD1;
 		end
 		

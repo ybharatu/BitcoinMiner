@@ -1,6 +1,6 @@
 #@ # 
 #@ # Running dc_shell Version K-2015.06-SP1 for linux64 -- Jul 21, 2015
-#@ # Date:   Thu Dec  7 05:20:44 2017
+#@ # Date:   Thu Dec  7 07:22:36 2017
 #@ # Run by: mg138@ee215lnx05.ecn.purdue.edu
 #@ 
 
@@ -3839,8 +3839,8 @@ source -echo do_mapping.tcl
 #@ # -- Starting source do_mapping.tcl
 
 #@ # Step 1:  Read in the source file
-#@ analyze -format sverilog -lib WORK {USB_encoder.sv USB_timer_tx.sv USB_crc_tx.sv USB_tx_controller.sv USB_tx_sr.sv  USB_timer_rx.sv USB_crc_16.sv USB_crc_5.sv USB_crc_rx.sv USB_decoder.sv USB_edge_detect.sv USB_eop_detect.sv USB_rx_controller.sv USB_rx_sr.sv USB_sync_high.sv USB_sync_low.sv HM_timer.sv HM_check_hash.sv HM_controller.sv HM_hash_selection.sv HM_SHA_256.sv HM_bus_select.sv PD_block_storage.sv PD_chunk_decoder.sv PD_timer.sv PD_controller.sv flip_endian.sv flex_counter.sv flex_pts_sr.sv flex_stp_sr.sv flex_counter_fix.sv USB_rx_top_level.sv USB_tx_top_level.sv USB_transceiver_selector.sv PD_hash_separation.sv main_controller.sv HM_top_level.sv PD_top_level.sv bitcoin_miner.sv}
-#@ elaborate bitcoin_miner -lib WORK
+#@ analyze -format sverilog -lib WORK { PD_hash_separation.sv}
+#@ elaborate PD_hash_separation -lib WORK
 #@ uniquify
 #@ # Step 2: Set design constraints
 #@ # Uncomment below to set timing, area, power, etc. constraints
@@ -3853,12 +3853,12 @@ source -echo do_mapping.tcl
 #@ compile -map_effort medium
 #@ 
 #@ # Step 4: Output reports
-#@ report_timing -path full -delay max -max_paths 4 -nworst 1 > reports/bitcoin_miner.rep
-#@ report_area >> reports/bitcoin_miner.rep
-#@ report_power -hier >> reports/bitcoin_miner.rep
+#@ report_timing -path full -delay max -max_paths 4 -nworst 1 > reports/PD_hash_separation.rep
+#@ report_area >> reports/PD_hash_separation.rep
+#@ report_power -hier >> reports/PD_hash_separation.rep
 #@ 
 #@ # Step 5: Output final VHDL and Verilog files
-#@ write_file -format verilog -hierarchy -output "mapped/bitcoin_miner.v"
+#@ write_file -format verilog -hierarchy -output "mapped/PD_hash_separation.v"
 #@ echo "\nScript Done\n"
 #@ echo "\nChecking Design\n"
 #@ check_design

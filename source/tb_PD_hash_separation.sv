@@ -37,6 +37,7 @@ module tb_PD_hash_separation ();
 	reg [7:0]tb_PID;
 	reg tb_PID_en;
 	reg tb_read_enable;
+	reg tb_data_sent;
 	reg [15:0]tb_tx_data;
 
 	integer i;
@@ -56,12 +57,13 @@ module tb_PD_hash_separation ();
 	endclocking
 
 	PD_hash_separation DUT (.clk(tb_clk), .n_rst(tb_n_rst), .valid_hash(tb_hash), .transmit_empty(tb_transmit_empty), .transmit_empty_en(tb_transmit_empty_en),
-				.PID(tb_PID), .PID_en(tb_PID_en), .read_enable(tb_read_enable),	.tx_data(tb_tx_data));
+				.PID(tb_PID), .PID_en(tb_PID_en), .read_enable(tb_read_enable),	.tx_data(tb_tx_data), .data_sent(tb_data_sent));
 
 	initial
 	begin
 		//@cb;
 		tb_read_enable <= 1'b0;
+		tb_data_sent = 0;
 		@cb;
 		tb_n_rst = 1'b0;
 		@cb;
@@ -73,7 +75,6 @@ module tb_PD_hash_separation ();
 		tb_hash =  {32'hf20015ad,32'hb410ff61,32'h96177a9c,32'hb00361a3,
 				32'h5dae2223,32'h414140de,32'h8f01cfea,32'hba7816bf,32'hb5016bf};
 
-		tb_tx_data <= '0;
 		tb_PID <= 8'b11101100;
 		tb_transmit_empty <= 1'b1;
 		tb_read_enable <= 1'b0;
@@ -118,5 +119,10 @@ module tb_PD_hash_separation ();
 			@cb;
 			#CHECK_DELAY;		
 		end
+		tb_data_sent = 1;
+		@(posedge tb_clk);
+		tb_data_sent = 0;
+
+		
 	end
 endmodule

@@ -452,7 +452,6 @@ module tb_bitcoin_miner ();
 	begin
 
 		tb_packet_type = 0;
-		tb_rx_data = 0;
 
 		tb_n_rst = 1'b0;
 		tb_transmitting = 1;
