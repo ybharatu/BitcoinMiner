@@ -199,6 +199,9 @@ module tb_HM_top_level ();
 
 	#CHECK_DELAY;
 	flip_endian_8 (test_nonce, display_nonce);
+		
+	integer count;
+
 
 	check_nonce(display_nonce - 10);
 

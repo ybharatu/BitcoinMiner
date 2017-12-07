@@ -12,7 +12,7 @@
 `define DATA1   8'b01001011
 `define IN  8'b01101001
 `define OUT 8'b11100001
-`define INTERRUPT   8'b00000000
+`define INTERRUPT   8'b00000100
 `define HASH   8'b00000001
 `define CORRECT_ADDRESS 7'b0010101
 `define END_P 8'b11101111
@@ -70,7 +70,7 @@ module tb_bitcoin_miner ();
 	bitcoin_miner MINER (.clk(tb_clk), .n_rst(tb_n_rst), .d_plus(tb_d_plus), .d_minus(tb_d_minus));
 
 	USB_rx_top_level RX_TOP_LEVEL (.clk(tb_clk), .d_plus_in(rcv_plus), .d_minus_in(rcv_minus), .n_rst(tb_n_rst), .packet_type(tb_packet_type), .rx_data(tb_rx_data), 
-		.write_enable(tb_write_enable), .rcv_error(tb_rcv_error));
+		.write_enable(tb_write_enable), .rcv_error(tb_rcv_error), .eop());
 
 
 	
@@ -485,6 +485,7 @@ module tb_bitcoin_miner ();
 
 		@(posedge eop);
 		#(BUS_PERIOD * 2);
+		#(CHECK_DELAY);
 
 		tb_transmitting = 1;
 		tb_d_plus_reg = 1;
@@ -521,6 +522,7 @@ module tb_bitcoin_miner ();
 
 		@(posedge eop);
 		#(BUS_PERIOD * 2);
+		#(CHECK_DELAY);
 
 		tb_transmitting = 1;
 		tb_d_plus_reg = 1;
@@ -535,7 +537,7 @@ module tb_bitcoin_miner ();
 
 		send_token(`OUT);
 
-		send_header(640'h0100000050120119172a610421a6c3011dd330d9df07b63616c2cc1f1cd00200000000006657a9252aacd5c0b2940996ecff952228c3067cc38d4885efb5a4ac4247e9f337221b4d4c86041b0f2b5700,
+		send_header(640'h0100000050120119172a610421a6c3011dd330d9df07b63616c2cc1f1cd00200000000006657a9252aacd5c0b2940996ecff952228c3067cc38d4885efb5a4ac4247e9f337221b4d4c86041b002b5700,
 		256'h000000000004864c000000000000000000000000000000000000000000000000,
 		16'h8364,
 		16'h91BD);
@@ -553,12 +555,12 @@ module tb_bitcoin_miner ();
 		send_sync();
 		send_pid(`DATA0);
 		send_byte(`INTERRUPT);
-		send_byte(8'h40); //BF40
-		send_byte(8'hBF);
+		send_byte(8'h41); //BF40
+		send_byte(8'h7C);
 		send_eop();
 
 		
-
+		tb_transmitting = 0;
 		
 		
 

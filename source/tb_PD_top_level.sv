@@ -10,9 +10,9 @@
 `define OUT_PID 	8'b11100001
 `define DATA0		8'b11000011
 `define DATA1 		8'b01001011
-`define INTERRUPT 	8'b00000000
-`define HASH		8'b11111111
-`define CORRECT_ADDRESS 7'b1100001
+`define INTERRUPT 	8'b00000100
+`define HASH		8'b00000001
+`define CORRECT_ADDRESS 7'b0010101
 
 module tb_PD_top_level ();
 	
@@ -48,7 +48,6 @@ module tb_PD_top_level ();
 	logic [255:0] tb_difficulty;
 	logic tb_new_block;
 	logic tb_r_enable;
-	logic tb_valid_hash;
 	logic tb_hash_done;
 	logic tb_transmit_ack;
 	logic [6:0] byte_count;
@@ -63,7 +62,6 @@ module tb_PD_top_level ();
 			eop = tb_eop,
 			hash_select = tb_hash_select,
 			increment = tb_increment,
-			valid_hash = tb_valid_hash,
 			hash_done = tb_hash_done;
 		input	data_to_hash = tb_data_to_hash,
 			p_error = tb_p_error,
@@ -76,7 +74,7 @@ module tb_PD_top_level ();
 	
 	PD_top_level PD_TOP_LEVEL (.clk(tb_clk), .n_rst(tb_n_rst), .write_enable(tb_write_enable), .rx_data(tb_rx_data), .eop(tb_eop), .hash_select(tb_hash_select), .increment(tb_increment), 
 					.data_to_hash(tb_data_to_hash), .p_error(tb_p_error), .host_ready(tb_host_ready), .difficulty(tb_difficulty), .new_block(tb_new_block), .r_enable(tb_r_enable),
-					.valid_hash(tb_valid_hash), .hash_done(tb_hash_done), .transmit_ack(tb_transmit_ack), .rcv_error(tb_rcv_error));
+					.hash_done(tb_hash_done), .transmit_ack(tb_transmit_ack), .rcv_error(tb_rcv_error));
 	
 	task send_write_enables;
 		input [62:0][7:0] header;
@@ -117,7 +115,6 @@ module tb_PD_top_level ();
 		cb.eop <= 'b0;
 		cb.hash_select <= 'b0;
 		cb.increment <= 'b0;
-		cb.valid_hash <= 'b0;
 		cb.hash_done <= 'b0;
 		//RESET
 		cb.n_rst <= 'b0;
@@ -135,7 +132,7 @@ module tb_PD_top_level ();
 		cb.write_enable <= 'b0;
 		#(BYTE_PERIOD);
 		cb.write_enable <= 'b1;
-		cb.rx_data [7:1] <= `CORRECT_ADDRESS;
+		cb.rx_data [6:0] <= `CORRECT_ADDRESS;
 		@(posedge tb_clk);
 		@(posedge tb_clk);
 		cb.write_enable <= 'b0;
@@ -149,7 +146,7 @@ module tb_PD_top_level ();
 		#(BUS_PERIOD);
 		cb.eop <= 'b0;
 		#(BYTE_PERIOD);
-
+		
 
 		//READING OUT_PID
 		cb.write_enable <= 'b1;
@@ -157,9 +154,10 @@ module tb_PD_top_level ();
 		@(posedge tb_clk);
 		@(posedge tb_clk);
 		cb.write_enable <= 'b0;
+		//cb.rx_data[6:0] <= `CORRECT_ADDRESS;
 		#(BYTE_PERIOD);
 		cb.write_enable <= 'b1;
-		cb.rx_data[7:1] <= `CORRECT_ADDRESS;
+		cb.rx_data[6:0] <= `CORRECT_ADDRESS;
 		@(posedge tb_clk);
 		@(posedge tb_clk);
 		cb.write_enable <= 'b0;
@@ -172,8 +170,8 @@ module tb_PD_top_level ();
 		cb.eop <= 'b1;
 		#(BUS_PERIOD);
 		cb.eop <= 'b0;
-		#(BUS_PERIOD);
-
+		cb.rx_data <= `DATA0;
+		#(BYTE_PERIOD);
 
 		// SENDING DATA 0 Packet with interrupt meta data
 		cb.write_enable <= 'b1;
@@ -182,10 +180,15 @@ module tb_PD_top_level ();
 		@(posedge tb_clk);
 		cb.write_enable <= 'b0;
 		#(BYTE_PERIOD);
-		cb.write_enable <= 'b1;
 		cb.rx_data <= `INTERRUPT;
 		@(posedge tb_clk);
 		@(posedge tb_clk);
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		cb.write_enable <= 'b1;
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		cb.rx_data <= `INTERRUPT;
 		cb.write_enable <= 'b0;
 		#(BYTE_PERIOD);
 		cb.write_enable <= 'b1;
@@ -212,7 +215,7 @@ module tb_PD_top_level ();
 		cb.write_enable <= 'b0;
 		#(BYTE_PERIOD);
 		cb.write_enable <= 'b1;
-		cb.rx_data[7:1] <= `CORRECT_ADDRESS;
+		cb.rx_data[6:0] <= `CORRECT_ADDRESS;
 		@(posedge tb_clk);
 		@(posedge tb_clk);
 		cb.write_enable <= 'b0;
@@ -269,7 +272,7 @@ module tb_PD_top_level ();
 		cb.write_enable <= 'b0;
 		#(BYTE_PERIOD);
 		cb.write_enable <= 'b1;
-		cb.rx_data[7:1] <= `CORRECT_ADDRESS;
+		cb.rx_data[6:0] <= `CORRECT_ADDRESS;
 		@(posedge tb_clk);
 		@(posedge tb_clk);
 		cb.write_enable <= 'b0;
@@ -308,6 +311,7 @@ module tb_PD_top_level ();
 		#(BUS_PERIOD);
 		cb.eop <= 'b0;
 		#(BUS_PERIOD);
+		
 	end
 
 endmodule
