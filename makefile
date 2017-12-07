@@ -25,13 +25,14 @@ EXTRA_FILES := flip_endian.sv flex_counter.sv flex_pts_sr.sv flex_stp_sr.sv flex
 
 TOP_LEVELS := USB_rx_top_level.sv USB_tx_top_level.sv USB_transceiver_selector.sv PD_hash_separation.sv main_controller.sv HM_top_level.sv PD_top_level.sv
 
-COMPONENT_FILES	:= $(USB_TX_FILES) $(USB_RX_FILES) $(HM_FILES) $(PD_FILES) $(EXTRA_FILES) $(TOP_LEVELS)
-
+COMPONENT_FILES	:= $(USB_TX_FILES) $(USB_RX_FILES) $(HM_FILES) $(PD_FILES) $(EXTRA_FILES) 
+# $(TOP_LEVELS)
 
 # Specify the name of the top level file (do not include the source folder in the name)
 # NOTE: YOU WILL NEED TO SET THIS VARIABLE'S VALUE WHEN WORKING WITH HEIRARCHICAL DESIGNS
 # AND THE AUTOMATED GRADING SYSTEM
-TOP_LEVEL_FILE	:= bitcoin_miner.sv
+TOP_LEVEL_FILE	:= PD_top_level.sv
+#bitcoin_miner.sv
 
 # Specify the filepath of the test bench you want to use (ie. tb_top_level.sv)
 # (do not include the source folder in the name)

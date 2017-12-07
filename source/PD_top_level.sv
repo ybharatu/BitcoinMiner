@@ -16,6 +16,7 @@ module PD_top_level
 	input wire increment,
 	input wire hash_done,
 	input wire rcv_error,
+	input wire valid_hash,
 	output logic interrupt,
 	output logic [511:0] data_to_hash,
 	output logic p_error,

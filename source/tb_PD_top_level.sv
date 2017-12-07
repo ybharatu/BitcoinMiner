@@ -11,8 +11,8 @@
 `define DATA0		8'b11000011
 `define DATA1 		8'b01001011
 `define INTERRUPT 	8'b00000000
-`define HASH		8'b11111111
-`define CORRECT_ADDRESS 7'b1100001
+`define HASH		8'b00000001
+`define CORRECT_ADDRESS 7'b0010101
 
 module tb_PD_top_level ();
 	
@@ -135,7 +135,7 @@ module tb_PD_top_level ();
 		cb.write_enable <= 'b0;
 		#(BYTE_PERIOD);
 		cb.write_enable <= 'b1;
-		cb.rx_data [7:1] <= `CORRECT_ADDRESS;
+		cb.rx_data [6:0] <= `CORRECT_ADDRESS;
 		@(posedge tb_clk);
 		@(posedge tb_clk);
 		cb.write_enable <= 'b0;
@@ -149,7 +149,7 @@ module tb_PD_top_level ();
 		#(BUS_PERIOD);
 		cb.eop <= 'b0;
 		#(BYTE_PERIOD);
-
+		
 
 		//READING OUT_PID
 		cb.write_enable <= 'b1;
@@ -157,9 +157,10 @@ module tb_PD_top_level ();
 		@(posedge tb_clk);
 		@(posedge tb_clk);
 		cb.write_enable <= 'b0;
+		//cb.rx_data[6:0] <= `CORRECT_ADDRESS;
 		#(BYTE_PERIOD);
 		cb.write_enable <= 'b1;
-		cb.rx_data[7:1] <= `CORRECT_ADDRESS;
+		cb.rx_data[6:0] <= `CORRECT_ADDRESS;
 		@(posedge tb_clk);
 		@(posedge tb_clk);
 		cb.write_enable <= 'b0;
@@ -172,8 +173,8 @@ module tb_PD_top_level ();
 		cb.eop <= 'b1;
 		#(BUS_PERIOD);
 		cb.eop <= 'b0;
-		#(BUS_PERIOD);
-
+		cb.rx_data <= `DATA0;
+		#(BYTE_PERIOD);
 
 		// SENDING DATA 0 Packet with interrupt meta data
 		cb.write_enable <= 'b1;
@@ -182,10 +183,15 @@ module tb_PD_top_level ();
 		@(posedge tb_clk);
 		cb.write_enable <= 'b0;
 		#(BYTE_PERIOD);
-		cb.write_enable <= 'b1;
 		cb.rx_data <= `INTERRUPT;
 		@(posedge tb_clk);
 		@(posedge tb_clk);
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		cb.write_enable <= 'b1;
+		@(posedge tb_clk);
+		@(posedge tb_clk);
+		cb.rx_data <= `INTERRUPT;
 		cb.write_enable <= 'b0;
 		#(BYTE_PERIOD);
 		cb.write_enable <= 'b1;
@@ -212,7 +218,7 @@ module tb_PD_top_level ();
 		cb.write_enable <= 'b0;
 		#(BYTE_PERIOD);
 		cb.write_enable <= 'b1;
-		cb.rx_data[7:1] <= `CORRECT_ADDRESS;
+		cb.rx_data[6:0] <= `CORRECT_ADDRESS;
 		@(posedge tb_clk);
 		@(posedge tb_clk);
 		cb.write_enable <= 'b0;
@@ -269,7 +275,7 @@ module tb_PD_top_level ();
 		cb.write_enable <= 'b0;
 		#(BYTE_PERIOD);
 		cb.write_enable <= 'b1;
-		cb.rx_data[7:1] <= `CORRECT_ADDRESS;
+		cb.rx_data[6:0] <= `CORRECT_ADDRESS;
 		@(posedge tb_clk);
 		@(posedge tb_clk);
 		cb.write_enable <= 'b0;
@@ -308,6 +314,7 @@ module tb_PD_top_level ();
 		#(BUS_PERIOD);
 		cb.eop <= 'b0;
 		#(BUS_PERIOD);
+		
 	end
 
 endmodule
