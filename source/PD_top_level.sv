@@ -22,7 +22,6 @@ module PD_top_level
 	output logic host_ready,
 	output logic [255:0] difficulty,
 	output logic new_block,
-	output logic r_enable,
 	output logic transmit_ack,
 	output logic transmit_nack,
 	output logic packet_type

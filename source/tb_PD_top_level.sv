@@ -47,11 +47,12 @@ module tb_PD_top_level ();
 	logic tb_host_ready;
 	logic [255:0] tb_difficulty;
 	logic tb_new_block;
-	logic tb_r_enable;
 	logic tb_hash_done;
 	logic tb_transmit_ack;
 	logic [6:0] byte_count;
 	logic tb_rcv_error;
+	logic tb_packet_type;
+	logic tb_transmit_nack;
 
 	clocking cb @(posedge tb_clk);
 		 		// 1step means 1 time precision unit, 10ps for this module. We assume the hold time is less than 200ps.
@@ -68,13 +69,12 @@ module tb_PD_top_level ();
 			host_ready = tb_host_ready,
 			difficulty = tb_difficulty,
 			new_block = tb_new_block,
-			r_enable = tb_r_enable,
 			transmit_ack = tb_transmit_ack;
 	endclocking
 	
 	PD_top_level PD_TOP_LEVEL (.clk(tb_clk), .n_rst(tb_n_rst), .write_enable(tb_write_enable), .rx_data(tb_rx_data), .eop(tb_eop), .hash_select(tb_hash_select), .increment(tb_increment), 
-					.data_to_hash(tb_data_to_hash), .p_error(tb_p_error), .host_ready(tb_host_ready), .difficulty(tb_difficulty), .new_block(tb_new_block), .r_enable(tb_r_enable),
-					.hash_done(tb_hash_done), .transmit_ack(tb_transmit_ack), .rcv_error(tb_rcv_error));
+					.data_to_hash(tb_data_to_hash), .p_error(tb_p_error), .host_ready(tb_host_ready), .difficulty(tb_difficulty), .new_block(tb_new_block),
+					.hash_done(tb_hash_done), .transmit_ack(tb_transmit_ack), .rcv_error(tb_rcv_error), .packet_type(tb_packet_type), .transmit_nack(tb_transmit_nack));
 	
 	task send_write_enables;
 		input [62:0][7:0] header;

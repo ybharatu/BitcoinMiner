@@ -314,6 +314,10 @@ begin
 		
 			
 	endcase
+	if(rcv_error && !eop)
+		next_state = ERROR_EOP_WAIT;
+	else if(rcv_error && eop)
+		next_state = ERROR_EOP_END;
 end
 		
 endmodule

@@ -537,10 +537,15 @@ module tb_bitcoin_miner ();
 
 		send_token(`OUT);
 
-		send_header(640'h0100000050120119172a610421a6c3011dd330d9df07b63616c2cc1f1cd00200000000006657a9252aacd5c0b2940996ecff952228c3067cc38d4885efb5a4ac4247e9f337221b4d4c86041b002b5700,
+		send_header(640'h0100000050120119172a610421a6c3011dd330d9df07b63616c2cc1f1cd00200000000006657a9252aacd5c0b2940996ecff952228c3067cc38d4885efb5a4ac4247e9f337221b4d4c86041b002b5700, 
 		256'h000000000004864c000000000000000000000000000000000000000000000000,
 		16'h8364,
 		16'h91BD);
+
+;
+
+
+		//00000000000080b66c911bd5ba14a74260057311eaeb1982802f7010f1a9f090
 
 		tb_transmitting = 0;
 
@@ -561,8 +566,32 @@ module tb_bitcoin_miner ();
 
 		
 		tb_transmitting = 0;
+
+		check_ack();
+
+		tb_transmitting = 1;
+		#(BYTE_PERIOD);
 		
+
+		send_token(`OUT);
+	
+		send_sync();
+		send_pid(`DATA0);
+		send_byte(8'b10101010);
+		send_byte(8'h41); //BF40
+		send_byte(8'h7C);
+		send_eop();
+
+		tb_transmitting = 0;
 		
+		check_ack();
+
+	/*			  send_header(640'h0100000006e533fd1ada86391f3f6c343204b0d278d4aaec1c0b20aa27ba0300000000006abbb3eb3d733a9fe18967fd7d4c117e4ccbbac5bec4d910d900b3ae0793e77f54241b4d4c86041b4089cc00,//9Bcc8940
+		256'h000000000004864c000000000000000000000000000000000000000000000000,
+		16'hA2F9,
+		16'hC13E)
+*/
+		tb_transmitting = 1;
 
 	end
 

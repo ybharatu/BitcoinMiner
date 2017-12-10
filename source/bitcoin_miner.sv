@@ -18,7 +18,7 @@ logic rcv_error;
 logic eop;
 logic [7:0] rx_data;
 logic read_enable;
-logic r_enable; // is this the same as read_enable? only an output from PD_top_level (not an input to anything else)
+//logic r_enable; // is this the same as read_enable? only an output from PD_top_level (not an input to anything else)
 logic [15:0] tx_data;
 logic [15:0] data_bytes; // is this the same as tx_data? only an output from main_controller
 logic transmit_empty;
@@ -55,7 +55,7 @@ logic packet_type; // input to USB_rx
 
 // Not sure how to handle d_plus and d_minus as inputs and outputs
 
-USB_rx_top_level USB_RX (.clk(clk), .n_rst(n_rst), .d_plus_in(d_plus_in), .d_minus_in(d_minus_in), .packet_type(packet_type), .transmit_ack(transmit_ack), // INPUTS
+USB_rx_top_level USB_RX (.clk(clk), .n_rst(n_rst), .d_plus_in(d_plus_in), .d_minus_in(d_minus_in), .packet_type(packet_type), // INPUTS
 			.rx_data(rx_data), .write_enable(write_enable), .rcv_error(rcv_error), .eop(eop)); // OUTPUTS
 
 USB_tx_top_level USB_TX (.clk(clk), .n_rst(n_rst), .tx_data(tx_data), .transmit_empty(transmit_empty), .transmit_start(transmit_start), // INPUTS
@@ -74,6 +74,6 @@ HM_top_level HM_1 (.clk(clk), .n_rst(n_rst), .begin_hash(begin_hash), .quit_hash
 		   .hash_done(hash_done), .valid_hash_flag(valid_hash_flag), .valid_hash(valid_hash), .hash_select(hash_select)); // OUTPUTS
 
 PD_top_level PD (.clk(clk), .n_rst(n_rst), .write_enable(write_enable), .rx_data(rx_data), .eop(eop), .hash_select(hash_select), .increment(increment), .hash_done(hash_done), // INPUTS
-		 .data_to_hash(data_to_hash), .host_ready(host_ready), .difficulty(difficulty), .new_block(new_block), .r_enable(r_enable), .transmit_ack(transmit_ack), .transmit_nack(transmit_nack), .p_error(p_error), .rcv_error(rcv_error), .packet_type(packet_type), .interrupt(interrupt)); // OUTPUT
+		 .data_to_hash(data_to_hash), .host_ready(host_ready), .difficulty(difficulty), .new_block(new_block), .transmit_ack(transmit_ack), .transmit_nack(transmit_nack), .p_error(p_error), .rcv_error(rcv_error), .packet_type(packet_type), .interrupt(interrupt)); // OUTPUT
 
 endmodule

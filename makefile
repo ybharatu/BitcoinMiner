@@ -27,7 +27,6 @@ TOP_LEVELS := USB_rx_top_level.sv USB_tx_top_level.sv USB_transceiver_selector.s
 
 COMPONENT_FILES	:= $(USB_TX_FILES) $(USB_RX_FILES) $(HM_FILES) $(PD_FILES) $(EXTRA_FILES) $(TOP_LEVELS)
 
-
 # Specify the name of the top level file (do not include the source folder in the name)
 # NOTE: YOU WILL NEED TO SET THIS VARIABLE'S VALUE WHEN WORKING WITH HEIRARCHICAL DESIGNS
 # AND THE AUTOMATED GRADING SYSTEM
