@@ -4,7 +4,7 @@
 // Author:      Yashwanth Bharatula
 // Lab Section: 337-05
 // Version:     1.0  Initial Design Entry
-// Description: Receiver Timer
+// Description: Receiver Timer counts to know when we are receiving a bit, when we have received a byte, or when a stuff bit is occuring
 
 module USB_timer_rx
 (
