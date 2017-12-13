@@ -1,10 +1,10 @@
 // $Id: $
 // File name:   flex_counter.sv
-// Created:     9/16/2017
+// Created:     12/1/2017
 // Author:      Michael Toner
 // Lab Section: 337-05
 // Version:     1.0  Initial Design Entry
-// Description: Flexible Rollover Counter
+// Description: Flex counter that resets to zero instead of one, used in Hashing Module
 module flex_counter_fix
 #(
 	parameter NUM_CNT_BITS = 4
