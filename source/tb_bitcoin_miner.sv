@@ -4,7 +4,7 @@
 // Author:      Michael Toner
 // Lab Section: 337-05
 // Version:     1.0  Initial Design Entry
-// Description: Bitcoin Miner
+// Description: Main test bench for Overall Top Level Bitcoin Miner Test Bench
 
 `timescale 1ns / 10ps
 `define SYNC_BYTE 8'b10000000
