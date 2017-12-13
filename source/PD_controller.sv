@@ -4,7 +4,7 @@
 // Author:      Michael Toner
 // Lab Section: 337-05
 // Version:     1.0  Initial Design Entry
-// Description: Controller for Packet Decoder
+// Description: Main Controller for Packet Decoder. Makes decisions based on input packets from USB receiver
 
 `define IN_PID  8'b01101001
 `define OUT_PID 8'b11100001
