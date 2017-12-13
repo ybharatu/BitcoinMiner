@@ -4,7 +4,7 @@
 // Author:      Michael Toner
 // Lab Section: 337-05
 // Version:     1.0  Initial Design Entry
-// Description: hash selector thing file
+// Description: Hash Selectector Determines whether to use the input data or the previous hash as an input to the SHA-256 Core
 module HM_hash_selection
 #(
 	parameter MODULE_NUM = 0
