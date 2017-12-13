@@ -4,7 +4,7 @@
 // Author:      Yashwanth Bharatula
 // Lab Section: 337-05
 // Version:     1.0  Initial Design Entry
-// Description: CRC Block
+// Description: CRC Block wrapper for Receiver. Simply calls both CRC5 and CRC16 and connects them together.
 
 module USB_crc_rx
 (

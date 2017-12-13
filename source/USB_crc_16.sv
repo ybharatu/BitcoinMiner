@@ -4,7 +4,7 @@
 // Author:      Yashwanth Bharatula
 // Lab Section: 337-05
 // Version:     1.0  Initial Design Entry
-// Description: crc 16
+// Description: crc 16 block for USB receiver
 
 module USB_crc_16
 (

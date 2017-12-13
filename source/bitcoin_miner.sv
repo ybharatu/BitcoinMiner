@@ -18,13 +18,11 @@ logic rcv_error;
 logic eop;
 logic [7:0] rx_data;
 logic read_enable;
-//logic r_enable; // is this the same as read_enable? only an output from PD_top_level (not an input to anything else)
 logic [15:0] tx_data;
-logic [15:0] data_bytes; // is this the same as tx_data? only an output from main_controller
+logic [15:0] data_bytes; 
 logic transmit_empty;
 logic transmit_start;
-logic [7:0] PID; // only an input for PD_hash_separation
-//logic [7:0] pid_byte; // is this the same as PID? only an output from main_controller
+logic [7:0] PID; 
 logic hash_done; // 2 inputs and 1 output
 logic new_block;
 logic valid_hash_flag;
@@ -33,12 +31,12 @@ logic interrupt;
 logic transmit_ack; // 1 input and 2 outputs
 logic transmit_nack;
 logic transmit_response;
-logic increment; // only an input in PD_top_level
+logic increment; 
 logic [255:0] difficulty;
 logic [511:0] data_to_hash;
 logic [287:0] valid_hash; 
 logic [1:0] hash_select;
-logic p_error; // only an input to main_controller
+logic p_error;
 logic host_ready;
 logic d_plus_out;
 logic d_minus_out;
@@ -48,12 +46,10 @@ logic d_plus_in;
 logic transmitting;
 logic begin_hash;
 logic transmit_eop;
-// Things to figure out (their declarations are commented)
 logic PID_en; // input to hash_separation
 logic transmit_empty_en; // input to hash_separation
 logic packet_type; // input to USB_rx
 
-// Not sure how to handle d_plus and d_minus as inputs and outputs
 
 USB_rx_top_level USB_RX (.clk(clk), .n_rst(n_rst), .d_plus_in(d_plus_in), .d_minus_in(d_minus_in), .packet_type(packet_type), // INPUTS
 			.rx_data(rx_data), .write_enable(write_enable), .rcv_error(rcv_error), .eop(eop)); // OUTPUTS
