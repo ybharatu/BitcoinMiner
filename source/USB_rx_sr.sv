@@ -4,7 +4,7 @@
 // Author:      Chinar Dhamija
 // Lab Section: 337-05
 // Version:     1.0  Initial Design Entry
-// Description: USB Receiver Shift Register
+// Description: USB Receiver Shift Register shifts as long as rx_hold (i.e. a stiff bit) is low
 
 module USB_rx_sr
 (
