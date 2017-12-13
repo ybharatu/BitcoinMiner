@@ -4,7 +4,7 @@
 // Author:      Chinar Dhamija
 // Lab Section: 337-05
 // Version:     1.0  Initial Design Entry
-// Description: USB Encoder
+// Description: Encoder for USB transmitter that puts back in NRZi Encoding, Bit stuffing and EOP signals
 
 module USB_encoder
 (
