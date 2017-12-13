@@ -4,7 +4,8 @@
 // Author:      Michael Toner
 // Lab Section: 337-05
 // Version:     1.0  Initial Design Entry
-// Description: Check decoder in Packet Decoder
+// Description: Selects which chunk of the block storage to send to the hashing module.
+// Also appends Chunk2 according to SHA-256 standard
 module PD_chunk_decoder
 (
 	input [1:0] hash_select,
