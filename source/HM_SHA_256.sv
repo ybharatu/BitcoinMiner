@@ -1,4 +1,10 @@
-// SHA 256 main module
+// $Id: $
+// File name:   HM_bus_select.sv
+// Created:     11/28/2017
+// Author:      Michael Toner
+// Lab Section: 337-05
+// Version:     1.0  Initial Design Entry
+// Description: SHA 256 Core Calculation Module
 
 `define abc {a,b,c,d,e,f,g,h}
 `define abcnext  {anext,bnext,cnext,dnext,enext,fnext,gnext,hnext}
