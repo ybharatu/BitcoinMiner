@@ -4,7 +4,7 @@
 // Author:      Michael Toner
 // Lab Section: 337-05
 // Version:     1.0  Initial Design Entry
-// Description: 640 bit block storage for the block header
+// Description: 896 bit block storage for the block header and the target difficulty. Also increments the nonce value in storage
 module PD_block_storage
 (
 	input i_data_en,
