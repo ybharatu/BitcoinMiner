@@ -4,7 +4,7 @@
 // Author:      Yashwanth Bharatula
 // Lab Section: 337-05
 // Version:     1.0  Initial Design Entry
-// Description: USB Decoder
+// Description: Decoder for USB receiver that removes NRZi encoding and bit stuffing
 
 module USB_decoder
 (
