@@ -4,7 +4,7 @@
 // Author:      Chinar Dhamija
 // Lab Section: 337-05
 // Version:     1.0  Initial Design Entry
-// Description: Packet Decoder Timer
+// Description: Packet Decoder Timer. Simple wrapper for Flex Counter to count number of bytes in storage
 
 module PD_timer(
 	input wire clk,
