@@ -4,7 +4,7 @@
 // Author:      Yashwanth Bharatula
 // Lab Section: 337-05
 // Version:     1.0  Initial Design Entry
-// Description: EOP Detect
+// Description: Detects an EOP signal in USB receiver
 
 module USB_eop_detect
 (
