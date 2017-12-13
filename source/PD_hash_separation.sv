@@ -4,7 +4,8 @@
 // Author:      Rahul Patni
 // Lab Section: 337-05
 // Version:     1.0  Initial Design Entry
-// Description: hash separation
+// Description: Separates the hash output from Hashing MOdule to be fed into the USB transmitter
+// Not actually a part of Packet Decoder but the Naming Convention of the file is not updated
 
 module PD_hash_separation
 (
