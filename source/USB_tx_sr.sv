@@ -4,7 +4,7 @@
 // Author:      Chinar Dhamija
 // Lab Section: 337-05
 // Version:     1.0  Initial Design Entry
-// Description: USB Transmitter Shift Register
+// Description: USB Transmitter Shift Register, Shifts out 16 bits at a time and then shifts out the 16 CRC bits
 
 module USB_tx_sr
 (
