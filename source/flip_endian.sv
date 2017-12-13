@@ -4,7 +4,7 @@
 // Author:      Rahul Patni
 // Lab Section: 337-05
 // Version:     1.0  Initial Design Entry
-// Description: Flip Endian with Parameters
+// Description: Helper file that flips byte order of various chunks of data. Very helpful getting data between modules
 module flip_endian
 #(
 	parameter LENGTH = 512,
