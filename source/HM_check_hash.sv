@@ -4,7 +4,8 @@
 // Author:      Michael Toner
 // Lab Section: 337-05
 // Version:     1.0  Initial Design Entry
-// Description: Check Hash Module
+// Description: Check Hash Module which compares the output hash to the difficulty when the hash is complete
+// Flip endian module simply makes the sure the bytes are in the correct order to be compared properly
 module HM_check_hash
 (
 	input [255:0] out_hash,
