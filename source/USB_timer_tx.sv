@@ -4,7 +4,8 @@
 // Author:      Yashwanth Bharatula
 // Lab Section: 337-05
 // Version:     1.0  Initial Design Entry
-// Description: Transmitter Timer
+// Description: Transmitter Timer counts to know when we are supposed to send out a bit, send out a byte (16 bits in this context) and when we are supposed to inset a suff bit.
+// It also counts when the whole data has been sent and knows when to transmit an EOP signal
 
 module USB_timer_tx
 (
