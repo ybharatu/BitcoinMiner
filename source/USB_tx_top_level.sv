@@ -4,7 +4,7 @@
 // Author:      Michael Toner
 // Lab Section: 337-05
 // Version:     1.0  Initial Design Entry
-// Description: Top Level File for USB module
+// Description: Top Level File for USB transmitter module
 module USB_tx_top_level
 (
 	input clk,
