@@ -4,7 +4,7 @@
 // Author:      Yashwanth Bharatula
 // Lab Section: 337-05
 // Version:     1.0  Initial Design Entry
-// Description: USB Transceiver Selector
+// Description: USB Transceiver Selector Selects whether to send data into the receiver or to transmit data out from the transmitter
 
 module USB_transceiver_selector
 (
