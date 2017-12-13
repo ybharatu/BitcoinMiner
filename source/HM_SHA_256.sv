@@ -28,7 +28,7 @@ reg [7:0][31:0]curr_hash;
 reg [63:0][31:0] w; //Full array of W regs, can optimize to only 16x32 later on if time warrants
 logic [63:16][31:0] w_next; // Next state of W
 logic [6:0] w_count; //The count on w stays 16 clock cycles ahead of count;
-logic [31:0] w_prep; //TODO remove, help variable
+logic [31:0] w_prep;
 reg [31:0]s0;
 reg [31:0]s1;
 logic [31:0] rr7;    // Right rotated W by 7
