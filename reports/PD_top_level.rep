@@ -1,0 +1,393 @@
+Information: Updating design information... (UID-85)
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 4
+Design : PD_top_level
+Version: K-2015.06-SP1
+Date   : Wed Dec 13 19:33:17 2017
+****************************************
+
+Operating Conditions: typical   Library: osu05_stdcells
+Wire Load Model Mode: top
+
+  Startpoint: BLOCK_STORAGE/storage_reg[76][0]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: BLOCK_STORAGE/storage_reg[79][7]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  BLOCK_STORAGE/storage_reg[76][0]/CLK (DFFPOSX1)         0.00       0.00 r
+  BLOCK_STORAGE/storage_reg[76][0]/Q (DFFPOSX1)           0.43       0.43 f
+  BLOCK_STORAGE/add_46/A[0] (PD_block_storage_DW01_inc_0)
+                                                          0.00       0.43 f
+  BLOCK_STORAGE/add_46/U1_1_1/YC (HAX1)                   0.30       0.72 f
+  BLOCK_STORAGE/add_46/U1_1_2/YC (HAX1)                   0.27       0.99 f
+  BLOCK_STORAGE/add_46/U1_1_3/YC (HAX1)                   0.27       1.26 f
+  BLOCK_STORAGE/add_46/U1_1_4/YC (HAX1)                   0.27       1.53 f
+  BLOCK_STORAGE/add_46/U1_1_5/YC (HAX1)                   0.27       1.80 f
+  BLOCK_STORAGE/add_46/U1_1_6/YC (HAX1)                   0.27       2.07 f
+  BLOCK_STORAGE/add_46/U1_1_7/YC (HAX1)                   0.27       2.34 f
+  BLOCK_STORAGE/add_46/U1_1_8/YC (HAX1)                   0.27       2.61 f
+  BLOCK_STORAGE/add_46/U1_1_9/YC (HAX1)                   0.27       2.88 f
+  BLOCK_STORAGE/add_46/U1_1_10/YC (HAX1)                  0.27       3.15 f
+  BLOCK_STORAGE/add_46/U1_1_11/YC (HAX1)                  0.27       3.42 f
+  BLOCK_STORAGE/add_46/U1_1_12/YC (HAX1)                  0.27       3.69 f
+  BLOCK_STORAGE/add_46/U1_1_13/YC (HAX1)                  0.27       3.96 f
+  BLOCK_STORAGE/add_46/U1_1_14/YC (HAX1)                  0.27       4.23 f
+  BLOCK_STORAGE/add_46/U1_1_15/YC (HAX1)                  0.27       4.50 f
+  BLOCK_STORAGE/add_46/U1_1_16/YC (HAX1)                  0.27       4.77 f
+  BLOCK_STORAGE/add_46/U1_1_17/YC (HAX1)                  0.27       5.04 f
+  BLOCK_STORAGE/add_46/U1_1_18/YC (HAX1)                  0.27       5.30 f
+  BLOCK_STORAGE/add_46/U1_1_19/YC (HAX1)                  0.27       5.57 f
+  BLOCK_STORAGE/add_46/U1_1_20/YC (HAX1)                  0.27       5.84 f
+  BLOCK_STORAGE/add_46/U1_1_21/YC (HAX1)                  0.27       6.11 f
+  BLOCK_STORAGE/add_46/U1_1_22/YC (HAX1)                  0.27       6.38 f
+  BLOCK_STORAGE/add_46/U1_1_23/YC (HAX1)                  0.27       6.65 f
+  BLOCK_STORAGE/add_46/U1_1_24/YC (HAX1)                  0.27       6.92 f
+  BLOCK_STORAGE/add_46/U1_1_25/YC (HAX1)                  0.27       7.19 f
+  BLOCK_STORAGE/add_46/U1_1_26/YC (HAX1)                  0.27       7.46 f
+  BLOCK_STORAGE/add_46/U1_1_27/YC (HAX1)                  0.27       7.73 f
+  BLOCK_STORAGE/add_46/U1_1_28/YC (HAX1)                  0.27       8.00 f
+  BLOCK_STORAGE/add_46/U1_1_29/YC (HAX1)                  0.27       8.27 f
+  BLOCK_STORAGE/add_46/U1_1_30/YC (HAX1)                  0.31       8.58 f
+  BLOCK_STORAGE/add_46/U1/Y (XOR2X1)                      0.18       8.76 r
+  BLOCK_STORAGE/add_46/SUM[31] (PD_block_storage_DW01_inc_0)
+                                                          0.00       8.76 r
+  BLOCK_STORAGE/U2039/Y (INVX2)                           0.08       8.84 f
+  BLOCK_STORAGE/U471/Y (OAI21X1)                          0.11       8.94 r
+  BLOCK_STORAGE/storage_reg[79][7]/D (DFFPOSX1)           0.00       8.94 r
+  data arrival time                                                  8.94
+
+  clock clk (rise edge)                                  10.00      10.00
+  clock network delay (ideal)                             0.00      10.00
+  BLOCK_STORAGE/storage_reg[79][7]/CLK (DFFPOSX1)         0.00      10.00 r
+  library setup time                                     -0.36       9.64
+  data required time                                                 9.64
+  --------------------------------------------------------------------------
+  data required time                                                 9.64
+  data arrival time                                                 -8.94
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.69
+
+
+  Startpoint: BLOCK_STORAGE/storage_reg[76][0]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: BLOCK_STORAGE/storage_reg[79][6]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  BLOCK_STORAGE/storage_reg[76][0]/CLK (DFFPOSX1)         0.00       0.00 r
+  BLOCK_STORAGE/storage_reg[76][0]/Q (DFFPOSX1)           0.43       0.43 f
+  BLOCK_STORAGE/add_46/A[0] (PD_block_storage_DW01_inc_0)
+                                                          0.00       0.43 f
+  BLOCK_STORAGE/add_46/U1_1_1/YC (HAX1)                   0.30       0.72 f
+  BLOCK_STORAGE/add_46/U1_1_2/YC (HAX1)                   0.27       0.99 f
+  BLOCK_STORAGE/add_46/U1_1_3/YC (HAX1)                   0.27       1.26 f
+  BLOCK_STORAGE/add_46/U1_1_4/YC (HAX1)                   0.27       1.53 f
+  BLOCK_STORAGE/add_46/U1_1_5/YC (HAX1)                   0.27       1.80 f
+  BLOCK_STORAGE/add_46/U1_1_6/YC (HAX1)                   0.27       2.07 f
+  BLOCK_STORAGE/add_46/U1_1_7/YC (HAX1)                   0.27       2.34 f
+  BLOCK_STORAGE/add_46/U1_1_8/YC (HAX1)                   0.27       2.61 f
+  BLOCK_STORAGE/add_46/U1_1_9/YC (HAX1)                   0.27       2.88 f
+  BLOCK_STORAGE/add_46/U1_1_10/YC (HAX1)                  0.27       3.15 f
+  BLOCK_STORAGE/add_46/U1_1_11/YC (HAX1)                  0.27       3.42 f
+  BLOCK_STORAGE/add_46/U1_1_12/YC (HAX1)                  0.27       3.69 f
+  BLOCK_STORAGE/add_46/U1_1_13/YC (HAX1)                  0.27       3.96 f
+  BLOCK_STORAGE/add_46/U1_1_14/YC (HAX1)                  0.27       4.23 f
+  BLOCK_STORAGE/add_46/U1_1_15/YC (HAX1)                  0.27       4.50 f
+  BLOCK_STORAGE/add_46/U1_1_16/YC (HAX1)                  0.27       4.77 f
+  BLOCK_STORAGE/add_46/U1_1_17/YC (HAX1)                  0.27       5.04 f
+  BLOCK_STORAGE/add_46/U1_1_18/YC (HAX1)                  0.27       5.30 f
+  BLOCK_STORAGE/add_46/U1_1_19/YC (HAX1)                  0.27       5.57 f
+  BLOCK_STORAGE/add_46/U1_1_20/YC (HAX1)                  0.27       5.84 f
+  BLOCK_STORAGE/add_46/U1_1_21/YC (HAX1)                  0.27       6.11 f
+  BLOCK_STORAGE/add_46/U1_1_22/YC (HAX1)                  0.27       6.38 f
+  BLOCK_STORAGE/add_46/U1_1_23/YC (HAX1)                  0.27       6.65 f
+  BLOCK_STORAGE/add_46/U1_1_24/YC (HAX1)                  0.27       6.92 f
+  BLOCK_STORAGE/add_46/U1_1_25/YC (HAX1)                  0.27       7.19 f
+  BLOCK_STORAGE/add_46/U1_1_26/YC (HAX1)                  0.27       7.46 f
+  BLOCK_STORAGE/add_46/U1_1_27/YC (HAX1)                  0.27       7.73 f
+  BLOCK_STORAGE/add_46/U1_1_28/YC (HAX1)                  0.27       8.00 f
+  BLOCK_STORAGE/add_46/U1_1_29/YC (HAX1)                  0.27       8.27 f
+  BLOCK_STORAGE/add_46/U1_1_30/YS (HAX1)                  0.31       8.58 r
+  BLOCK_STORAGE/add_46/SUM[30] (PD_block_storage_DW01_inc_0)
+                                                          0.00       8.58 r
+  BLOCK_STORAGE/U2040/Y (INVX2)                           0.07       8.66 f
+  BLOCK_STORAGE/U473/Y (OAI21X1)                          0.09       8.75 r
+  BLOCK_STORAGE/storage_reg[79][6]/D (DFFPOSX1)           0.00       8.75 r
+  data arrival time                                                  8.75
+
+  clock clk (rise edge)                                  10.00      10.00
+  clock network delay (ideal)                             0.00      10.00
+  BLOCK_STORAGE/storage_reg[79][6]/CLK (DFFPOSX1)         0.00      10.00 r
+  library setup time                                     -0.36       9.64
+  data required time                                                 9.64
+  --------------------------------------------------------------------------
+  data required time                                                 9.64
+  data arrival time                                                 -8.75
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.89
+
+
+  Startpoint: BLOCK_STORAGE/storage_reg[76][0]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: BLOCK_STORAGE/storage_reg[79][5]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  BLOCK_STORAGE/storage_reg[76][0]/CLK (DFFPOSX1)         0.00       0.00 r
+  BLOCK_STORAGE/storage_reg[76][0]/Q (DFFPOSX1)           0.43       0.43 f
+  BLOCK_STORAGE/add_46/A[0] (PD_block_storage_DW01_inc_0)
+                                                          0.00       0.43 f
+  BLOCK_STORAGE/add_46/U1_1_1/YC (HAX1)                   0.30       0.72 f
+  BLOCK_STORAGE/add_46/U1_1_2/YC (HAX1)                   0.27       0.99 f
+  BLOCK_STORAGE/add_46/U1_1_3/YC (HAX1)                   0.27       1.26 f
+  BLOCK_STORAGE/add_46/U1_1_4/YC (HAX1)                   0.27       1.53 f
+  BLOCK_STORAGE/add_46/U1_1_5/YC (HAX1)                   0.27       1.80 f
+  BLOCK_STORAGE/add_46/U1_1_6/YC (HAX1)                   0.27       2.07 f
+  BLOCK_STORAGE/add_46/U1_1_7/YC (HAX1)                   0.27       2.34 f
+  BLOCK_STORAGE/add_46/U1_1_8/YC (HAX1)                   0.27       2.61 f
+  BLOCK_STORAGE/add_46/U1_1_9/YC (HAX1)                   0.27       2.88 f
+  BLOCK_STORAGE/add_46/U1_1_10/YC (HAX1)                  0.27       3.15 f
+  BLOCK_STORAGE/add_46/U1_1_11/YC (HAX1)                  0.27       3.42 f
+  BLOCK_STORAGE/add_46/U1_1_12/YC (HAX1)                  0.27       3.69 f
+  BLOCK_STORAGE/add_46/U1_1_13/YC (HAX1)                  0.27       3.96 f
+  BLOCK_STORAGE/add_46/U1_1_14/YC (HAX1)                  0.27       4.23 f
+  BLOCK_STORAGE/add_46/U1_1_15/YC (HAX1)                  0.27       4.50 f
+  BLOCK_STORAGE/add_46/U1_1_16/YC (HAX1)                  0.27       4.77 f
+  BLOCK_STORAGE/add_46/U1_1_17/YC (HAX1)                  0.27       5.04 f
+  BLOCK_STORAGE/add_46/U1_1_18/YC (HAX1)                  0.27       5.30 f
+  BLOCK_STORAGE/add_46/U1_1_19/YC (HAX1)                  0.27       5.57 f
+  BLOCK_STORAGE/add_46/U1_1_20/YC (HAX1)                  0.27       5.84 f
+  BLOCK_STORAGE/add_46/U1_1_21/YC (HAX1)                  0.27       6.11 f
+  BLOCK_STORAGE/add_46/U1_1_22/YC (HAX1)                  0.27       6.38 f
+  BLOCK_STORAGE/add_46/U1_1_23/YC (HAX1)                  0.27       6.65 f
+  BLOCK_STORAGE/add_46/U1_1_24/YC (HAX1)                  0.27       6.92 f
+  BLOCK_STORAGE/add_46/U1_1_25/YC (HAX1)                  0.27       7.19 f
+  BLOCK_STORAGE/add_46/U1_1_26/YC (HAX1)                  0.27       7.46 f
+  BLOCK_STORAGE/add_46/U1_1_27/YC (HAX1)                  0.27       7.73 f
+  BLOCK_STORAGE/add_46/U1_1_28/YC (HAX1)                  0.27       8.00 f
+  BLOCK_STORAGE/add_46/U1_1_29/YS (HAX1)                  0.31       8.31 r
+  BLOCK_STORAGE/add_46/SUM[29] (PD_block_storage_DW01_inc_0)
+                                                          0.00       8.31 r
+  BLOCK_STORAGE/U2041/Y (INVX2)                           0.07       8.39 f
+  BLOCK_STORAGE/U475/Y (OAI21X1)                          0.09       8.48 r
+  BLOCK_STORAGE/storage_reg[79][5]/D (DFFPOSX1)           0.00       8.48 r
+  data arrival time                                                  8.48
+
+  clock clk (rise edge)                                  10.00      10.00
+  clock network delay (ideal)                             0.00      10.00
+  BLOCK_STORAGE/storage_reg[79][5]/CLK (DFFPOSX1)         0.00      10.00 r
+  library setup time                                     -0.36       9.64
+  data required time                                                 9.64
+  --------------------------------------------------------------------------
+  data required time                                                 9.64
+  data arrival time                                                 -8.48
+  --------------------------------------------------------------------------
+  slack (MET)                                                        1.16
+
+
+  Startpoint: BLOCK_STORAGE/storage_reg[76][0]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: BLOCK_STORAGE/storage_reg[79][4]
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  BLOCK_STORAGE/storage_reg[76][0]/CLK (DFFPOSX1)         0.00       0.00 r
+  BLOCK_STORAGE/storage_reg[76][0]/Q (DFFPOSX1)           0.43       0.43 f
+  BLOCK_STORAGE/add_46/A[0] (PD_block_storage_DW01_inc_0)
+                                                          0.00       0.43 f
+  BLOCK_STORAGE/add_46/U1_1_1/YC (HAX1)                   0.30       0.72 f
+  BLOCK_STORAGE/add_46/U1_1_2/YC (HAX1)                   0.27       0.99 f
+  BLOCK_STORAGE/add_46/U1_1_3/YC (HAX1)                   0.27       1.26 f
+  BLOCK_STORAGE/add_46/U1_1_4/YC (HAX1)                   0.27       1.53 f
+  BLOCK_STORAGE/add_46/U1_1_5/YC (HAX1)                   0.27       1.80 f
+  BLOCK_STORAGE/add_46/U1_1_6/YC (HAX1)                   0.27       2.07 f
+  BLOCK_STORAGE/add_46/U1_1_7/YC (HAX1)                   0.27       2.34 f
+  BLOCK_STORAGE/add_46/U1_1_8/YC (HAX1)                   0.27       2.61 f
+  BLOCK_STORAGE/add_46/U1_1_9/YC (HAX1)                   0.27       2.88 f
+  BLOCK_STORAGE/add_46/U1_1_10/YC (HAX1)                  0.27       3.15 f
+  BLOCK_STORAGE/add_46/U1_1_11/YC (HAX1)                  0.27       3.42 f
+  BLOCK_STORAGE/add_46/U1_1_12/YC (HAX1)                  0.27       3.69 f
+  BLOCK_STORAGE/add_46/U1_1_13/YC (HAX1)                  0.27       3.96 f
+  BLOCK_STORAGE/add_46/U1_1_14/YC (HAX1)                  0.27       4.23 f
+  BLOCK_STORAGE/add_46/U1_1_15/YC (HAX1)                  0.27       4.50 f
+  BLOCK_STORAGE/add_46/U1_1_16/YC (HAX1)                  0.27       4.77 f
+  BLOCK_STORAGE/add_46/U1_1_17/YC (HAX1)                  0.27       5.04 f
+  BLOCK_STORAGE/add_46/U1_1_18/YC (HAX1)                  0.27       5.30 f
+  BLOCK_STORAGE/add_46/U1_1_19/YC (HAX1)                  0.27       5.57 f
+  BLOCK_STORAGE/add_46/U1_1_20/YC (HAX1)                  0.27       5.84 f
+  BLOCK_STORAGE/add_46/U1_1_21/YC (HAX1)                  0.27       6.11 f
+  BLOCK_STORAGE/add_46/U1_1_22/YC (HAX1)                  0.27       6.38 f
+  BLOCK_STORAGE/add_46/U1_1_23/YC (HAX1)                  0.27       6.65 f
+  BLOCK_STORAGE/add_46/U1_1_24/YC (HAX1)                  0.27       6.92 f
+  BLOCK_STORAGE/add_46/U1_1_25/YC (HAX1)                  0.27       7.19 f
+  BLOCK_STORAGE/add_46/U1_1_26/YC (HAX1)                  0.27       7.46 f
+  BLOCK_STORAGE/add_46/U1_1_27/YC (HAX1)                  0.27       7.73 f
+  BLOCK_STORAGE/add_46/U1_1_28/YS (HAX1)                  0.31       8.04 r
+  BLOCK_STORAGE/add_46/SUM[28] (PD_block_storage_DW01_inc_0)
+                                                          0.00       8.04 r
+  BLOCK_STORAGE/U2042/Y (INVX2)                           0.07       8.12 f
+  BLOCK_STORAGE/U477/Y (OAI21X1)                          0.09       8.21 r
+  BLOCK_STORAGE/storage_reg[79][4]/D (DFFPOSX1)           0.00       8.21 r
+  data arrival time                                                  8.21
+
+  clock clk (rise edge)                                  10.00      10.00
+  clock network delay (ideal)                             0.00      10.00
+  BLOCK_STORAGE/storage_reg[79][4]/CLK (DFFPOSX1)         0.00      10.00 r
+  library setup time                                     -0.36       9.64
+  data required time                                                 9.64
+  --------------------------------------------------------------------------
+  data required time                                                 9.64
+  data arrival time                                                 -8.21
+  --------------------------------------------------------------------------
+  slack (MET)                                                        1.43
+
+
+1
+ 
+****************************************
+Report : area
+Design : PD_top_level
+Version: K-2015.06-SP1
+Date   : Wed Dec 13 19:33:17 2017
+****************************************
+
+Library(s) Used:
+
+    osu05_stdcells (File: /package/eda/cells/OSU/v2.7/synopsys/lib/ami05/osu05_stdcells.db)
+
+Number of ports:                         4827
+Number of nets:                          8166
+Number of cells:                         4109
+Number of combinational cells:           3150
+Number of sequential cells:               930
+Number of macros/black boxes:               0
+Number of buf/inv:                        394
+Number of references:                       4
+
+Combinational area:             739674.000000
+Buf/Inv area:                    65016.000000
+Noncombinational area:          797904.000000
+Macro/Black Box area:                0.000000
+Net Interconnect area:      undefined  (No wire load specified)
+
+Total cell area:               1537578.000000
+Total area:                 undefined
+1
+Loading db file '/package/eda/cells/OSU/v2.7/synopsys/lib/ami05/osu05_stdcells.db'
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
+Warning: Design has unannotated primary inputs. (PWR-414)
+Warning: Design has unannotated sequential cell outputs. (PWR-415)
+ 
+****************************************
+Report : power
+        -hier
+        -analysis_effort low
+Design : PD_top_level
+Version: K-2015.06-SP1
+Date   : Wed Dec 13 19:33:17 2017
+****************************************
+
+
+Library(s) Used:
+
+    osu05_stdcells (File: /package/eda/cells/OSU/v2.7/synopsys/lib/ami05/osu05_stdcells.db)
+
+
+Operating Conditions: typical   Library: osu05_stdcells
+Wire Load Model Mode: top
+
+
+Global Operating Voltage = 5    
+Power-specific unit information :
+    Voltage Units = 1V
+    Capacitance Units = 1.000000pf
+    Time Units = 1ns
+    Dynamic Power Units = 1mW    (derived from V,C,T units)
+    Leakage Power Units = 1nW
+
+
+--------------------------------------------------------------------------------
+                                       Switch   Int      Leak     Total
+Hierarchy                              Power    Power    Power    Power    %
+--------------------------------------------------------------------------------
+PD_top_level                              7.851  150.008  457.496  157.859 100.0
+  TIMER (PD_timer)                        0.000    1.638   13.271    1.638   1.0
+    TIMER_PD (flex_counter_NUM_CNT_BITS7)
+                                          0.000    1.638   12.796    1.638   1.0
+      add_49_aco (flex_counter_NUM_CNT_BITS7_DW01_inc_1)
+                                          0.000    0.000    1.541 1.54e-06   0.0
+      add_50 (flex_counter_NUM_CNT_BITS7_DW01_inc_0)
+                                          0.000    0.000    1.627 1.63e-06   0.0
+  CHUNK_DECODER (PD_chunk_decoder)        2.353    0.650   65.186    3.003   1.9
+  BLOCK_STORAGE (PD_block_storage)        4.160  144.979  358.925  149.140  94.5
+    add_46 (PD_block_storage_DW01_inc_0)
+                                       4.41e-02 8.03e-02    8.161    0.124   0.1
+    FLIP_DIFF (flip_endian_LENGTH256_FLIP_LENGTH8)
+                                          0.000    0.000    0.000    0.000   0.0
+    genblk2[12].FLIP_CHUNK_2 (flip_endian_LENGTH32_FLIP_LENGTH8_0)
+                                          0.000    0.000    0.000    0.000   0.0
+    genblk2[8].FLIP_CHUNK_2 (flip_endian_LENGTH32_FLIP_LENGTH8_1)
+                                          0.000    0.000    0.000    0.000   0.0
+    genblk2[4].FLIP_CHUNK_2 (flip_endian_LENGTH32_FLIP_LENGTH8_2)
+                                          0.000    0.000    0.000    0.000   0.0
+    genblk2[0].FLIP_CHUNK_2 (flip_endian_LENGTH32_FLIP_LENGTH8_3)
+                                          0.000    0.000    0.000    0.000   0.0
+    genblk1[60].FLIP_CHUNK_1 (flip_endian_LENGTH32_FLIP_LENGTH8_4)
+                                          0.000    0.000    0.000    0.000   0.0
+    genblk1[56].FLIP_CHUNK_1 (flip_endian_LENGTH32_FLIP_LENGTH8_5)
+                                          0.000    0.000    0.000    0.000   0.0
+    genblk1[52].FLIP_CHUNK_1 (flip_endian_LENGTH32_FLIP_LENGTH8_6)
+                                          0.000    0.000    0.000    0.000   0.0
+    genblk1[48].FLIP_CHUNK_1 (flip_endian_LENGTH32_FLIP_LENGTH8_7)
+                                          0.000    0.000    0.000    0.000   0.0
+    genblk1[44].FLIP_CHUNK_1 (flip_endian_LENGTH32_FLIP_LENGTH8_8)
+                                          0.000    0.000    0.000    0.000   0.0
+    genblk1[40].FLIP_CHUNK_1 (flip_endian_LENGTH32_FLIP_LENGTH8_9)
+                                          0.000    0.000    0.000    0.000   0.0
+    genblk1[36].FLIP_CHUNK_1 (flip_endian_LENGTH32_FLIP_LENGTH8_10)
+                                          0.000    0.000    0.000    0.000   0.0
+    genblk1[32].FLIP_CHUNK_1 (flip_endian_LENGTH32_FLIP_LENGTH8_11)
+                                          0.000    0.000    0.000    0.000   0.0
+    genblk1[28].FLIP_CHUNK_1 (flip_endian_LENGTH32_FLIP_LENGTH8_12)
+                                          0.000    0.000    0.000    0.000   0.0
+    genblk1[24].FLIP_CHUNK_1 (flip_endian_LENGTH32_FLIP_LENGTH8_13)
+                                          0.000    0.000    0.000    0.000   0.0
+    genblk1[20].FLIP_CHUNK_1 (flip_endian_LENGTH32_FLIP_LENGTH8_14)
+                                          0.000    0.000    0.000    0.000   0.0
+    genblk1[16].FLIP_CHUNK_1 (flip_endian_LENGTH32_FLIP_LENGTH8_15)
+                                          0.000    0.000    0.000    0.000   0.0
+    genblk1[12].FLIP_CHUNK_1 (flip_endian_LENGTH32_FLIP_LENGTH8_16)
+                                          0.000    0.000    0.000    0.000   0.0
+    genblk1[8].FLIP_CHUNK_1 (flip_endian_LENGTH32_FLIP_LENGTH8_17)
+                                          0.000    0.000    0.000    0.000   0.0
+    genblk1[4].FLIP_CHUNK_1 (flip_endian_LENGTH32_FLIP_LENGTH8_18)
+                                          0.000    0.000    0.000    0.000   0.0
+    genblk1[0].FLIP_CHUNK_1 (flip_endian_LENGTH32_FLIP_LENGTH8_19)
+                                          0.000    0.000    0.000    0.000   0.0
+  CONTROLLER (PD_controller)              1.338    2.740   20.116    4.078   2.6
+1
